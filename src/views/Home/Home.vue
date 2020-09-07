@@ -108,7 +108,10 @@ export default {
   },
   async asyncData ({ store, route, accessToken = "" }) {
     // 触发 action 后，会返回 Promise
+    console.log('Home页面---服务器端渲染')
+
     return Promise.all([
+      // store.dispatch('PERSONAL_INFO', { accessToken }),
       store.commit(
         "articleColumn/SET_CURRENT_ARTICLE_COLUMN",
         ""
@@ -136,7 +139,7 @@ export default {
     next();
   },
   created () {
-    this.$store.dispatch("home/GET_POPULAR_ARTICLE_TAG"); // 获取热门文章标签
+    // this.$store.dispatch("home/GET_POPULAR_ARTICLE_TAG"); // 获取热门文章标签
   },
   methods: {
     navTap (val) {

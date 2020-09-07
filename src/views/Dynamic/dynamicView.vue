@@ -74,12 +74,12 @@ export default {
   minixs: [googleMixin], //混合谷歌分析
   metaInfo () {
     return {
-      title: this.dynamic.dynamicView.content + '-片刻' || '',
+      title: this.dynamic.dynamicView.content + '-百多帮' || '',
       meta: [
         {
           // set meta
           name: 'description',
-          content: `${this.dynamic.dynamicView.content || ''}-片刻`
+          content: `${this.dynamic.dynamicView.content || ''}-百多帮`
         },
         {
           // og:site_name

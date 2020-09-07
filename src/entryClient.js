@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import { createApp } from './app'
 import NProgress from 'nprogress'
 import { loading } from './directive'
@@ -14,10 +14,10 @@ NProgress.configure({
   trickleSpeed: 200, // 自动递增间隔
   minimum: 0.3 // 初始化时的最小百分比
 })
-const orgUrl = window.location.origin
-const socketUrl = IS_DEV ? 'http://localhost:8086' : orgUrl
+// const orgUrl = window.location.origin
+// const socketUrl = IS_DEV ? 'http://localhost:8086' : orgUrl
 
-Vue.prototype.$socket = io(socketUrl)
+// Vue.prototype.$socket = io(socketUrl)
 
 // or with options
 Vue.use(VueLazyload, {

@@ -7,7 +7,7 @@
             <div class="book-info">
               <div class="poster">
                 <div class="image"
-                     :style="`background-image: url(${books.booksInfo.cover_img||''})`"></div>
+                     :style="`background-image: url(${books.booksInfo.coverImg||''})`"></div>
               </div>
               <div class="info">
                 <div class="title-line">
@@ -15,9 +15,9 @@
                      class="title">
                     {{books.booksInfo.title}}
                     <span class="free"
-                          :class="Number(books.booksInfo.is_free)===isFree.free?'yes':''">{{isFreeText[books.booksInfo.is_free]}}</span>
+                          :class="Number(books.booksInfo.isFree)===isFree.free?'yes':''">{{isFreeText[books.booksInfo.isFree]}}</span>
                     <span class="price"
-                          v-if="Number(books.booksInfo.is_free)!==isFree.free">￥{{books.booksInfo.price}} {{payTypeText[books.booksInfo.pay_type]}}</span>
+                          v-if="Number(books.booksInfo.isFree)!==isFree.free">￥{{books.booksInfo.price}} {{payTypeText[books.booksInfo.pay_type]}}</span>
                   </a>
                   <span class="attention"
                         v-if="~[statusList.reviewSuccess,statusList.freeReview].indexOf(books.booksInfo.status)&&personalInfo.islogin"
@@ -41,7 +41,7 @@
                   </div>
                 </div>
                 <div class="other">
-                  <button v-if="books.booksInfo.is_free===isFree.free||books.booksInfo.user.uid===personalInfo.user.uid"
+                  <button v-if="books.booksInfo.isFree===isFree.free||books.booksInfo.user.uid===personalInfo.user.uid"
                           class="btn button-look"
                           @click="lookChapter"> 查看</button>
                   <template v-else>
@@ -51,8 +51,9 @@
                             v-if="!books.booksInfo.isBuy"
                             @click="onBuy"> 购买 </button>
                   </template>
+<!--                  v-if="personalInfo.islogin&&personalInfo.user.uid===books.booksInfo.user.uid"-->
                   <router-link v-if="personalInfo.islogin&&personalInfo.user.uid===books.booksInfo.user.uid"
-                               :to="{ name: 'booksWrite', params: { type: 'update' }, query: { books_id: books.booksInfo.books_id }}"
+                               :to="{ name: 'booksWrite', params: { type: 'update' }, query: { books_id: books.booksInfo.booksId }}"
                                class="btn button-update"
                                @click="lookChapter">修改</router-link>
                 </div>
@@ -136,7 +137,7 @@ import {
 
 export default {
   name: "NavSort",
-  mixins: [googleMixin], //混合谷歌分析  
+  mixins: [googleMixin], //混合谷歌分析
   metaInfo () {
     return {
       title: this.books.booksInfo.title || "",
@@ -155,7 +156,7 @@ export default {
         {
           // og:site_name
           property: "og:image",
-          content: this.books.booksInfo.cover_img || this.website.meta.logo
+          content: this.books.booksInfo.coverImg || this.website.meta.logo
         },
         {
           // og:type
@@ -236,7 +237,7 @@ export default {
           }
         })
     },
-    onBuy () { // 
+    onBuy () { //
       if (!this.personalInfo.islogin) {
         this.$message.warning('请先登录，再继续操作');
         return false

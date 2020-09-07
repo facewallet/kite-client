@@ -11,8 +11,8 @@
               <ul class="nav-item-view">
                 <li class="nav-item"
                     v-for="column_item in articleColumn.homeColumn"
-                    :key="column_item.column_id">
-                  <router-link :to="{name:'books',params:{columnEnName:column_item.en_name}}">
+                    :key="column_item.columnId">
+                  <router-link :to="{name:'books',params:{columnEnName:column_item.enName}}">
                     {{column_item.name}}
                   </router-link>
                 </li>
@@ -61,19 +61,19 @@
                    :key="key">
                 <div class="library-item clearfix">
                   <div class="library-item__thumb">
-                    <router-link :to="{name:'book',params:{books_id:booksItem.books_id}}">
+                    <router-link :to="{name:'book',params:{books_id:booksItem.booksId}}">
                       <div class="image"
-                           :style="`background-image: url(${booksItem.cover_img})`"
-                           v-lazy="booksItem.cover_img"></div>
+                           :style="`background-image: url(${booksItem.coverImg})`"
+                           v-lazy="booksItem.coverImg"></div>
                     </router-link>
                   </div>
                   <div class="library-item__body">
 
                     <router-link class="library-item__title"
-                                 :to="{name:'book',params:{books_id:booksItem.books_id}}">
+                                 :to="{name:'book',params:{books_id:booksItem.booksId}}">
                       {{booksItem.title}}
                       <span class="free"
-                            :class="Number(booksItem.is_free)===isFree.free?'yes':''">{{isFreeText[booksItem.is_free]}}</span>
+                            :class="Number(booksItem.isFree)===isFree.free?'yes':''">{{isFreeText[booksItem.isFree]}}</span>
                     </router-link>
 
                     <div class="library-item__info">
@@ -83,7 +83,7 @@
                       </span>
                       <span class="attention"
                             v-if="~[statusList.reviewSuccess,statusList.freeReview].indexOf(booksItem.status)&&personalInfo.islogin"
-                            @click="collectBooks(booksItem.books_id)"
+                            @click="collectBooks(booksItem.booksId)"
                             :class="{'active':isCollect(booksItem).status}">{{isCollect(booksItem).text}}</span>
                     </div>
                     <div class="library-item-tag">
@@ -139,7 +139,7 @@ import {
 
 export default {
   name: "books",
-  mixins: [googleMixin], //混合谷歌分析 
+  mixins: [googleMixin], //混合谷歌分析
   metaInfo () {
     return {
       title: `小书-${this.website.meta.website_name}`,
@@ -166,6 +166,8 @@ export default {
     };
   },
   asyncData ({ store, route }) {
+    console.log('小书页面---服务器端渲染')
+
     // 触发 action 后，会返回 Promise
     return Promise.all([
       store.dispatch("articleColumn/GET_ARTICLE_COLUMN_ALL"),

@@ -16,7 +16,7 @@ const actions = {
   LOGIN: ({ commit, dispatch, state }, parameter) => {
     // 登录 post
     return fetch({
-      url: '/sign-in',
+      url: '/upc/login',
       method: 'post',
       parameter
     })
@@ -24,7 +24,7 @@ const actions = {
   REGISTER: ({ commit, dispatch, state }, parameter) => {
     // 注册 post
     return fetch({
-      url: '/sign-up',
+      url: '/upc/register',
       method: 'post',
       parameter
     })

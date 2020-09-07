@@ -10,9 +10,9 @@
                 ref="login">
             <!-- 正常登录登录名输入框 -->
             <div class="input-prepend restyle js-normal">
-              <input placeholder="邮箱"
+              <input placeholder="昵称"
                      type="text"
-                     v-model="formData.email"
+                     v-model="formData.name"
                      @keyup.enter="login"
                      value="" />
               <i class="el-icon-user-solid"></i>
@@ -93,6 +93,7 @@ export default {
   data () {
     return {
       formData: {
+        name: '',
         email: '',
         phone: '',
         type: 'email',
@@ -103,13 +104,20 @@ export default {
   methods: {
     login () {
       this.$store.dispatch('sign/LOGIN', this.formData).then(res => {
-        if (res.state === 'success') {
-          this.$message.success(res.message)
+        // if (res.state === 'success') {
+        if (res.meta.success === true) {
+          this.$message.success(res.meta.message)
           this.$refs.login.reset()
-          cookie.set('accessToken', res.data.token, 7)
-          this.$router.push({ name: 'home' })
+          cookie.set('accessToken', res.data.user.token, 7)
+          this.$router.push({
+            // name: '/' ,
+            name: 'home' ,
+            params:{
+              accessToken2:res.data.user.token
+            }
+          })
         } else {
-          this.$message.warning(res.message)
+          this.$message.warning(res.meta.message)
         }
       })
     },

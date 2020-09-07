@@ -15,7 +15,7 @@
       </div>
       <ul class="stat-list">
         <a class="item">
-          <div class="title">片刻</div>
+          <div class="title">帮主</div>
           <div class="count">{{user.dynamicCount}}</div>
         </a><a class="item">
           <div class="title">关注</div>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="related-dynamic-block dynamic-block client-card">
-      <header class="title">推荐片刻</header>
+      <header class="title">百多帮</header>
       <ul class="dynamic-list">
         <li class="item"
             v-for="(item,key) in dynamic.recommendDynamicList"

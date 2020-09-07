@@ -28,7 +28,7 @@
                 :key="key">
               <router-link :to="{
                   name: 'dynamics',
-                  params: { dynamicTopicId: item.topic_id }
+                  params: { dynamicTopicId: item.topicId }
                 }"
                            class="nav-link">{{ item.name }}</router-link>
             </li>
@@ -80,7 +80,7 @@ export default {
   mixins: [googleMixin], //混合谷歌分析
   metaInfo () {
     return {
-      title: `片刻-${this.website.meta.website_name}`,
+      title: `百多帮-${this.website.meta.website_name}`,
       htmlAttrs: {
         lang: 'zh'
       },
@@ -107,6 +107,7 @@ export default {
     }
   },
   async asyncData ({ store, route, accessToken = '' }) {
+    console.log('百多帮页面---服务器端渲染')
     // 触发 action 后，会返回 Promise
     const dispatchUrl =
       route.params.dynamicTopicId !== 'following'
@@ -114,6 +115,8 @@ export default {
         : 'dynamic/GET_DYNAMIC_LIST_ME'
     const isSort = ~['newest', 'hot'].indexOf(route.params.dynamicTopicId)
     return Promise.all([
+      // store.dispatch('PERSONAL_INFO', { accessToken }),
+
       store.commit('dynamic/INIT_DYNAMIC_LIST'),
       store.dispatch(dispatchUrl, {
         topic_id: !isSort ? route.params.dynamicTopicId : '',

@@ -13,7 +13,7 @@
            @click="createDynamic"
            class="btn-dynamic">
           <i class="el-icon-chat-line-round"></i>
-          <span class="label-title">发片刻</span>
+          <span class="label-title">百多帮</span>
         </a>
         <a href="javascript:;"
            @click="createBooks"
@@ -26,7 +26,7 @@
 
     <div class="new-dynamic client-card">
       <h3 class="as-title">
-        最新片刻
+        百多帮
       </h3>
       <ul class="dynamic-list">
         <li class="item"
@@ -35,10 +35,11 @@
           <router-link class="avatar"
                        :to="{
               name: 'user',
-              params: { uid: item.user.uid, routeType: 'article' }
+              // params: { uid: item.user.uid, routeType: 'article' }
             }">
             <div class="avatar-img"
-                 :style="`background-image: url(${item.user.avatar});`"></div>
+                 :style="`background-image: url();`"></div>
+<!--                 :style="`background-image: url(${item.user.avatar});`"></div>-->
           </router-link>
           <router-link class="dynamic"
                        :to='{name:"dynamicView",params:{dynamicId:item.id}}'>

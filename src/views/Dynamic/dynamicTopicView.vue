@@ -56,7 +56,7 @@
               <div class="stat-box">
                 <li class="item">
                   <div class="count">{{topicInfo.dynamic_count}}</div>
-                  <div class="title">片刻</div>
+                  <div class="title">百多帮</div>
                 </li>
                 <li class="item">
                   <div class="count">{{topicInfo.attention_count}}</div>

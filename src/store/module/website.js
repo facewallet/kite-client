@@ -48,8 +48,8 @@ const actions = {
     }).then(result => {
       commit('SET_WEBSITE_INFO', result.data.website)
       commit('SET_WEBSITE_CONFIG', result.data.config)
-      commit('SET_NOTICE_LIST', result.data.notice)
-      commit('SET_ADVERTISE_LIST', result.data.advertise)
+      // commit('SET_NOTICE_LIST', result.data.notice)
+      // commit('SET_ADVERTISE_LIST', result.data.advertise)
       commit('SET_OAUTH', result.data.oauths)
       return result
     })

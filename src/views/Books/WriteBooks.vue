@@ -8,8 +8,8 @@
           <div class="col-xs-12 col-sm-4 col-md-3 box-form-group">
             <div class="cover-img">
               <div class="cover-img-view"
-                   v-if="write.cover_img"
-                   :style="`background-image: url(${write.cover_img})`"></div>
+                   v-if="write.coverImg"
+                   :style="`background-image: url(${write.coverImg})`"></div>
               <div class="cover-img-view cover-img-null"
                    v-else>
                 <p>封面图片为空，如果未上传，将采用默认图片</p>
@@ -53,7 +53,7 @@
                 <label class="box-label"
                        for="">是否公开</label>
                 <select class="box-select"
-                        v-model="write.is_public">
+                        v-model="write.isPublic">
                   <option :value="key"
                           v-for="(item,key) in publicTypeList"
                           :key="key">{{item}}</option>
@@ -63,7 +63,7 @@
                 <label class="box-label"
                        for="">开启付费</label>
                 <select class="box-select"
-                        v-model="write.is_free">
+                        v-model="write.isFree">
                   <option :value="key"
                           v-for="(item,key) in isFreeText"
                           :key="key">{{item}}</option>
@@ -72,12 +72,12 @@
             </div>
 
             <div class="row mrg-bm20"
-                 v-if="Number(write.is_free||1)!==isFree.free">
+                 v-if="Number(write.isFree||1)!==isFree.free">
               <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
                 <label class="box-label"
                        for="">支付类型</label>
                 <select class="box-select"
-                        v-model="write.pay_type">
+                        v-model="write.payType">
                   <option :value="key"
                           v-for="(item,key) in payTypeText"
                           :key="key">{{item}}</option>
@@ -85,7 +85,7 @@
               </div>
               <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
                 <label class="box-label"
-                       for="">价格 ￥({{payTypeText[write.pay_type]}})</label>
+                       for="">价格 ￥({{payTypeText[write.payType]}})</label>
                 <input type="text"
                        class="box-input"
                        @keyup="isFloor"
@@ -186,13 +186,13 @@ export default {
   data () {
     return {
       write: {
-        cover_img: '', // 小书封面图片
+        coverImg: '', // 小书封面图片
         title: '', // 小书的标题
         description: '', // 小书的简介
         content: '', // 小书的详情
-        is_public: 1, // 是否公开 1公开 0仅自己可见
-        is_free: 1, // 免费还是付费
-        pay_type: 1,// 支付类型
+        isPublic: 1, // 是否公开 1公开 0仅自己可见
+        isFree: 1, // 免费还是付费
+        payType: 1,// 支付类型
         price: 0, // 价格
       },
       payTypeText, // 支付类型
@@ -264,14 +264,14 @@ export default {
           })
           .then(result => {
             this.write = result.data.books;
-            this.write.is_public = Number(result.data.books.is_public)
-            this.write.content = result.data.books.origin_content;
+            this.write.isPublic = Number(result.data.books.isPublic)
+            this.write.content = result.data.books.originContent;
             this.editInfo = result.data.books
             this.articleTagAll.map(item => {
               if (
-                ~this.editInfo.tag_ids
+                ~this.editInfo.tagIds
                   .split(",")
-                  .indexOf(String(item.tag_id))
+                  .indexOf(String(item.tagId))
               ) {
                 this.currentArticleTagArr.push(item);
               }
@@ -298,7 +298,7 @@ export default {
       this.$store.dispatch('common/UPLOAD_FILE', formData)
         .then(result => {
           if (result.state === 'success') {
-            this.write.cover_img = result.data.fileUrl
+            this.write.coverImg = result.data.fileUrl
             this.$message.success('上传封面成功')
           } else {
             this.$message.warning(result.message)
@@ -384,7 +384,7 @@ export default {
         return false
       }
 
-      if (Number(this.write.is_free || 1) !== this.isFree.free) {
+      if (Number(this.write.isFree || 1) !== this.isFree.free) {
         if (this.write.price < 1) {
           this.$message.warning('小书价格请大于0！');
           return false
@@ -393,19 +393,19 @@ export default {
       var params = {
         title: this.write.title, //小书的标题
         description: this.write.description, //小书的简介
-        cover_img: this.write.cover_img,//小书的封面
+        coverImg: this.write.coverImg,//小书的封面
         content: marked(this.write.content, { breaks: true }) /*主内容*/,
-        origin_content: this.write.content /*源内容*/,
-        is_public: this.write.is_public,
-        is_free: this.write.is_free, // 免费还是付费
-        pay_type: this.write.pay_type,// 支付类型
+        originContent: this.write.content /*源内容*/,
+        isPublic: this.write.isPublic,
+        isFree: this.write.isFree, // 免费还是付费
+        payType: this.write.payType,// 支付类型
         price: this.write.price, // 价格
-        tag_ids: this
+        tagIds: this
           .getObjectValues(this.currentArticleTagArr)
           .join(",")
       };
       this.$route.params.type !== "create" &&
-        (params.books_id = this.$route.query.books_id);
+        (params.booksId = this.$route.query.books_id);
 
       let dispatch_url =
         this.$route.params.type === "create"
@@ -415,14 +415,14 @@ export default {
       this.$store
         .dispatch(dispatch_url, params)
         .then(res => {
-          if (res.state === "success") {
-            this.$message.success(res.message);
+          if (res.meta.success === true) {
+            this.$message.success(res.meta.message);
             this.$router.push({
               name: "user",
               params: { uid: this.personalInfo.user.uid, routeType: "books" }
             });
           } else {
-            this.$message.warning(res.message);
+            this.$message.warning(res.meta.message);
           }
         })
         .catch(function (err) {

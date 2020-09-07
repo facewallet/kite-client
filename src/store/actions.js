@@ -8,7 +8,7 @@ export default {
       method: 'post',
       parameter: parameter
     }).then(result => {
-      commit('SET_PERSONAL_INFO', result.data)
+      if (result.data) commit('SET_PERSONAL_INFO', result.data)
       return result
     })
   }

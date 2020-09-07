@@ -23,7 +23,7 @@
             <div class="book-directory"
                  :class="{'bought':personalInfo.islogin}">
               <router-link class="section"
-                           :to="{name:'BookView', params: { books_id: $route.params.books_id, book_id: bookItem.book_id}}"
+                           :to="{name:'BookView', params: { books_id: $route.params.books_id, book_id: bookItem.bookId}}"
                            v-for="(bookItem,key) in books.booksBookAll"
                            :key="key">
                 <div class="step">
@@ -92,18 +92,21 @@
                 <div class="clearfix">
                   <div class="btn edit-outline"
                        v-if="personalInfo.islogin&&book.bookInfo.uid===personalInfo.user.uid"
-                       @click="writeChapter(book.bookInfo.book_id)">
+                       @click="writeChapter(book.bookInfo.bookId)">
                     编辑当前章节
                   </div>
                 </div>
                 <div class="entry-content article-content"
-                     v-if="book.bookInfo.isLook"
                      v-html="book.bookInfo.content">
                 </div>
-                <div v-else
-                     class="no-read">
-                  <p>当前章节需要购买此小书后，方可继续阅读</p>
-                </div>
+<!--                <div class="entry-content article-content"-->
+<!--                     v-if="book.bookInfo.isLook"-->
+<!--                     v-html="book.bookInfo.content">-->
+<!--                </div>-->
+<!--                <div v-else-->
+<!--                     class="no-read">-->
+<!--                  <p>当前章节需要购买此小书后，方可继续阅读</p>-->
+<!--                </div>-->
                 <div class="book-comments">
                   <div class="comment-box"
                        v-if="!personalInfo.islogin">

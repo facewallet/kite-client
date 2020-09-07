@@ -6,17 +6,17 @@
                    :to="{name:'home'}">推荐</router-link>
       <a class="nav-item"
          v-for="column_item in navItem"
-         :key="column_item.column_id"
-         @click="switchNav({name:'column',params:{en_name:column_item.en_name}})"
-         :class="{'active':currColumnEnName===column_item.en_name}">
+         :key="column_item.columnId"
+         @click="switchNav({name:'column',params:{en_name:column_item.enName}})"
+         :class="{'active':currColumnEnName===column_item.enName}">
         {{column_item.name}}
       </a>
 
-      <a class="nav-item nav-more"
-         href="javascript:;"
-         @click="switchNav({name:'columnAll'})">
-        更多...
-      </a>
+<!--      <a class="nav-item nav-more"-->
+<!--         href="javascript:;"-->
+<!--         @click="switchNav({name:'columnAll'})">-->
+<!--        更多...-->
+<!--      </a>-->
 
     </div>
   </nav>

@@ -18,6 +18,8 @@
               params: { uid: articleItem.user.uid, routeType: 'article' }
             }"
                        class="name">{{ articleItem.user.nickname }}</router-link>
+<!--          params: { uid: articleItem.user.uid, routeType: 'article' }-->
+          <!--                       class="name">{{ articleItem.user.nickname }}</router-link>-->
         </li>
         <li class="item">
           <time>{{ articleItem.create_dt }}</time>

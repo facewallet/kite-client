@@ -42,7 +42,7 @@
         <div class="stat-item item">
           <i class="el-icon-chat-line-square"></i>
           <span class="content">
-            片刻总数
+            百多帮总数
             <em class="count">{{ userInfo.dynamicCount || 0 }}</em>
           </span>
         </div>
@@ -184,6 +184,7 @@ export default {
       })
     },
     getUserInfo () {
+      //todo graphql是做什么的？
       this.$store
         .dispatch('graphql/GET_USER_INFO', { uid: this.article.uid })
         .then(result => {

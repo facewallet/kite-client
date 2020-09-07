@@ -26,9 +26,10 @@ module.exports = {
       pathRewrite: {
         '^/api-client': '/api-client',
         '^/graphql': '/graphql',
-        '^/default': '/default',
+        // '^/default': '/default',
         '^/upload': '/upload'
-      }
+      },
+      logLevel: 'silent'
     },
     assetsRoot: IS_NODE_ENV
       ? ProcessCwd(`${THEME_NAME}`)

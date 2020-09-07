@@ -116,7 +116,7 @@
                 </li>
                 <li>
                   <router-link :to="{ name: 'user', params: { routeType: 'dynamic' } }">
-                    片刻
+                    百多帮
                   </router-link>
                 </li>
                 <li>
@@ -193,7 +193,7 @@ export default {
   },
   async asyncData ({ store, route }) {
     return Promise.all([
-      store.dispatch('user/GET_USER_INFO_ALL', { uid: route.params.uid })
+      // store.dispatch('user/GET_USER_INFO_ALL', { uid: route.params.uid })
     ])
   },
   methods: {

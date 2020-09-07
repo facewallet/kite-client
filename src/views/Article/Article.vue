@@ -22,7 +22,8 @@
                     <router-link :to="{
                         name: 'user',
                         params: { uid: article.user.uid, routeType: 'article' }
-                      }">{{ article.user.nickname }}</router-link>
+                      }">易学习</router-link>
+<!--                      }">{{ article.user.nickname }}</router-link>-->
                   </div>
                   <!-- 文章数据信息 -->
                   <div class="meta">
@@ -35,8 +36,10 @@
                         :class="`type${article.type}`">{{
                       articleTypeText[article.type]
                     }}</em>
+
+<!--                    v-if="personalInfo.user.uid===article.user.uid"-->
                     <router-link class="article-edit"
-                                 v-if="personalInfo.user.uid===article.user.uid"
+
                                  :to="{name:'Write',params:{type:article.aid}}">文章编辑</router-link>
                   </div>
                 </div>
@@ -409,14 +412,14 @@ export default {
         })
     },
     getThumbUserList () {
-      this.$store
-        .dispatch('graphql/GET_THUMB_USER_LIST', {
-          associate_id: this.article.aid,
-          type: modelName.article
-        })
-        .then(result => {
-          this.thumbUserList = result.data ? result.data.thumbUserList.list : []
-        })
+      // this.$store
+      //   .dispatch('graphql/GET_THUMB_USER_LIST', {
+      //     associate_id: this.article.aid,
+      //     type: modelName.article
+      //   })
+      //   .then(result => {
+      //     this.thumbUserList = result.data ? result.data.thumbUserList.list : []
+      //   })
     },
     shareChange (val) {
       // 分享到其他

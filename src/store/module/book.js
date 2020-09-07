@@ -48,11 +48,15 @@ const actions = {
     })
   },
   DELETE_BOOK: ({ commit, dispatch, state }, parameter) => {
+    // eslint-disable-next-line no-unused-vars
+    // let paramet = { 'book_id': '10' }
     // 删除小书章节
     return fetch({
       url: '/book/delete',
+      // method: 'get',
       method: 'post',
       parameter: parameter
+      // parameter: paramet
     })
   },
   // 小书章节评论开始

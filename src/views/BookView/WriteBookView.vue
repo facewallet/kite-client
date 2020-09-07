@@ -23,7 +23,7 @@
             <div class="book-directory"
                  :class="{'bought':personalInfo.islogin}">
               <router-link class="section"
-                           :to="{name:'WriteBookView', params: { books_id: $route.params.books_id, book_id: bookItem.book_id}}"
+                           :to="{name:'WriteBookView', params: { books_id: $route.params.books_id, book_id: bookItem.bookId}}"
                            v-for="(bookItem,key) in books.booksBookAll"
                            :key="key">
                 <div class="step">
@@ -97,7 +97,7 @@
                           @click="resetBook">恢复默认稿</button>
                   <button class="btn btn-look"
                           v-if="$route.params.book_id!=='create'"
-                          @click="lookChapter(editDataInfo.book_id)">查看演示</button>
+                          @click="lookChapter(editDataInfo.bookId)">查看演示</button>
                   <div class="trial-read"
                        v-if="books.booksInfo.is_free===isFree.pay">
                     <label for="">开启试读：</label>
@@ -110,7 +110,7 @@
                   </div>
                   <button class="btn btn-delete"
                           v-if="$route.params.book_id!=='create'"
-                          @click="deleteChapter(editDataInfo.book_id)"><i class="el-icon-delete"></i></button>
+                          @click="deleteChapter(editDataInfo.bookId)"><i class="el-icon-delete"></i></button>
                 </div>
 
                 <div class="content-edit">
@@ -261,16 +261,17 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        console.log('删除book_id',book_id)
         this.$store.dispatch('book/DELETE_BOOK', {
-          book_id
+          book_id:book_id
         })
           .then(result => {
-            if (result.state === 'success') {
-              this.$message.success(result.message, ',前往创建');
+            if (result.meta.success === true) {
+              this.$message.success(result.meta.message, ',前往创建');
               this.$store.dispatch("books/GET_BOOKS_BOOK_ALL", { books_id: this.$route.params.books_id })
               this.writeChapter('create')
             } else {
-              this.$message.warning(result.message);
+              this.$message.warning(result.meta.message);
             }
           })
       }).catch(() => {
@@ -286,7 +287,7 @@ export default {
           .then(result => {
             this.write = result.data.book
             this.editDataInfo = result.data.book
-            this.write.content = result.data.book.origin_content;
+            this.write.content = result.data.book.originContent;
           }).catch(err => {
           });
       } else {
@@ -337,15 +338,15 @@ export default {
         return false
       }
       var params = {
-        books_id: this.$route.params.books_id,
+        booksId: this.$route.params.books_id,
         title: this.write.title, //小书的标题
-        trial_read: this.write.trial_read,
+        trialRead: this.write.trial_read,
         content: marked(this.write.content, { breaks: true }) /*主内容*/,
-        origin_content: this.write.content, /*源内容*/
+        originContent: this.write.content, /*源内容*/
         sort: this.write.sort
       };
       this.$route.params.book_id !== "create" &&
-        (params.book_id = this.$route.params.book_id);
+        (params.bookId = this.$route.params.book_id);
 
       let dispatch_url =
         this.$route.params.book_id === "create"
@@ -355,14 +356,14 @@ export default {
       this.$store
         .dispatch(dispatch_url, params)
         .then(result => {
-          if (result.state === "success") {
-            this.$message.success(result.message)
+          if (result.meta.success === true) {
+            this.$message.success(result.meta.message)
             if (this.$route.params.book_id === "create") {
-              this.writeChapter(result.data.book.book_id)
+              this.writeChapter(result.data.book.bookId)
             }
             this.$store.dispatch("books/GET_BOOKS_BOOK_ALL", { books_id: this.$route.params.books_id })
           } else {
-            this.$message.warning(result.message);
+            this.$message.warning(result.meta.message);
           }
         })
         .catch((err) => {

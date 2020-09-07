@@ -13,7 +13,7 @@
       </router-link>
       <span>
         <!-- {{dynamicTopicItem.attention_count}} 关注 ·  -->
-        {{dynamicTopicItem.dynamicCount}} 片刻
+        {{dynamicTopicItem.dynamicCount}} 百多帮
       </span>
       <!-- <span class="subscribe"
             :class="{'active':isRssDynamicTopic}"

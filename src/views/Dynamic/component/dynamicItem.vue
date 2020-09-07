@@ -114,9 +114,10 @@
       <div class="action-box">
         <div class="like-action action"
              :class="{
-            active: ~user.associateInfo.dynamicThumdId.indexOf(
-              dynamicItem.id || ''
-            )
+              active: true
+            // active: ~user.associateInfo.dynamicThumdId.indexOf(
+            //   dynamicItem.id || ''
+            // )
           }"
              @click="userThumdDynamic">
           <i class="el-icon-thumb"></i>
@@ -247,9 +248,9 @@ export default {
     },
     isAttention (item) {
       // 是否收藏
-      if (
-        this.user.associateInfo.userAttentionId &&
-        ~this.user.associateInfo.userAttentionId.indexOf(item.uid)
+      if (true
+        // this.user.associateInfo.userAttentionId &&
+        // ~this.user.associateInfo.userAttentionId.indexOf(item.uid)
       ) {
         return true
       } else {
@@ -266,7 +267,7 @@ export default {
     },
     deleteDynamic () {
       // 删除动态
-      this.$confirm('此操作将永久删除此条片刻?', '提示', {
+      this.$confirm('此操作将永久删除此条信息?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

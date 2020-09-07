@@ -33,15 +33,16 @@ const isCacheable = (req, res, next) => {
 const proxy = require('http-proxy-middleware')
 
 // 配置静态资源加载中间件
-
-app.use(express.static(path.join(__dirname, '../../static')))
+// 我在这个地方改成../static
+app.use(express.static(path.join(__dirname, '../static')))
+// app.use(express.static(path.join(__dirname, '../../static')))
 
 app.use((req, res, next) => {
   // 接口进行拦截，并进行代理
   if (
     req.url.startsWith('/api-client/v1') ||
     req.url.startsWith('/graphql') ||
-    req.url.startsWith('/default') ||
+    // req.url.startsWith('/default') ||
     req.url.startsWith('/upload')
   ) {
     req.respond = false

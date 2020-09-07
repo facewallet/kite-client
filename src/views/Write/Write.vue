@@ -486,25 +486,25 @@ export default {
       let params = {
         title: this.write.title, //文章的标题
         content: marked(this.write.content, { breaks: true }) /*主内容*/,
-        origin_content: this.write.content /*源内容*/,
+        originContent: this.write.content /*源内容*/,
         source: this.write.source, // 来源 （1原创 2转载）
         type: this.write.type, // 类型 （1:文章;2:日记,3:草稿 ）
-        is_public: this.write.is_public,
-        blog_ids: this.write.blog_ids,
-        tag_ids: this.getObjectValues(this.currentArticleTagArr).join(','),
+        isPublic: this.write.is_public,
+        blogIds: this.write.blog_ids,
+        tagIds: this.getObjectValues(this.currentArticleTagArr).join(','),
         // 2020.3.6加
-        is_attachment,
-        is_free,
-        pay_type,
-        price: Number(price),
-        attachment: attachment
-          ? marked(attachment, { breaks: true })
-          : '' /*主内容*/,
-        origin_attachment: attachment /*源内容*/
+        isAttachment: is_attachment,
+        // is_free,
+        // pay_type,
+        // price: Number(price),
+        // attachment: attachment
+        //   ? marked(attachment, { breaks: true })
+        //   : '' /*主内容*/,
+        // origin_attachment: attachment /*源内容*/
       }
       this.$route.params.type !== 'create' &&
         (params.aid = this.$route.params.type)
-
+      params.uid = this.personalInfo.user.uid;
       let dispatch_url =
         this.$route.params.type === 'create'
           ? 'editor/SAVE_ARTICLE'
@@ -513,14 +513,15 @@ export default {
       this.$store
         .dispatch(dispatch_url, params)
         .then(res => {
-          if (res.state === 'success') {
-            this.$message.success(res.message)
+          if (res.meta.success === true) {
+            console.log('11111', this.personalInfo.user.uid)
+            this.$message.success(res.meta.message)
             this.$router.push({
               name: 'user',
               params: { uid: this.personalInfo.user.uid, routeType: 'article' }
             })
           } else {
-            this.$message.warning(res.message)
+            this.$message.warning(res.meta.message)
           }
         })
         .catch(function (err) {

@@ -6,7 +6,7 @@
           <textarea v-model.trim="content"
                     ref="dynamicContent"
                     class="empty"
-                    placeholder="发布的动态~" />
+                    placeholder="发布需求或服务...~" />
           <div class="current-topic"
                v-if="currentTopic.name">{{currentTopic.name}}</div>
         </div>
@@ -43,7 +43,7 @@
       <div class="toolbar editor-toolbar">
         <div class="tool">
           <div class="emoji picker">
-            
+
             <Popover :visible.sync="faceVisible">
               <face @changeFace="changeFace"
                       v-if="faceVisible" />
@@ -73,16 +73,16 @@
           </div>
           <div class="link-picker picker"
                :class="{'no-click':type===2}">
-              
+
             <Popover :visible.sync="isLinkPopover" class="link-view">
                 <input type="text"
                       v-model="linkContent"
                       class="link-input"
                       placeholder="请输入连接地址">
                 <div style="text-align: right; margin: 0">
-                  <button class="btn btn-default btn-sm" 
+                  <button class="btn btn-default btn-sm"
                             @click="onLink('delete')">取消</button>
-                  <button class="btn btn-primary btn-sm"  
+                  <button class="btn btn-primary btn-sm"
                             @click="onLink('enter')">确定</button>
                 </div>
                 <template>
@@ -180,7 +180,7 @@ export default {
       isLinkPopover: false, // 是否显示link弹窗
       isTopicPopover: false, // 是否显示topic弹窗
       linkContent: '', // 连接内容
-      searchTopicVal: "", // 
+      searchTopicVal: "", //
       searchTopicResultList: [], //搜索结果展示
       currentTopic: {} // 当前使用专题
     }
@@ -314,15 +314,15 @@ export default {
         topic_ids: this.currentTopic.topic_id
       }
       this.$store.dispatch('dynamic/CREATE_DYNAMIC', params).then(result => {
-        if (result.state === 'success') {
-          this.$message.success("动态创建成功");
+        if (result.meta.success === true) {
+          this.$message.success("发布成功");
           this.content = ''
           this.coverImage = ''
           this.currentTopic = ''
           this.linkContent = ''
           this.$emit('changeDynamicWrite')
         } else {
-          this.$message.error(result.message);
+          this.$message.error(result.meta.message);
         }
       })
     },

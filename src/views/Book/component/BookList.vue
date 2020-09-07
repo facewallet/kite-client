@@ -22,10 +22,10 @@
               <span class="read"
                     v-if="Number(books.booksInfo.is_free)===isFree.pay&&Number(bookItem.trial_read)===trialRead.yes">可试读</span>
               <span class="edit"
-                    @click="writeChapter(bookItem.book_id)"
+                    @click="writeChapter(bookItem.bookId)"
                     v-if="personalInfo.islogin&&personalInfo.user.uid===bookItem.uid">编辑章节</span>
               <span class="delete"
-                    @click="deleteChapter(bookItem.book_id)"
+                    @click="deleteChapter(bookItem.bookId)"
                     v-if="personalInfo.islogin&&personalInfo.user.uid===bookItem.uid">删除</span>
             </div>
           </div>
@@ -58,11 +58,12 @@ export default {
   },
   methods: {
     lookChapter (bookItem) {
-      if (bookItem.isBuy || bookItem.trial_read === this.trialRead.yes || bookItem.uid === this.personalInfo.user.uid || Number(this.books.booksInfo.is_free) === this.isFree.free) {
-        this.$router.push({ name: 'BookView', params: { books_id: this.$route.params.books_id, book_id: bookItem.book_id } })
-      } else {
-        this.$message.warning('当前章节需要购买后可阅读');
-      }
+      this.$router.push({ name: 'BookView', params: { books_id: this.$route.params.books_id, book_id: bookItem.bookId } })
+      // if (bookItem.isBuy || bookItem.trial_read === this.trialRead.yes || bookItem.uid === this.personalInfo.user.uid || Number(this.books.booksInfo.is_free) === this.isFree.free) {
+      //   this.$router.push({ name: 'BookView', params: { books_id: this.$route.params.books_id, book_id: bookItem.book_id } })
+      // } else {
+      //   this.$message.warning('当前章节需要购买后可阅读');
+      // }
     },
     writeChapter (book_id) {
       if (!this.personalInfo.islogin) {
@@ -77,15 +78,16 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        console.log('在这个地方删除',book_id)
         this.$store.dispatch('book/DELETE_BOOK', {
           book_id
         })
           .then(result => {
-            if (result.state === 'success') {
-              this.$message.success(result.message);
+            if (result.meta.success === true) {
+              this.$message.success(result.meta.message);
               this.$store.dispatch("books/GET_BOOKS_BOOK_ALL", { books_id: this.$route.params.books_id })
             } else {
-              this.$message.warning(result.message);
+              this.$message.warning(result.meta.message);
             }
           })
       }).catch(() => {

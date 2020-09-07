@@ -5,7 +5,7 @@
 // 或者 生产环境的 product 端口前缀
 
 /* 所有请求必须调用这里 此处的请求对服务端和客户端的请求做了处理 */
-
+import Cookies from 'js-cookie'
 import { requestConfig } from 'request-config'
 import axios from 'axios'
 
@@ -17,7 +17,8 @@ const logRequests =
 const service = axios.create({
   baseURL: api.url,
   headers: {
-    'access-token': api.accessToken || ''
+    // 'access-token': api.accessToken || ''
+    // 'Token': api.accessToken
   }
 })
 
@@ -56,12 +57,32 @@ export function Cachefetch ({ url, method, parameter, moreConfig = {} }) {
 
 // 不缓存请求
 export function fetch ({ url, method, parameter, moreConfig = {} }) {
-  logRequests && console.log(`fetching ${url}...`)
+  logRequests && console.log(`调用的API是： ${url}...`)
+  // let co = Cookies.get('accessToken')
+  // console.log('-------------获取到的cookie:--------------', co)
   return new Promise((resolve, reject) => {
+    // if (api.accessToken || parameter.accessToken) {
+    //   service.defaults.headers.common['Token'] = api.accessToken || parameter.accessToken
+    //   service.defaults.headers.common['Role'] = 'user'
+    // }
+    let co = Cookies.get('accessToken')
+    console.log('-------------获取到的cookie:-------二虎争食-------', co)
+    if (co != null) {
+      console.log('驱虎吞狼之计----------')
+      service.defaults.headers.common['Token'] = co
+      service.defaults.headers.common['Role'] = 'user'
+    } else {
+      service.defaults.headers.common['Role'] = 'guest'
+    }
+    if (parameter.accessRole === 'user' || service.defaults.headers.common['Role'] === 'user') {
+      service.defaults.headers.common['Role'] = 'user'
+    } else {
+      service.defaults.headers.common['Role'] = 'guest'
+    }
     service[method](url, parameter, moreConfig)
       .then(res => {
         const val = res.data
-        logRequests && console.log(`fetched ${url}.`)
+        logRequests && console.log(`调用完成- ${url}.`)
         resolve(val)
       }, reject)
       .catch(reject)
