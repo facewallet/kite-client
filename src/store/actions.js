@@ -8,8 +8,10 @@ export default {
       method: 'post',
       parameter: parameter
     }).then(result => {
-      if (result.data) commit('SET_PERSONAL_INFO', result.data)
-      return result
+      if (result.data && result.data.user) {
+        commit('SET_PERSONAL_INFO', result.data)
+        return result
+      }
     })
   }
 }

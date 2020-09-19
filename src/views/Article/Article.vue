@@ -22,8 +22,7 @@
                     <router-link :to="{
                         name: 'user',
                         params: { uid: article.user.uid, routeType: 'article' }
-                      }">易学习</router-link>
-<!--                      }">{{ article.user.nickname }}</router-link>-->
+                      }">{{ article.user.nickname }}</router-link>
                   </div>
                   <!-- 文章数据信息 -->
                   <div class="meta">
@@ -37,9 +36,9 @@
                       articleTypeText[article.type]
                     }}</em>
 
-<!--                    v-if="personalInfo.user.uid===article.user.uid"-->
-                    <router-link class="article-edit"
 
+                    <router-link class="article-edit"
+                                 v-if="personalInfo.user.uid===article.user.uid"
                                  :to="{name:'Write',params:{type:article.aid}}">文章编辑</router-link>
                   </div>
                 </div>

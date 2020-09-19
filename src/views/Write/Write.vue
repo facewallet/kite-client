@@ -36,7 +36,7 @@
             <label class="box-label"
                    for="">是否公开</label>
             <select class="box-select"
-                    v-model="write.is_public">
+                    v-model="write.isPublic">
               <option :value="key"
                       v-for="(item, key) in publicTypeList"
                       :key="key">{{ item }}</option>
@@ -49,8 +49,8 @@
             <label class="box-label"
                    for="">个人专栏（非必选）</label>
             <select class="box-select"
-                    v-model="write.blog_ids">
-              <option :value="item.blog_id"
+                    v-model="write.blogIds">
+              <option :value="item.blogId"
                       v-for="(item, key) in userArticleBlogAll"
                       :key="key">{{ item.name }}</option>
             </select>
@@ -136,7 +136,7 @@
             <label class="box-label"
                    for="">是否添加附件</label>
             <select class="box-select"
-                    v-model="write.is_attachment">
+                    v-model="write.isAttachment">
               <option :value="item"
                       v-for="item in isOpen"
                       :key="item">{{
@@ -145,11 +145,11 @@
             </select>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6 box-form-group"
-               v-if="Number(write.is_attachment) === isOpen.yes">
+               v-if="Number(write.isAttachment) === isOpen.yes">
             <label class="box-label"
                    for="">开启付费</label>
             <select class="box-select"
-                    v-model="write.is_free">
+                    v-model="write.isFree">
               <option :value="item"
                       v-for="item in isFree"
                       :key="item">{{
@@ -161,8 +161,8 @@
 
         <div class="row mrg-bm20"
              v-if="
-            Number(write.is_free || 1) !== isFree.free &&
-              Number(write.is_attachment) === isOpen.yes
+            Number(write.isFree || 1) !== isFree.free &&
+              Number(write.isAttachment) === isOpen.yes
           ">
           <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
             <label class="box-label"
@@ -185,7 +185,7 @@
         </div>
 
         <div class="row mrg-bm20"
-             v-if="Number(write.is_attachment) === isOpen.yes">
+             v-if="Number(write.isAttachment) === isOpen.yes">
           <div class="col-xs-12 col-sm-12 col-md-12">
             <label class="box-label"
                    for="">附件内容(支持markdown)</label>
@@ -246,11 +246,11 @@ export default {
         title: '', // 文章的标题
         source: '1', // 文章的来源
         content: '', // 文章的内容
-        blog_ids: '', // 文章所属专栏ID
+        blogIds: '', // 文章所属专栏ID
         type: '1', // 文章的类型
-        is_public: 1, // 是否公开 1公开 0仅自己可见
-        is_attachment: 2, // 是否添加附件
-        is_free: 1, // 免费还是付费
+        isPublic: 1, // 是否公开 1公开 0仅自己可见
+        isAttachment: 2, // 是否添加附件
+        isFree: 1, // 免费还是付费
         pay_type: 1, // 支付类型
         price: 0, // 价格
         attachment: ''
@@ -344,23 +344,24 @@ export default {
             aid: this.$route.params.type
           })
           .then(result => {
-            if (result.state === 'success') {
+            if (result.meta.success === true) {
               const articleInfo = result.data.article
-              const articleAnnexInfo = result.data.articleAnnex
-              this.write = { ...articleInfo, ...articleAnnexInfo }
-              this.write.is_public = Number(articleInfo.is_public)
-              this.write.content = articleInfo.origin_content
+              // const articleAnnexInfo = result.data.articleAnnex
+              // this.write = { ...articleInfo, ...articleAnnexInfo }
+              this.write = { ...articleInfo }
+              this.write.isPublic = Number(articleInfo.isPublic)
+              this.write.content = articleInfo.originContent
               this.write.title = articleInfo.title
               this.articleTagAll.map(item => {
                 if (
-                  ~articleInfo.tag_ids.split(',').indexOf(String(item.tag_id))
+                  ~articleInfo.tagIds.split(',').indexOf(String(item.tag_id))
                 ) {
                   this.currentArticleTagArr.push(item)
                 }
               })
               if (result.data.articleAnnex) {
                 // 附件
-                this.write.is_attachment = articleInfo.is_attachment
+                this.write.isAttachment = articleInfo.isAttachment
                 this.write.attachment = articleAnnexInfo.origin_attachment
               }
               this.renderCurrentArticleTag()
@@ -482,19 +483,19 @@ export default {
         })
     },
     saveArticle () {
-      const { is_attachment, is_free, pay_type, price, attachment } = this.write
+      const { isAttachment, isFree, pay_type, price, attachment } = this.write
       let params = {
         title: this.write.title, //文章的标题
         content: marked(this.write.content, { breaks: true }) /*主内容*/,
         originContent: this.write.content /*源内容*/,
         source: this.write.source, // 来源 （1原创 2转载）
         type: this.write.type, // 类型 （1:文章;2:日记,3:草稿 ）
-        isPublic: this.write.is_public,
-        blogIds: this.write.blog_ids,
+        isPublic: this.write.isPublic,
+        blogIds: this.write.blogIds,
         tagIds: this.getObjectValues(this.currentArticleTagArr).join(','),
         // 2020.3.6加
-        isAttachment: is_attachment,
-        // is_free,
+        isAttachment: isAttachment,
+        // isFree,
         // pay_type,
         // price: Number(price),
         // attachment: attachment

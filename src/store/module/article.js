@@ -23,6 +23,14 @@ const actions = {
       return result
     })
   },
+  GET_ARTICLE_USER_INFO ({ commit, dispatch, state }, parameter) {
+    // 获取文章
+    return fetch({
+      url: '/article/user',
+      method: 'get',
+      parameter: { params: parameter }
+    })
+  },
   GET_ARTICLE_ANNEX ({ commit, dispatch, state }, parameter) {
     // 获取文章
     return fetch({

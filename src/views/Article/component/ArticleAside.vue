@@ -91,11 +91,13 @@ export default {
     }
   },
   mounted () {
-    this.getUserInfo() // 获取用户的信息
+    this.getArticleUserInfo() // 获取用户的信息
+    // this.getUserInfo() // 获取用户的信息
   },
   watch: {
     $route (to, from) {
-      this.getUserInfo()
+      this.getArticleUserInfo()
+      // this.getUserInfo()
     }
   },
   computed: {
@@ -187,6 +189,15 @@ export default {
       //todo graphql是做什么的？
       this.$store
         .dispatch('graphql/GET_USER_INFO', { uid: this.article.uid })
+        .then(result => {
+          this.userInfo = result.data.userInfo || {}
+          this.recommendArticle = result.data.recommendArticle || []
+        })
+    },
+    getArticleUserInfo () {
+      //todo graphql是做什么的？
+      this.$store
+        .dispatch('article/GET_ARTICLE_USER_INFO', { uid: this.article.uid })
         .then(result => {
           this.userInfo = result.data.userInfo || {}
           this.recommendArticle = result.data.recommendArticle || []
