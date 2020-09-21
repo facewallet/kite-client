@@ -8,7 +8,8 @@
     "build": "node fileDelete.js && npm run build:client && npm run build:server",
     "build:client": "cross-env NODE_ENV=production  webpack --config tools/webpack.client.config.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:server": "cross-env NODE_ENV=production  webpack --config tools/webpack.server.config.js --color -p --progress --hide-modules --display-optimization-bailout",
-    "start": "cross-env NODE_ENV=development node ./tools/dev.js"
+    "start": "cross-env NODE_ENV=development node ./tools/dev.js",
+    "product": "cross-env NODE_ENV=development node ./tools/devproduct.js"
   },
   "author": "xiaoquan",
   "license": "ISC",
