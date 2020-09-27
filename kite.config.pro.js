@@ -20,7 +20,7 @@ module.exports = {
     port: 8081, // 前台调试端口号
     assetsSubDirectory: 'static',
     proxy: {
-      target: `http://easystudy.vip`, // client ssr
+      target: `https://easystudy.vip`, // client ssr
       changeOrigin: true,
       secure: false,
       pathRewrite: {
