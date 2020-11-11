@@ -1,6 +1,6 @@
 <template>
   <div class="book-comment">
-    <div class="book-content-head">小书评价</div>
+    <div class="book-content-head">教程评价</div>
     <BooksComment />
   </div>
 </template>

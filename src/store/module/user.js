@@ -55,7 +55,8 @@ const actions = {
     return fetch({
       url: '/user/info',
       method: 'get',
-      parameter: { params: parameter }
+      parameter: parameter
+      // parameter: { params: parameter }
     }).then(result => {
       commit('SET_USER_INFO_ALL', result.data)
       return result

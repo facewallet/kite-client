@@ -121,7 +121,7 @@
                 </li>
                 <li>
                   <router-link :to="{ name: 'user', params: { routeType: 'books' } }">
-                    小书
+                    教程
                   </router-link>
                 </li>
                 <li>
@@ -191,9 +191,10 @@ export default {
       userLevel
     }
   },
-  async asyncData ({ store, route }) {
+  async asyncData ({ store, route ,accessToken = '' }) {
     return Promise.all([
-      // store.dispatch('user/GET_USER_INFO_ALL', { uid: route.params.uid })
+      // store.dispatch('user/GET_USER_INFO_ALL', { uid: route.params.uid ,accessToken:accessToken })
+      store.dispatch('user/GET_USER_INFO_ALL', { accessToken })
     ])
   },
   methods: {

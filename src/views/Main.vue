@@ -18,23 +18,9 @@ export default {
     // 触发 action 后，会返回 Promise
     return Promise.all([
       store.dispatch('PERSONAL_INFO', { accessToken }),
-      console.log('suansuan001'),
       store.dispatch('website/GET_WEBSITE_INFO'),
       // store.dispatch('articleTag/GET_ARTICLE_TAG_ALL')
     ])
-    // if(accessToken){
-    //   return Promise.all([
-    //     store.dispatch('PERSONAL_INFO', { accessToken }),
-    //     store.dispatch('website/GET_WEBSITE_INFO'),
-    //     // store.dispatch('articleTag/GET_ARTICLE_TAG_ALL')
-    //   ])
-    // }else {
-    //   return Promise.all([
-    //     // store.dispatch('PERSONAL_INFO', { accessToken }),
-    //     store.dispatch('website/GET_WEBSITE_INFO'),
-    //     // store.dispatch('articleTag/GET_ARTICLE_TAG_ALL')
-    //   ])
-    // }
 
   },
   mounted() {
@@ -49,12 +35,14 @@ export default {
 
 
     if (this.personalInfo.islogin) {
+      console.log('islogin true')
       this.$store.dispatch('user/GET_UNREAD_MESSAGE_COUNT')
       this.$store.dispatch('user/GET_ASSOCIATE_INFO')
       // 用户登录的情况下，当前用户加入socket
       // this.$socket.emit('loginXiaoSuiBi', { uid: this.personalInfo.user.uid })
     }else {
-      this.$store.dispatch('PERSONAL_INFO')
+      console.log('islogin false')
+      // this.$store.dispatch('PERSONAL_INFO')
     }
   },
   computed: {

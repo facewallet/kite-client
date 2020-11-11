@@ -30,7 +30,7 @@
 <!--                      }"-->
 <!--                                 class="dropdown-menu-item">百多帮</router-link>-->
 <!--                    <router-link :to="{ name: 'books', params: { columnEnName: 'all' } }"-->
-<!--                                 class="dropdown-menu-item">小书</router-link>-->
+<!--                                 class="dropdown-menu-item">教程</router-link>-->
 <!--                    <router-link v-if="personalInfo.islogin"-->
 <!--                                 class="dropdown-menu-item"-->
 <!--                                 :to="{-->
@@ -79,7 +79,7 @@
                 <li class="nav-item"
                     :class="{'active':$route.name==='books'}">
                   <router-link :to="{ name: 'books', params: { columnEnName: 'all' } }"
-                               class="nav-link">小书</router-link>
+                               class="nav-link">教程</router-link>
                 </li>
               </ul>
             </li>

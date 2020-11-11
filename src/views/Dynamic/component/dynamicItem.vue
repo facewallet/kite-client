@@ -273,16 +273,17 @@ export default {
         type: 'warning'
       })
         .then(() => {
+          console.log('把裤子提上------------')
           this.$store
             .dispatch('dynamic/DELETE_DYNAMIC', {
               id: this.dynamicItem.id
             })
             .then(result => {
-              if (result.state === 'success') {
-                this.$message.success(result.message)
+              if (result.meta.success === true) {
+                this.$message.success(result.meta.message)
                 this.isShowDynamic = false
               } else {
-                this.$message.error(result.message)
+                this.$message.error(result.meta.message)
               }
             })
         })

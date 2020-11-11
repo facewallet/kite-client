@@ -20,19 +20,19 @@ export const statusListText = {
 export const articleType = {
   // 文章的类型
   article: 1, // 文章
-  discuss: 2, // 讨论提问
-  share: 3, // 分享
-  recourse: 4, // 求助
-  note: 5 // 笔记
+  fight: 2, // 实战
+  publish: 3, // 发布
+  service: 4, // 服务
+  help: 5 // 求助
 }
 
 export const articleTypeText = {
   // 文章的类型
   [articleType.article]: '文章', // 文章
-  [articleType.discuss]: '讨论提问', // 提问
-  [articleType.share]: '分享', // 分享
-  [articleType.recourse]: '求助', // 求助
-  [articleType.note]: '笔记' // 笔记
+  [articleType.fight]: '实战', // 实战
+  [articleType.publish]: '发布', // 分享
+  [articleType.service]: '服务', // 服务
+  [articleType.help]: '求助' // 求助
 }
 
 export const dynamicType = {
@@ -57,10 +57,10 @@ export const modelName = {
   article: 2, // 文章
   article_blog: 3, // 文章个人专栏
   article_comment: 4, // 文章评论
-  book: 5, // 小书章节
-  book_comment: 6, // 小书章节评论
-  books: 7, // 小书
-  books_comment: 8, // 小书评论
+  book: 5, // 教程章节
+  book_comment: 6, // 教程章节评论
+  books: 7, // 教程
+  books_comment: 8, // 教程评论
   dynamic: 9, // 片刻
   dynamic_comment: 10, // 片刻评论
   thumb: 11, // 点赞表
@@ -100,24 +100,24 @@ export const modelInfo = {
   }, // 文章评论
   [modelName.book]: {
     model: 'book',
-    name: '小书章节',
+    name: '教程章节',
     idKey: 'book_id'
-  }, // 小书章节
+  }, // 教程章节
   [modelName.book_comment]: {
     model: 'book_comment',
-    name: '小书章节评论',
+    name: '教程章节评论',
     idKey: 'id'
-  }, // 小书章节评论
+  }, // 教程章节评论
   [modelName.books]: {
     model: 'books',
-    name: '小书',
+    name: '教程',
     idKey: 'books_id'
-  }, // 小书
+  }, // 教程
   [modelName.books_comment]: {
     model: 'books_comment',
-    name: '小书评论',
+    name: '教程评论',
     idKey: 'id'
-  }, // 小书评论
+  }, // 教程评论
   [modelName.dynamic]: {
     model: 'dynamic',
     name: '片刻',
@@ -252,20 +252,20 @@ export const userMessageTypeText = {
     [userMessageAction.reply]: '文章中回复你的'
   },
   [modelName.book]: {
-    [userMessageAction.comment]: '评论了你的小书章节',
-    [userMessageAction.reply]: '在你的小书章节有回复'
+    [userMessageAction.comment]: '评论了你的教程章节',
+    [userMessageAction.reply]: '在你的教程章节有回复'
   },
   [modelName.book_comment]: {
-    [userMessageAction.reply]: '小书章节中回复你的'
+    [userMessageAction.reply]: '教程章节中回复你的'
   },
   [modelName.books]: {
-    [userMessageAction.comment]: '评论了你的小书',
-    [userMessageAction.sell]: '卖出小书',
-    [userMessageAction.reply]: '在你的小书有回复',
-    [userMessageAction.collect]: '收藏小书'
+    [userMessageAction.comment]: '评论了你的教程',
+    [userMessageAction.sell]: '卖出教程',
+    [userMessageAction.reply]: '在你的教程有回复',
+    [userMessageAction.collect]: '收藏教程'
   },
   [modelName.books_comment]: {
-    [userMessageAction.reply]: '小书中回复你的'
+    [userMessageAction.reply]: '教程中回复你的'
   },
   [modelName.dynamic]: {
     [userMessageAction.comment]: '评论了你片刻',
@@ -328,8 +328,8 @@ export const virtualInfo = {
     plusLess: virtualPlusLess.less, // -
     [modelName.article]: 20, // 创建文章：-20
     [modelName.article_blog]: 10, // 创建个人专栏文章：-10
-    [modelName.book]: 5, // 创建小书章节：-5
-    [modelName.books]: 50, // 创建小书：-50
+    [modelName.book]: 5, // 创建教程章节：-5
+    [modelName.books]: 50, // 创建教程：-50
     [modelName.dynamic]: 15 // 创建动态：-15
   },
   [modelAction.like]: {
@@ -346,16 +346,16 @@ export const virtualInfo = {
     // 创建评论-
     plusLess: virtualPlusLess.less, // -
     [modelName.article]: 5, // 创建文章评论：-5
-    [modelName.book]: 5, // 创建小书章节评论：-5
-    [modelName.books]: 5, // 创建小书评论：-5
+    [modelName.book]: 5, // 创建教程章节评论：-5
+    [modelName.books]: 5, // 创建教程评论：-5
     [modelName.dynamic]: 5 // 创建动态评论：-5
   },
   [modelAction.reply]: {
     // 回复评论-
     plusLess: virtualPlusLess.less, // -
     [modelName.article]: 5, // 创建文章回复：-5
-    [modelName.book]: 5, // 创建小书章节回复：-5
-    [modelName.books]: 5, // 创建小书回复：-5
+    [modelName.book]: 5, // 创建教程章节回复：-5
+    [modelName.books]: 5, // 创建教程回复：-5
     [modelName.dynamic]: 5 // 创建动态回复：-5
   },
   [modelAction.thumb]: {
@@ -373,15 +373,15 @@ export const virtualInfo = {
   [modelAction.obtain_comment]: {
     plusLess: virtualPlusLess.plus, // +
     [modelName.article]: 5, // 收到文章评论：+5
-    [modelName.book]: 5, // 收到小书章节评论：+5
-    [modelName.books]: 5, // 收到小书评论：+5
+    [modelName.book]: 5, // 收到教程章节评论：+5
+    [modelName.books]: 5, // 收到教程评论：+5
     [modelName.dynamic]: 5 // 收到动态评论：+5
   },
   [modelAction.obtain_reply]: {
     plusLess: virtualPlusLess.plus, // +
     [modelName.article]: 5, // 收到文章回复：+5
-    [modelName.book]: 5, // 收到小书章节回复：+5
-    [modelName.books]: 5, // 收到小书回复：+5
+    [modelName.book]: 5, // 收到教程章节回复：+5
+    [modelName.books]: 5, // 收到教程回复：+5
     [modelName.dynamic]: 5 // 收到动态回复：+5
   },
   [modelAction.obtain_thumb]: {
@@ -428,21 +428,27 @@ export const productTypeInfo = {
 
   [modelName.books]: {
     model: 'books',
-    name: '小书',
+    name: '教程',
     isUse: true,
     idKey: 'books_id'
-  } // 小书
+  } // 教程
 }
 
 export const isFree = {
-  free: 1, // 免费
-  pay: 2 // 付费
+  free: 1
 }
+// export const isFree = {
+//   free: 1, // 免费
+//   pay: 2 // 付费
+// }
 
 export const isFreeText = {
-  [isFree.free]: '免费', // 免费
-  [isFree.pay]: '付费' // 付费
+  [isFree.free]: '免费'
 }
+// export const isFreeText = {
+//   [isFree.free]: '免费', // 免费
+//   [isFree.pay]: '付费' // 付费
+// }
 
 export const trialRead = {
   // 是否可以试读

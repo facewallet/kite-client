@@ -193,13 +193,20 @@ export default {
   created () {
     this.$store.dispatch("dynamic/GET_DYNAMIC_TOPIC_LIST").then(result => {
       this.searchTopicResultList = result.data.list
-      let topic_id = this.$route.params.dynamicTopicId
+      const topic_id = this.$route.params.dynamicTopicId
       if (topic_id) {
         this.initTopic(topic_id)
       }
     })
   },
   watch: {
+    $route(to, from){
+      console.log('在这个地方调用---222---',this.$route.params.dynamicTopicId)
+      const currentTopicId = this.$route.params.dynamicTopicId
+      if (currentTopicId) {
+        this.initTopic(currentTopicId)
+      }
+    },
     coverImage (val) { // 判断当前是否是在传封面图
       if (val) {
         this.type = 2
@@ -267,10 +274,11 @@ export default {
     },
     initTopic (val) { // 初始化当前专题
       this.dynamic.dynamicTopicList.map((item) => {
-        if (item.topic_id === val) {
+        if (item.topicId === val) {
           this.currentTopic = item
         }
       })
+      if(this.currentTopic.topicId != val) this.currentTopic = {}
     },
     onTopic (val) { // 选择专题
       this.currentTopic = val
@@ -311,7 +319,9 @@ export default {
         content: this.trim(this.content) /* 主内容 */,
         attach, // 摘要
         type: this.type, // 类型 （1:默认动态;2:图片,3:连接，4：视频  ）
-        topic_ids: this.currentTopic.topic_id
+        topicIds: this.currentTopic.topicId,
+        topicName: this.currentTopic.name
+
       }
       this.$store.dispatch('dynamic/CREATE_DYNAMIC', params).then(result => {
         if (result.meta.success === true) {

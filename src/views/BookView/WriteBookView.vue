@@ -14,7 +14,7 @@
               <router-link :to="{name:'home'}"
                            class="navbar-brand logo-text"
                            v-else>{{website.meta.website_name}}</router-link>
-              <div class="label">小书</div>
+              <div class="label">教程</div>
             </div>
             <div class="book-summary-btn">
               <div class="section-buy"
@@ -91,7 +91,7 @@
               <div class="section-content">
                 <div class="operating clearfix">
                   <button class="btn btn-save"
-                          @click="saveBook">{{$route.params.book_id==='create'?'新建小书章节':'更新当前章节'}}</button>
+                          @click="saveBook">{{$route.params.book_id==='create'?'新建教程章节':'更新当前章节'}}</button>
                   <button class="btn btn-cancel"
                           v-if="$route.params.book_id!=='create'"
                           @click="resetBook">恢复默认稿</button>
@@ -156,12 +156,12 @@ export default {
   minixs: [googleMixin], //混合谷歌分析
   metaInfo () {
     return {
-      title: this.$route.params.book_id === "create" ? '创建小书章节' : `编辑-${this.editDataInfo.title || ''}` || "",
+      title: this.$route.params.book_id === "create" ? '创建教程章节' : `编辑-${this.editDataInfo.title || ''}` || "",
       meta: [
         {
           // set meta
           name: "description",
-          content: this.$route.params.book_id === "create" ? '创建小书章节' : `编辑-${this.editDataInfo.title || ''}` || "",
+          content: this.$route.params.book_id === "create" ? '创建教程章节' : `编辑-${this.editDataInfo.title || ''}` || "",
         }
       ],
       htmlAttrs: {
@@ -224,7 +224,7 @@ export default {
         save: false, // 保存（触发events中的save事件）
         /* 1.4.2 */
       },
-      editDataInfo: {} // 修改小书的信息
+      editDataInfo: {} // 修改教程的信息
     };
   },
   watch: {
@@ -256,7 +256,7 @@ export default {
       });
     },
     deleteChapter (book_id) {
-      this.$confirm('此操作将永久删除该小书章节, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该教程章节, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -300,13 +300,13 @@ export default {
     },
     imageFilter (file) {
       if (file.size > 1 * 1024 * 1024) {
-        this.$message.success("上传小书图片应该小于1M");
+        this.$message.success("上传教程图片应该小于1M");
         return false
       } else {
         return true
       }
     },
-    lookChapter (book_id) { // 查看小书章节
+    lookChapter (book_id) { // 查看教程章节
       this.$router.push({ name: 'BookView', params: { books_id: this.$route.params.books_id, book_id: book_id } })
     },
     $imgAdd (pos, $file) {
@@ -325,21 +325,21 @@ export default {
           }
         });
     },
-    writeChapter (book_id) { // 编辑或新增小书章节
+    writeChapter (book_id) { // 编辑或新增教程章节
       this.$router.push({ name: 'WriteBookView', params: { books_id: this.$route.params.books_id, book_id: book_id } })
     },
     saveBook () {
       if (!this.write.title) {
-        this.$message.warning('小书章节标题不能为空！');
+        this.$message.warning('教程章节标题不能为空！');
         return false
       }
       if (!this.write.content) {
-        this.$message.warning('小书章节内容不能为空！');
+        this.$message.warning('教程章节内容不能为空！');
         return false
       }
       var params = {
         booksId: this.$route.params.books_id,
-        title: this.write.title, //小书的标题
+        title: this.write.title, //教程的标题
         trialRead: this.write.trial_read,
         content: marked(this.write.content, { breaks: true }) /*主内容*/,
         originContent: this.write.content, /*源内容*/

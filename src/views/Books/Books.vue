@@ -16,9 +16,9 @@
                     {{column_item.name}}
                   </router-link>
                 </li>
-                <li class="nav-item more">
-                  <router-link :to="{name:'columnAll'}"> 更多...</router-link>
-                </li>
+<!--                <li class="nav-item more">-->
+<!--                  <router-link :to="{name:'columnAll'}"> 更多...</router-link>-->
+<!--                </li>-->
               </ul>
             </nav>
 
@@ -47,7 +47,7 @@
                 <router-link class="nav-item"
                              :to="{name:'books',query:sortMenu('7day')}">近7天</router-link>
                 <span class="nav-item add-book"
-                      @click="createBook">新增小书</span>
+                      @click="createBook">新增教程</span>
               </nav>
             </div>
 
@@ -142,12 +142,12 @@ export default {
   mixins: [googleMixin], //混合谷歌分析
   metaInfo () {
     return {
-      title: `小书-${this.website.meta.website_name}`,
+      title: `教程-${this.website.meta.website_name}`,
       meta: [
         {
           // set meta
           name: "description",
-          content: `小书-${this.website.meta.website_name}`
+          content: `教程-${this.website.meta.website_name}`
         }
       ],
       htmlAttrs: {
@@ -166,7 +166,7 @@ export default {
     };
   },
   asyncData ({ store, route }) {
-    console.log('小书页面---服务器端渲染')
+    console.log('教程页面---服务器端渲染')
 
     // 触发 action 后，会返回 Promise
     return Promise.all([
@@ -205,7 +205,7 @@ export default {
         this.childNavItem = {}
       }
     },
-    collectBooks (books_id) { // 用户收藏小书
+    collectBooks (books_id) { // 用户收藏教程
       this.$store.dispatch('common/SET_COLLECT', {
         associate_id: books_id,
         type: modelName.books

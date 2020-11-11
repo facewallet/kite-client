@@ -131,70 +131,70 @@
           </div>
         </div>
 
-        <div class="row mrg-bm20">
-          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
-            <label class="box-label"
-                   for="">是否添加附件</label>
-            <select class="box-select"
-                    v-model="write.isAttachment">
-              <option :value="item"
-                      v-for="item in isOpen"
-                      :key="item">{{
-                isOpenInfo[item]
-              }}</option>
-            </select>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group"
-               v-if="Number(write.isAttachment) === isOpen.yes">
-            <label class="box-label"
-                   for="">开启付费</label>
-            <select class="box-select"
-                    v-model="write.isFree">
-              <option :value="item"
-                      v-for="item in isFree"
-                      :key="item">{{
-                isFreeText[item]
-              }}</option>
-            </select>
-          </div>
-        </div>
+<!--        <div class="row mrg-bm20">-->
+<!--          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">-->
+<!--            <label class="box-label"-->
+<!--                   for="">是否添加附件</label>-->
+<!--            <select class="box-select"-->
+<!--                    v-model="write.isAttachment">-->
+<!--              <option :value="item"-->
+<!--                      v-for="item in isOpen"-->
+<!--                      :key="item">{{-->
+<!--                isOpenInfo[item]-->
+<!--              }}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group"-->
+<!--               v-if="Number(write.isAttachment) === isOpen.yes">-->
+<!--            <label class="box-label"-->
+<!--                   for="">开启付费</label>-->
+<!--            <select class="box-select"-->
+<!--                    v-model="write.isFree">-->
+<!--              <option :value="item"-->
+<!--                      v-for="item in isFree"-->
+<!--                      :key="item">{{-->
+<!--                isFreeText[item]-->
+<!--              }}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="row mrg-bm20"
-             v-if="
-            Number(write.isFree || 1) !== isFree.free &&
-              Number(write.isAttachment) === isOpen.yes
-          ">
-          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
-            <label class="box-label"
-                   for="">支付类型</label>
-            <select class="box-select"
-                    v-model="write.pay_type">
-              <option :value="key"
-                      v-for="(item, key) in payTypeText"
-                      :key="key">{{ item }}</option>
-            </select>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
-            <label class="box-label"
-                   for="">价格 ￥({{ payTypeText[write.pay_type] }})</label>
-            <input type="text"
-                   class="box-input"
-                   @keyup="isFloor"
-                   v-model="write.price" />
-          </div>
-        </div>
+<!--        <div class="row mrg-bm20"-->
+<!--             v-if="-->
+<!--            Number(write.isFree || 1) !== isFree.free &&-->
+<!--              Number(write.isAttachment) === isOpen.yes-->
+<!--          ">-->
+<!--          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">-->
+<!--            <label class="box-label"-->
+<!--                   for="">支付类型</label>-->
+<!--            <select class="box-select"-->
+<!--                    v-model="write.pay_type">-->
+<!--              <option :value="key"-->
+<!--                      v-for="(item, key) in payTypeText"-->
+<!--                      :key="key">{{ item }}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--          <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">-->
+<!--            <label class="box-label"-->
+<!--                   for="">价格 ￥({{ payTypeText[write.pay_type] }})</label>-->
+<!--            <input type="text"-->
+<!--                   class="box-input"-->
+<!--                   @keyup="isFloor"-->
+<!--                   v-model="write.price" />-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <div class="row mrg-bm20"
-             v-if="Number(write.isAttachment) === isOpen.yes">
-          <div class="col-xs-12 col-sm-12 col-md-12">
-            <label class="box-label"
-                   for="">附件内容(支持markdown)</label>
-            <textarea class="box-textarea"
-                      cols="30"
-                      v-model="write.attachment"
-                      rows="10"></textarea>
-          </div>
-        </div>
+<!--        <div class="row mrg-bm20"-->
+<!--             v-if="Number(write.isAttachment) === isOpen.yes">-->
+<!--          <div class="col-xs-12 col-sm-12 col-md-12">-->
+<!--            <label class="box-label"-->
+<!--                   for="">附件内容(支持markdown)</label>-->
+<!--            <textarea class="box-textarea"-->
+<!--                      cols="30"-->
+<!--                      v-model="write.attachment"-->
+<!--                      rows="10"></textarea>-->
+<!--          </div>-->
+<!--        </div>-->
 
         <div class="write-footer clearfix">
           <button class="send-article"
@@ -237,7 +237,9 @@ export default {
     // 触发 action 后，会返回 Promise
     return Promise.all([
       store.dispatch('PERSONAL_INFO', { accessToken }),
-      store.dispatch('articleTag/GET_ARTICLE_TAG_ALL')
+      // store.dispatch('articleTag/GET_ARTICLE_TAG_ALL'),
+      store.dispatch("articleColumn/GET_ARTICLE_COLUMN_ALL")
+
     ])
   },
   data () {
@@ -354,7 +356,8 @@ export default {
               this.write.title = articleInfo.title
               this.articleTagAll.map(item => {
                 if (
-                  ~articleInfo.tagIds.split(',').indexOf(String(item.tag_id))
+                  ~articleInfo.tagIds.split(',').indexOf(String(item.columnId))
+                  // ~articleInfo.tagIds.split(',').indexOf(String(item.tagId))
                 ) {
                   this.currentArticleTagArr.push(item)
                 }
@@ -437,17 +440,18 @@ export default {
     getObjectValues (object) {
       var values = []
       for (var property in object) {
-        values.push(object[property].tag_id)
+        values.push(object[property].columnId)
+        // values.push(object[property].tagId)
       }
       return values
     },
     saveCreateBlog () {
       this.$store
         .dispatch('editor/CREATE_ARTICLE_BLOG', {
-          blog_name: this.blog.name
+          name: this.blog.name
         })
         .then(res => {
-          if (res.state === 'success') {
+          if (res.meta.success === true){
             this.$message.success('创建文章专题成功')
             this.blog.name = ''
             this.getUserArticleBlogAll()
@@ -536,7 +540,8 @@ export default {
   },
   computed: {
     articleTagAll () {
-      return this.$store.state.articleTag.article_tag_all
+      return this.$store.state.articleColumn.homeColumn
+      // return this.$store.state.articleTag.article_tag_all
     },
     personalInfo () {
       // 登录后的个人信息

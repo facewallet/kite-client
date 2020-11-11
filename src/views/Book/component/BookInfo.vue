@@ -1,6 +1,6 @@
 <template>
   <div class="book-info">
-    <div class="book-content-head">小书介绍</div>
+    <div class="book-content-head">教程介绍</div>
     <div class="article-content box-article-view"
          v-html="books.booksInfo.content">
     </div>

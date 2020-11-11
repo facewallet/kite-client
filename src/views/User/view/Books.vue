@@ -3,7 +3,7 @@
        v-loading="isLoading">
 
     <button class="btn create-book"
-            @click="createBooks">创建小书</button>
+            @click="createBooks">创建教程</button>
 
     <div class="user-books-view row">
       <div class="col-xs-12 col-sm-6 col-md-6"
@@ -31,8 +31,8 @@
             </Dropdown>
           </div>
           <div class="library-item__thumb">
-            <router-link :to="{name:'book',params:{books_id:booksItem.books_id}}">
-              <img v-lazy="booksItem.cover_img"
+            <router-link :to="{name:'book',params:{books_id:booksItem.booksId}}">
+              <img v-lazy="booksItem.coverImg"
                    class="img-full"
                    lazy="loaded">
             </router-link>
@@ -40,19 +40,19 @@
           <div class="library-item__body">
             <div class="library-item__title">
               <router-link class="link-dark-major"
-                           :to="{name:'book',params:{books_id:booksItem.books_id}}">
+                           :to="{name:'book',params:{books_id:booksItem.booksId}}">
                 {{booksItem.title}}
                 <span class="free"
-                      :class="Number(booksItem.is_free)===isFree.free?'yes':''">{{isFreeText[booksItem.is_free]}}</span>
+                      :class="Number(booksItem.isFree)===isFree.free?'yes':''">{{isFreeText[booksItem.isFree]}}</span>
               </router-link>
             </div>
             <div class="library-item__info">
-              <span><i class="el-icon-view"></i> {{booksItem.read_count||0}}
+              <span><i class="el-icon-view"></i> {{booksItem.readCount||0}}
               </span><span style="margin-left: 8px;">
                 <i class="el-icon-notebook-2"></i> {{booksItem.bookCount||0}}
               </span>
               <span class="public-tag"
-                    v-if="!booksItem.is_public">未公开</span>
+                    v-if="!booksItem.isPublic">未公开</span>
             </div>
             <div class="library-item-tag">
               <template v-if="booksItem.tag">
@@ -102,7 +102,7 @@ export default {
       isFree,
       isFreeText,
       books: {
-        // 个人中心小书列表
+        // 个人中心教程列表
         count: 0,
         list: [],
         page: 1,
@@ -122,7 +122,9 @@ export default {
         page: this.books.page || 1,
         pageSize: this.books.pageSize || 10,
       }).then(result => {
-        this.books = result.data
+        console.log('返回的', result)
+        this.books.list = result.data.list
+        // this.books = result.data
         this.isLoading = false
       }).catch(() => {
         this.isLoading = false
@@ -139,7 +141,7 @@ export default {
       if (val.type === 'edit') {
         this.$router.push({ name: 'booksWrite', params: { type: 'update' }, query: { books_id: val.booksItem.books_id } })
       } else if (val.type === 'delete') {
-        this.$confirm('此操作将永久删除该小书, 是否继续?', '提示', {
+        this.$confirm('此操作将永久删除该教程, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

@@ -139,7 +139,7 @@ export default {
     next();
   },
   created () {
-    // this.$store.dispatch("home/GET_POPULAR_ARTICLE_TAG"); // 获取热门文章标签
+    this.$store.dispatch("home/GET_POPULAR_ARTICLE_TAG"); // 获取热门文章标签
   },
   methods: {
     navTap (val) {

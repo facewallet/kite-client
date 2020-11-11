@@ -12,7 +12,7 @@
         <h4>
           <router-link class="user-info"
                        :to="{name:'user',params:{uid:commentItem.user.uid,routeType:'article'}}">{{commentItem.user.nickname}}</router-link>
-          <span>小书评价星级 {{commentItem.star}} 星</span>
+          <span>教程评价星级 {{commentItem.star}} 星</span>
         </h4>
         <div class="comment-text"
              v-if="Number(commentItem.status)===statusList.reviewSuccess||Number(commentItem.status)===statusList.freeReview"

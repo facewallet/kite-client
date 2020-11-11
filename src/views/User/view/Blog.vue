@@ -15,7 +15,7 @@
             <router-link class="article-blog-icon"
                          :to="{
                 name: 'articleBlog',
-                params: { blogId: articleBlogItem.blog_id }
+                params: { blogId: articleBlogItem.blogId }
               }">
               <img class="article-blog-icon-img"
                    v-lazy="articleBlogItem.icon"
@@ -26,7 +26,7 @@
               <router-link class="name"
                            :to="{
                   name: 'articleBlog',
-                  params: { blogId: articleBlogItem.blog_id }
+                  params: { blogId: articleBlogItem.blogId }
                 }">{{ articleBlogItem.name }}</router-link>
 
               <div class="time-view">
@@ -97,7 +97,7 @@
               </li>
               <li class="item item-icon read-count">
                 <i class="el-icon-view"></i>
-                <span v-text="articleBlogItem.read_count || 0"></span>
+                <span v-text="articleBlogItem.readCount || 0"></span>
               </li>
               <li class="item item-icon like-article">
                 <i class="el-icon-star-off"></i>
@@ -108,7 +108,7 @@
                   ~[2, 4].indexOf(articleBlogItem.status) &&
                     personalInfo.islogin
                 "
-                  @click="setLikeArticleBlog(articleBlogItem.blog_id)">
+                  @click="setLikeArticleBlog(articleBlogItem.blogId)">
                 <span :class="{ active: isLike(articleBlogItem).status }">{{
                   isLike(articleBlogItem).text
                 }}</span>
@@ -248,7 +248,8 @@ export default {
           pageSize: this.articleBlog.pageSize || 10
         })
         .then(result => {
-          this.articleBlog = result.data
+          console.log('关羽', result.data)
+          this.articleBlog.list = result.data.list
           this.isLoading = false
         })
         .catch(() => {
@@ -282,11 +283,11 @@ export default {
     },
     setBlogTime (item) {
       // 设置blog的时间
-      if (item.create_date === item.update_date) {
-        return `创建于：${item.create_dt}`
-      } else {
-        return `更新于：${item.update_dt}`
-      }
+      // if (item.createDate === item.updateDate) {
+      //   return `创建于：${item.createDate}`
+      // } else {
+      //   return `更新于：${item.updateDt}`
+      // }
     },
     setIsEditCreateArticleBlog () {
       let url = ''

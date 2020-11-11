@@ -2,8 +2,8 @@
   <div class="book-list">
     <router-link class="btn create-book"
                  v-if="personalInfo.islogin&&personalInfo.user.uid===books.booksInfo.user.uid"
-                 :to="{name:'WriteBookView',params: { books_id: $route.params.books_id, book_id: 'create' }}">新增小书章节</router-link>
-    <div class="book-content-head">小书章节</div>
+                 :to="{name:'WriteBookView',params: { books_id: $route.params.books_id, book_id: 'create' }}">新增教程章节</router-link>
+    <div class="book-content-head">教程章节</div>
     <div class="book-directory section-of-info"
          v-if="books.booksBookAll.length">
       <div class="section"
@@ -34,7 +34,7 @@
     </div>
     <div v-else
          class="book-directory-null">
-      当前小书章节为空，请等待作者新增章节......
+      当前教程章节为空，请等待作者新增章节......
     </div>
   </div>
 </template>
@@ -67,13 +67,13 @@ export default {
     },
     writeChapter (book_id) {
       if (!this.personalInfo.islogin) {
-        this.$message.warning('编辑小书需要登录');
+        this.$message.warning('编辑教程需要登录');
         return false
       }
       this.$router.push({ name: 'WriteBookView', params: { books_id: this.$route.params.books_id, book_id: book_id } })
     },
     deleteChapter (book_id) {
-      this.$confirm('此操作将永久删除该小书章节, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该教程章节, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

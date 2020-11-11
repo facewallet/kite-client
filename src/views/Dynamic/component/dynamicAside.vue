@@ -27,24 +27,24 @@
       </ul>
     </div>
 
-    <div class="related-dynamic-block dynamic-block client-card">
-      <header class="title">百多帮</header>
-      <ul class="dynamic-list">
-        <li class="item"
-            v-for="(item,key) in dynamic.recommendDynamicList"
-            :key="key">
-          <router-link class="dynamic"
-                       :to='{name:"dynamicView",params:{dynamicId:item.id}}'>
-            <div class="content-box">
-              <div class="content"
-                   v-html="contentRender(item.content)"></div>
-              <div class="stat item"><span>{{item.thumb_count}} 赞 · </span><span>{{item.comment_count}} 评论</span></div>
-            </div>
+<!--    <div class="related-dynamic-block dynamic-block client-card">-->
+<!--      <header class="title">百多帮</header>-->
+<!--      <ul class="dynamic-list">-->
+<!--        <li class="item"-->
+<!--            v-for="(item,key) in dynamic.recommendDynamicList"-->
+<!--            :key="key">-->
+<!--          <router-link class="dynamic"-->
+<!--                       :to='{name:"dynamicView",params:{dynamicId:item.id}}'>-->
+<!--            <div class="content-box">-->
+<!--              <div class="content"-->
+<!--                   v-html="contentRender(item.content)"></div>-->
+<!--              <div class="stat item"><span>{{item.thumb_count}} 赞 · </span><span>{{item.comment_count}} 评论</span></div>-->
+<!--            </div>-->
 
-          </router-link>
-        </li>
-      </ul>
-    </div>
+<!--          </router-link>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
 
     <!-- <div class="topic-sidebar shadow topics client-card"
          v-if="personalInfo.islogin">

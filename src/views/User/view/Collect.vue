@@ -88,7 +88,7 @@ export default {
         },
         {
           type: modelName.books,
-          text: '小书'
+          text: '教程'
         }
       ],
       modelName,

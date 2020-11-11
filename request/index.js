@@ -65,11 +65,14 @@ export function fetch ({ url, method, parameter, moreConfig = {} }) {
     //   service.defaults.headers.common['Token'] = api.accessToken || parameter.accessToken
     //   service.defaults.headers.common['Role'] = 'user'
     // }
-    let co = Cookies.get('accessToken')
+    const co = Cookies.get('accessToken')
+    const token = co || parameter.accessToken
     console.log('-------------获取到的cookie:-------二虎争食-------', co)
-    if (co != null) {
+    console.log('-------------获取到的parameter.accessToken:-------二虎争食-------', parameter)
+    console.log('-------------获取到的token:-------二虎争食-------', token)
+    if (token) {
       console.log('驱虎吞狼之计----------')
-      service.defaults.headers.common['Token'] = co
+      service.defaults.headers.common['Token'] = token
       service.defaults.headers.common['Role'] = 'user'
     } else {
       service.defaults.headers.common['Role'] = 'guest'

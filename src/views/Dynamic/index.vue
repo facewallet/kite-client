@@ -32,12 +32,12 @@
                 }"
                            class="nav-link">{{ item.name }}</router-link>
             </li>
-            <li class="nav-item more">
-              <router-link :to="{ name: 'dynamicTopic' }"
-                           class="more-view">
-                <span>更多</span>
-              </router-link>
-            </li>
+<!--            <li class="nav-item more">-->
+<!--              <router-link :to="{ name: 'dynamicTopic' }"-->
+<!--                           class="more-view">-->
+<!--                <span>更多</span>-->
+<!--              </router-link>-->
+<!--            </li>-->
           </ul>
         </nav>
       </div>
@@ -173,6 +173,11 @@ export default {
   },
   computed: {
     ...mapState(['home', 'dynamic', 'website', 'personalInfo'])
+  },
+  watch: {
+    $route(to, from){
+      console.log('在这个地方调用------')
+    }
   },
   components: {
     ScrollLoading,

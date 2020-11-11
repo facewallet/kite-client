@@ -25,7 +25,7 @@
               <input class="box-input title"
                      v-model="write.title"
                      type="text"
-                     placeholder="请输入小书标题">
+                     placeholder="请输入教程书名">
             </div>
             <div class="box-form-group">
               <label class="box-label"
@@ -33,7 +33,7 @@
               <input class="box-input title"
                      v-model="write.description"
                      type="text"
-                     placeholder="请输入小书标题"></input>
+                     placeholder="请输入教程简介"></input>
             </div>
 
             <div class="write mrg-bm20 box-form-group">
@@ -61,7 +61,7 @@
               </div>
               <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
                 <label class="box-label"
-                       for="">开启付费</label>
+                       for="">是否付费</label>
                 <select class="box-select"
                         v-model="write.isFree">
                   <option :value="key"
@@ -95,7 +95,7 @@
 
             <div class="tag-warp">
               <p class="common-title">
-                小书标签
+                教程标签
                 <span>
                   <em id="chosen_tag_num">{{currentArticleTagArr.length}}</em>/3
                 </span>
@@ -134,7 +134,7 @@
 
             <div class="write-footer clearfix">
               <button class="send-article"
-                      @click="saveArticle">发布小书</button>
+                      @click="saveArticle">发布教程</button>
             </div>
 
           </div>
@@ -164,7 +164,7 @@ export default {
   minixs: [googleMixin], //混合谷歌分析
   metaInfo () {
     return {
-      title: "小书编辑",
+      title: "教程编辑",
       htmlAttrs: {
         lang: "zh"
       },
@@ -180,16 +180,17 @@ export default {
     // 触发 action 后，会返回 Promise
     return Promise.all([
       store.dispatch("PERSONAL_INFO", { accessToken }),
-      store.dispatch("articleTag/GET_ARTICLE_TAG_ALL")
+      // store.dispatch("articleTag/GET_ARTICLE_TAG_ALL")
+      store.dispatch("articleColumn/GET_ARTICLE_COLUMN_ALL")
     ]);
   },
   data () {
     return {
       write: {
-        coverImg: '', // 小书封面图片
-        title: '', // 小书的标题
-        description: '', // 小书的简介
-        content: '', // 小书的详情
+        coverImg: '', // 教程封面图片
+        title: '', // 教程的标题
+        description: '', // 教程的简介
+        content: '', // 教程的详情
         isPublic: 1, // 是否公开 1公开 0仅自己可见
         isFree: 1, // 免费还是付费
         payType: 1,// 支付类型
@@ -198,11 +199,11 @@ export default {
       payTypeText, // 支付类型
       isFree, // 免费还是付费值
       isFreeText, // 免费还是付费
-      publicTypeList: ['仅自己可见', '公开'], // 小书类型列表
+      publicTypeList: ['仅自己可见', '公开'], // 教程类型列表
       searchArticleTag: "",
-      currentArticleTagArr: [], // 用户选中的小书标签
+      currentArticleTagArr: [], // 用户选中的教程标签
       isSearchResultShow: false, // 搜索结果显示
-      searchShowArticleTagAll: [], // 搜索栏内呈现的小书标题
+      searchShowArticleTagAll: [], // 搜索栏内呈现的教程标题
       searchBoxWidth: "100%",
       toolbars: {
         bold: true, // 粗体
@@ -225,7 +226,7 @@ export default {
         save: false, // 保存（触发events中的save事件）
         /* 1.4.2 */
       },
-      editInfo: {} // 修改小书的信息
+      editInfo: {} // 修改教程的信息
     }
   },
   created () {
@@ -271,7 +272,8 @@ export default {
               if (
                 ~this.editInfo.tagIds
                   .split(",")
-                  .indexOf(String(item.tagId))
+                  .indexOf(String(item.columnId))
+                  // .indexOf(String(item.tagId))
               ) {
                 this.currentArticleTagArr.push(item);
               }
@@ -345,14 +347,15 @@ export default {
     getObjectValues (object) {
       var values = [];
       for (var property in object) {
-        values.push(object[property].tag_id);
+        values.push(object[property].columnId);
+        // values.push(object[property].tag_id);
       }
       return values;
     },
 
     imageFilter (file) {
       if (file.size > 1 * 1024 * 1024) {
-        this.$message.success("上传小书图片应该小于1M");
+        this.$message.success("上传教程图片应该小于1M");
         return false
       } else {
         return true
@@ -366,7 +369,7 @@ export default {
         .dispatch("common/UPLOAD_FILE", formData)
         .then(res => {
           if (res.state === "success") {
-            this.$message.success("上传小书图片成功");
+            this.$message.success("上传教程图片成功");
             this.$refs.mavonEditor.$img2Url(pos, res.data.fileUrl);
           } else {
             this.$message.warning(res.message);
@@ -376,24 +379,24 @@ export default {
     },
     saveArticle () {
       if (!this.write.title) {
-        this.$message.warning('小书标题不能为空！');
+        this.$message.warning('教程标题不能为空！');
         return false
       }
       if (!this.write.content) {
-        this.$message.warning('小书内容不能为空！');
+        this.$message.warning('教程内容不能为空！');
         return false
       }
 
       if (Number(this.write.isFree || 1) !== this.isFree.free) {
         if (this.write.price < 1) {
-          this.$message.warning('小书价格请大于0！');
+          this.$message.warning('教程价格请大于0！');
           return false
         }
       }
       var params = {
-        title: this.write.title, //小书的标题
-        description: this.write.description, //小书的简介
-        coverImg: this.write.coverImg,//小书的封面
+        title: this.write.title, //教程的标题
+        description: this.write.description, //教程的简介
+        coverImg: this.write.coverImg,//教程的封面
         content: marked(this.write.content, { breaks: true }) /*主内容*/,
         originContent: this.write.content /*源内容*/,
         isPublic: this.write.isPublic,
@@ -437,7 +440,8 @@ export default {
   },
   computed: {
     articleTagAll () {
-      return this.$store.state.articleTag.article_tag_all;
+      return this.$store.state.articleColumn.homeColumn;
+      // return this.$store.state.articleTag.article_tag_all;
     },
     ...mapState(['website', 'personalInfo'])
   },

@@ -19,7 +19,7 @@
            @click="createBooks"
            class="btn-book">
           <i class="el-icon-notebook-2"></i>
-          <span class="label-title">撰小书</span>
+          <span class="label-title">撰教程</span>
         </a>
       </div>
     </div>
@@ -50,29 +50,29 @@
       </ul>
     </div>
 
-    <div class="hot-tags-for-sidebar client-card">
-      <header class="heading u-clearfix heading--borderedBottom heading--allCaps heading--normal heading--simple xzl-margin-bottom15">
-        <div class="u-clearfix">
-          <div class="heading-content hot-tags-header u-floatLeft">
-            <span class="as-title">
-              热门标签
-            </span>
-            <span class="hot-tags-more">
-              <router-link :to="{ name: 'subscribe_tag', params: { type: 'all' } }">查看更多 &gt;</router-link>
-            </span>
-          </div>
-        </div>
-      </header>
-      <ul class="tags xzl-tags-list hot-sidebar-items hot-tags-sidebar tags--light">
-        <li v-for="(item, key) in home.popular_article_tag"
-            :key="key">
-          <router-link class="link xzl-link-color"
-                       :to="{ name: 'article_tag', params: { en_name: item.en_name } }">
-            {{ item.name }}
-          </router-link>
-        </li>
-      </ul>
-    </div>
+<!--    <div class="hot-tags-for-sidebar client-card">-->
+<!--      <header class="heading u-clearfix heading&#45;&#45;borderedBottom heading&#45;&#45;allCaps heading&#45;&#45;normal heading&#45;&#45;simple xzl-margin-bottom15">-->
+<!--        <div class="u-clearfix">-->
+<!--          <div class="heading-content hot-tags-header u-floatLeft">-->
+<!--            <span class="as-title">-->
+<!--              热门标签-->
+<!--            </span>-->
+<!--            <span class="hot-tags-more">-->
+<!--              <router-link :to="{ name: 'subscribe_tag', params: { type: 'all' } }">查看更多 &gt;</router-link>-->
+<!--            </span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </header>-->
+<!--      <ul class="tags xzl-tags-list hot-sidebar-items hot-tags-sidebar tags&#45;&#45;light">-->
+<!--        <li v-for="(item, key) in home.popular_article_tag"-->
+<!--            :key="key">-->
+<!--          <router-link class="link xzl-link-color"-->
+<!--                       :to="{ name: 'article_tag', params: { en_name: item.enName } }">-->
+<!--            {{ item.name }}-->
+<!--          </router-link>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </div>-->
 
     <div class="notice client-card-shadow"
          v-if="website.notice.length > 0">

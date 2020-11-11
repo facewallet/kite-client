@@ -299,13 +299,15 @@ export default {
         if (this.books.booksInfo.trialReadCount > 0) {
           this.lookChapter()
         } else {
-          this.$message.warning('当前小书无可试读章节');
+          this.$message.warning('当前教程无可试读章节');
         }
       }
     },
     lookChapter () {
+      console.log('书-0----', this.$route.params.books_id)
+      console.log('书-1----', this.books.booksBookAll[0])
       if (this.books.booksBookAll.length > 0) {
-        this.$router.push({ name: 'BookView', params: { books_id: this.$route.params.books_id, book_id: this.books.booksBookAll[0].book_id } })
+        this.$router.push({ name: 'BookView', params: { books_id: this.$route.params.books_id, book_id: this.books.booksBookAll[0].bookId } })
       } else {
         this.$message.warning('当前章节为空');
       }

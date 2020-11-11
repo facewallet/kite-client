@@ -13,7 +13,7 @@
               <router-link :to="{name:'home'}"
                            class="navbar-brand logo-text"
                            v-else>{{website.meta.website_name}}</router-link>
-              <div class="label">小书</div>
+              <div class="label">教程</div>
             </div>
             <div class="book-summary-btn"
                  v-if="personalInfo.islogin&&book.bookInfo.uid===personalInfo.user.uid">
@@ -105,7 +105,7 @@
 <!--                </div>-->
 <!--                <div v-else-->
 <!--                     class="no-read">-->
-<!--                  <p>当前章节需要购买此小书后，方可继续阅读</p>-->
+<!--                  <p>当前章节需要购买此教程后，方可继续阅读</p>-->
 <!--                </div>-->
                 <div class="book-comments">
                   <div class="comment-box"
@@ -190,7 +190,7 @@ export default {
       trialRead,
       isFree,
       isShowAside: true, // 是否显示侧栏
-      bookInfoOther: { // 当前小书章节的其他信息
+      bookInfoOther: { // 当前教程章节的其他信息
         prev: {},
         next: {}
       }

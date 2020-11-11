@@ -17,11 +17,11 @@
       </ul>
     </template>
 
-    <div class="page-null"
-         v-else>
-      <i class="icon-font el-icon-document"></i>
-      <span class="info">暂无数据</span>
-    </div>
+<!--    <div class="page-null"-->
+<!--         v-else>-->
+<!--      <i class="icon-font el-icon-document"></i>-->
+<!--      <span class="info">暂无数据</span>-->
+<!--    </div>-->
   </div>
 </template>
 
