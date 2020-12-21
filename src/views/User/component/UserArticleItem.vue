@@ -28,15 +28,15 @@
         <ul class="meta-list">
           <li class="item item-icon read-count">
             <i class="el-icon-view"></i>
-            <strong v-text="articleItem.read_count"></strong>
+            <strong v-text="articleItem.readCount"></strong>
           </li>
           <li class="item item-icon like-article">
             <i class="el-icon-star-off"></i>
-            <strong v-text="articleItem.thumb_count"></strong>
+            <strong v-text="articleItem.thumbCount"></strong>
           </li>
           <li class="item item-icon comment-count">
             <i class="el-icon-chat-dot-round"></i>
-            <strong v-text="articleItem.comment_count"></strong>
+            <strong v-text="articleItem.commentCount"></strong>
           </li>
           <li class="item"
               v-text="articleItem.create_dt"></li>
@@ -51,10 +51,10 @@
           <li class="item">
             {{articleTypeList[articleItem.type]}}
           </li>
-          <li class="item public-status"
-              v-if="!articleItem.is_public">
-            <span>仅自己可见</span>
-          </li>
+<!--          <li class="item public-status"-->
+<!--              v-if="!articleItem.isPublic">-->
+<!--            <span>仅自己可见</span>-->
+<!--          </li>-->
           <li class="item"
               style="color:#F07178"
               v-if="articleItem.status===statusList.reviewFail">{{statusListText[articleItem.status]}}:{{articleItem.rejection_reason}}</li>

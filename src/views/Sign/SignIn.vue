@@ -13,7 +13,7 @@
               <input placeholder="昵称"
                      type="text"
                      v-model="formData.name"
-                     @keyup.enter="login"
+                     @keyup.enter=""
                      value="" />
               <i class="el-icon-user-solid"></i>
             </div>
@@ -23,7 +23,7 @@
                      type="password"
                      v-model="formData.password"
                      name="password"
-                     @keyup.enter="login"
+                     @keyup.enter=""
                      value="" />
               <i class="el-icon-key"></i>
             </div>
@@ -33,10 +33,10 @@
                 没有账号？ <em class="reg-btn"
                     @click="tapRegister">注册</em>
               </div>
-              <div class="pull-right">
-                <a href="javascript:;"
-                   @click="tapResetPassword">忘记密码</a>
-              </div>
+<!--              <div class="pull-right">-->
+<!--                <a href="javascript:;"-->
+<!--                   @click="tapResetPassword">忘记密码</a>-->
+<!--              </div>-->
             </div>
 
             <div class="footer-text"></div>
@@ -66,6 +66,7 @@
 
 <script>
 import { cookie } from '../../utils/cookie.js'
+import { encrypt } from '../../utils/AESUtil.js'
 import ClientOnly from 'vue-client-only'
 import { mapState } from 'vuex'
 import signModule from '../../store/module/sign'
@@ -103,23 +104,37 @@ export default {
   },
   methods: {
     login () {
-      this.$store.dispatch('sign/LOGIN', this.formData).then(res => {
+
+      this.$store.dispatch('sign/TOKEN', this.formData).then(res => {
         // if (res.state === 'success') {
         if (res.meta.success === true) {
-          this.$message.success(res.meta.message)
-          this.$refs.login.reset()
-          cookie.set('accessToken', res.data.user.token, 7)
-          this.$router.push({
-            // name: '/' ,
-            name: 'home' ,
-            params:{
-              accessToken2:res.data.user.token
+          this.formData.userKey = res.data.userKey
+          this.formData.name = encrypt(this.formData.name, res.data.tokenKey)
+          this.formData.password = encrypt(this.formData.password, res.data.tokenKey)
+          // 下面是调用登录
+          this.$store.dispatch('sign/LOGIN', this.formData).then(res => {
+            // if (res.state === 'success') {
+            if (res.meta.success === true) {
+              this.$message.success(res.meta.message)
+              this.$refs.login.reset()
+              cookie.set('accessToken', res.data.user.token, 7)
+              this.$router.push({
+                // name: '/' ,
+                name: 'home' ,
+                params:{
+                  accessToken2:res.data.user.token
+                }
+              })
+            } else {
+              this.$message.warning(res.meta.message)
             }
           })
+
         } else {
           this.$message.warning(res.meta.message)
         }
       })
+
     },
     tapRegister () {
       this.$router.push({ name: 'signUp' })

@@ -22,15 +22,15 @@
           <!--                       class="name">{{ articleItem.user.nickname }}</router-link>-->
         </li>
         <li class="item">
-          <time>{{ articleItem.create_dt }}</time>
+          <time>{{ articleItem.updateDate ? moment(articleItem.updateDate).format('YYYY-MM-DD HH:mm') : moment().format('YYYY-MM-DD HH:mm') }}</time>
         </li>
-        <li class="item tag-view"
-            v-if="articleItem.tag_ids">
-          <router-link v-for="(itemTag, key) in articleItem.tag"
-                       class="tag-class frontend"
-                       :key="key"
-                       :to="{ name: 'article_tag', params: { en_name: itemTag.en_name } }">{{ itemTag.name }}</router-link>
-        </li>
+<!--        <li class="item tag-view"-->
+<!--            v-if="articleItem.tag_ids">-->
+<!--          <router-link v-for="(itemTag, key) in articleItem.tag"-->
+<!--                       class="tag-class frontend"-->
+<!--                       :key="key"-->
+<!--                       :to="{ name: 'article_tag', params: { en_name: itemTag.en_name } }">{{ itemTag.name }}</router-link>-->
+<!--        </li>-->
 
         <li class="item"
             v-if="articleItem.article_blog">
@@ -44,17 +44,17 @@
         </li>
         <li class="item">
           <i class="el-icon-thumb"></i>
-          <span>​​{{ articleItem.thumb_count }}​ </span>
+          <span>​​{{ articleItem.thumbCount ? articleItem.thumbCount : 0}}​ </span>
         </li>
 
         <li class="item">
           <i class="el-icon-chat-dot-round"></i>
-          <span>​​{{ articleItem.comment_count }}</span>
+          <span>​​{{ articleItem.commentCount ? articleItem.commentCount : 0  }}</span>
         </li>
 
         <li class="item">
           <i class="el-icon-view"></i>
-          <span>​{{ articleItem.read_count }}</span>
+          <span>​{{ articleItem.readCount ? articleItem.readCount : 0}}</span>
         </li>
       </ul>
     </div>
@@ -82,7 +82,7 @@ import {
 import { Dropdown } from '@components'
 import { share } from '@utils'
 import { mapState } from 'vuex'
-
+import moment from 'moment'
 export default {
   name: 'ArticleItem',
   props: {
@@ -123,7 +123,8 @@ export default {
           this.website.meta.logo
         )
       }
-    }
+    },
+    moment
   },
   components: {
     'box-drop': Dropdown

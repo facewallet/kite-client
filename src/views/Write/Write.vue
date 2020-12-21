@@ -472,16 +472,16 @@ export default {
     $imgAdd (pos, $file) {
       // 第一步.将图片上传到服务器.
       var formData = new FormData()
-      formData.append('fileType', 'admin')
+      // formData.append('fileType', 'admin')
       formData.append('file', $file)
       this.$store
         .dispatch('common/UPLOAD_FILE', formData)
         .then(res => {
-          if (res.state === 'success') {
+          if (res.meta.success === true) {
             this.$message.success('上传文章图片成功')
-            this.$refs.mavonEditor.$img2Url(pos, res.data.fileUrl)
+            this.$refs.mavonEditor.$img2Url(pos, res.data.url)
           } else {
-            this.$message.warning(res.message)
+            this.$message.warning('上传文章图片失败')
             return false
           }
         })

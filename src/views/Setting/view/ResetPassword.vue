@@ -46,6 +46,10 @@
 <script>
 import { cookie } from '../../../utils/cookie.js'
 import settingModule from '../../../store/module/setting'
+import { encrypt } from '../../../utils/AESUtil'
+import signModule from '../../../store/module/sign'
+// import signModule from '../../../store/module/sign'
+
 export default {
   name: 'ResetPassword',
   metaInfo () {
@@ -67,24 +71,44 @@ export default {
   },
   mounted () {
     this.$store.registerModule('setting', settingModule)
+    this.$store.registerModule('sign', signModule)
+
   },
   methods: {
     tapResetPassword () {
       this.$router.push({ name: 'resetPassword' })
     },
     save () {
-      this.$store.dispatch('setting/PERSONAL_UPLOAD_PASSWORD', this.formData)
-        .then(result => {
-          this.$nextTick(function () {
-            if (result.state === 'success') {
-              this.$message.warning('密码修改成功,已退出当前账户，请重新登录')
-              cookie.delete('accessToken')
-              window.location.reload()
-            } else {
-              this.$message.warning(result.message)
-            }
-          })
-        })
+
+      this.$store.dispatch('sign/TOKEN', this.formData).then(res => {
+        console.log('越王勾践---',this.formData)
+        console.log('忠臣-------',res)
+        if (res.meta.success === true) {
+          this.formData.userKey = res.data.userKey
+          this.formData.old_password = encrypt(this.formData.old_password, res.data.tokenKey)
+          this.formData.new_password = encrypt(this.formData.new_password, res.data.tokenKey)
+          this.formData.repeat_new_password = encrypt(this.formData.repeat_new_password, res.data.tokenKey)
+          console.log('越王勾践2---',this.formData)
+
+          this.$store.dispatch('setting/PERSONAL_UPLOAD_PASSWORD', this.formData)
+                  .then(result => {
+                    this.$nextTick(function () {
+                      if (result.meta.success === true) {
+                        this.$message.warning('密码修改成功,已退出当前账户，请重新登录')
+                        cookie.delete('accessToken')
+                        window.location.reload()
+                      } else {
+                        this.$message.warning(result.meta.message)
+                      }
+                    })
+                  })
+
+        }else {
+          this.$message.warning(res.meta.message)
+        }
+      })
+
+
     }
   },
   destroyed () {

@@ -7,7 +7,7 @@
           <ul class="nav-list">
             <li class="nav-item acitve">
               <router-link :to="{ name: 'dynamics', params: { dynamicTopicId: 'newest' } }"
-                           class="nav-link">推荐</router-link>
+                           class="nav-link">最新</router-link>
             </li>
             <li class="nav-item">
               <router-link :to="{ name: 'dynamics', params: { dynamicTopicId: 'hot' } }"

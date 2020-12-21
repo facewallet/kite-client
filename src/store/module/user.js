@@ -45,6 +45,7 @@ const mutations = {
   },
   SET_ASSOCIATE_INFO (state, data) {
     // 用户关联信心
+    console.log('申包胥-----', data)
     state.associateInfo = data || {}
   }
 }
@@ -55,8 +56,8 @@ const actions = {
     return fetch({
       url: '/user/info',
       method: 'get',
-      parameter: parameter
-      // parameter: { params: parameter }
+      // parameter: parameter
+      parameter: { params: parameter }
     }).then(result => {
       commit('SET_USER_INFO_ALL', result.data)
       return result
@@ -116,7 +117,7 @@ const actions = {
   GET_USER_ATTENTION_LIST: ({ commit, dispatch, state }, data) => {
     // 获取用户关注
     return fetch({
-      url: '/user/attention-list',
+      url: '/user/attention',
       method: 'get',
       parameter: { params: data }
     })
@@ -129,7 +130,15 @@ const actions = {
       parameter: { params: data }
     })
   },
-  GET_ATTENTION_MESSAGE_LIST: ({ commit, dispatch, state }, params) => {
+  GET_ATTENTION_MESSAGE_LIST ({ commit, dispatch, state }, parameter) {
+    // 获取收藏列表
+    return fetch({
+      url: '/attention/list',
+      method: 'get',
+      parameter: { params: parameter }
+    })
+  },
+  GET_ATTENTION_MESSAGE_LIST2: ({ commit, dispatch, state }, params) => {
     // 获取关注
     return gqlfetch({
       parameter: `

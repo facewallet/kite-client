@@ -38,11 +38,11 @@
 
                 <div class="btn-group"
                      v-if="user.user.uid !== personalInfo.user.uid">
-                  <button class="btn btn-private-chat"
-                          @click="privateChat">
-                    <i class="iconfont"></i>
-                    <span>私聊</span>
-                  </button>
+<!--                  <button class="btn btn-private-chat"-->
+<!--                          @click="privateChat">-->
+<!--                    <i class="iconfont"></i>-->
+<!--                    <span>私聊</span>-->
+<!--                  </button>-->
                   <button class="btn"
                           @click="onUserAttention(isAttention.is_attention)"
                           :class="isAttention.is_attention ? 'has' : 'no'">
@@ -91,17 +91,17 @@
                       </div>
                     </li>
 
-                    <li v-if="
-                        user.user.uid === personalInfo.user.uid &&
-                          personalInfo.islogin
-                      ">
-                      <div class="meta-block">
-                        <router-link :to="{ name: 'shellDetail' }">
-                          <p>{{ user.user_info.shell_balance || 0 }}</p>
-                          <strong>贝壳余额</strong>
-                        </router-link>
-                      </div>
-                    </li>
+<!--                    <li v-if="-->
+<!--                        user.user.uid === personalInfo.user.uid &&-->
+<!--                          personalInfo.islogin-->
+<!--                      ">-->
+<!--                      <div class="meta-block">-->
+<!--                        <router-link :to="{ name: 'shellDetail' }">-->
+<!--                          <p>{{ user.user_info.shell_balance || 0 }}</p>-->
+<!--                          <strong>贝壳余额</strong>-->
+<!--                        </router-link>-->
+<!--                      </div>-->
+<!--                    </li>-->
                   </ul>
                 </div>
               </div>
@@ -193,8 +193,8 @@ export default {
   },
   async asyncData ({ store, route ,accessToken = '' }) {
     return Promise.all([
-      // store.dispatch('user/GET_USER_INFO_ALL', { uid: route.params.uid ,accessToken:accessToken })
-      store.dispatch('user/GET_USER_INFO_ALL', { accessToken })
+      store.dispatch('user/GET_USER_INFO_ALL', { uid: route.params.uid ,accessToken:accessToken })
+      // store.dispatch('user/GET_USER_INFO_ALL', { accessToken })
     ])
   },
   methods: {
@@ -245,16 +245,19 @@ export default {
       }).then(() => {
         this.$store
           .dispatch('common/SET_ATTENTION', {
-            associate_id: this.$route.params.uid,
+            // associateId: '1001',
+            associateId: this.$route.params.uid,
+            // type: '1'
             type: modelName.user
           })
           .then(result => {
-            if (result.state === 'success') {
+            if (result.meta.success === true) {
               this.$store.dispatch('user/GET_ASSOCIATE_INFO')
-              this.$message.success(result.message)
+              this.$message.success(result.meta.message)
             } else {
-              this.$message.warning(result.message)
+              this.$message.warning(result.meta.message)
             }
+
           })
       })
     }

@@ -14,28 +14,40 @@
                    ref="user_message_list">
                 <div class="main clearfix">
                   <router-link class="user-info"
-                               v-if="MessageItem.sender&&MessageItem.sender.uid"
-                               :to="{name:'user',params:{uid:MessageItem.sender.uid,routeType:'article'}}">
+                               v-if="MessageItem.associateInfo"
+                               :to="{
+                                                                     name: 'user',
+              params: { uid: MessageItem.associateInfo.uid, routeType: 'article' }
+                               }">
                     <img class="avatar"
-                         v-lazy="MessageItem.sender.avatar"
+                         v-lazy="MessageItem.associateInfo.avatar"
                          alt />
-                    <span class="nickname">{{MessageItem.sender.nickname}}</span>
+                    <span class="nickname">{{MessageItem.associateInfo.nickname}}</span>
                   </router-link>
-                  <p class="time"> {{MessageItem.create_dt}}</p>
+                  <p class="time"> {{moment(MessageItem.createDate).format('YYYY-MM-DD HH:mm:ss')}}</p>
                   <div class="content"
                        v-if="MessageItem.associateInfo">
                     {{MessageItem.actionText}}{{MessageItem.typeText}}
+<!--                    <router-link style="color:#df5858"-->
+<!--                                 v-if="MessageItem.type===modelName.article&&MessageItem.associateInfo.aid"-->
+<!--                                 :to="{name:'article',params:{aid:MessageItem.associateInfo.aid}}">{{MessageItem.associateInfo.title}}</router-link>-->
+<!--                    <router-link style="color:#df5858"-->
+<!--                                 v-if="MessageItem.type===modelName.dynamic&&MessageItem.associateInfo.id"-->
+<!--                                 :to="{name:'dynamicView',params:{dynamicId:MessageItem.associateInfo.id}}">{{MessageItem.associateInfo.content}}</router-link>-->
+<!--                    <router-link style="color:#df5858"-->
+<!--                                 v-if="MessageItem.type===modelName.books&&MessageItem.associateInfo.books_id"-->
+<!--                                 :to="{name:'book',params:{books_id:MessageItem.associateInfo.books_id}}">{{MessageItem.associateInfo.title}}</router-link>-->
+<!--                    <router-link style="color:#df5858"-->
+<!--                                 v-if="MessageItem.type===modelName.user&&MessageItem.associateInfo.uid"-->
+<!--                                 :to="{name:'book',params:{books_id:MessageItem.associateInfo.books_id}}">{{MessageItem.associateInfo.uid}}</router-link>-->
                     <router-link style="color:#df5858"
-                                 v-if="MessageItem.type===modelName.article&&MessageItem.associateInfo.aid"
-                                 :to="{name:'article',params:{aid:MessageItem.associateInfo.aid}}">{{MessageItem.associateInfo.title}}</router-link>
-                    <router-link style="color:#df5858"
-                                 v-if="MessageItem.type===modelName.dynamic&&MessageItem.associateInfo.id"
-                                 :to="{name:'dynamicView',params:{dynamicId:MessageItem.associateInfo.id}}">{{MessageItem.associateInfo.content}}</router-link>
-                    <router-link style="color:#df5858"
-                                 v-if="MessageItem.type===modelName.books&&MessageItem.associateInfo.books_id"
-                                 :to="{name:'book',params:{books_id:MessageItem.associateInfo.books_id}}">{{MessageItem.associateInfo.title}}</router-link>
+                                 :to="{
+                                    name: 'user',
+              params: { uid: MessageItem.associateInfo.uid, routeType: 'article' }
+                                 }">{{MessageItem.associateInfo.introduction}}</router-link>
 
                   </div>
+<!--                  {{MessageItem}}-2021-->
                 </div>
 
               </div>
@@ -58,6 +70,7 @@ import { mapState } from 'vuex'
 import {
   modelName
 } from '@utils/constant'
+import moment from 'moment'
 export default {
   name: 'UserMessage',
   metaInfo () {
@@ -85,17 +98,34 @@ export default {
     this.getUserMessageList()
   },
   methods: {
+    moment,
     getUserMessageList () {
-      this.$store.dispatch('user/GET_ATTENTION_MESSAGE_LIST', {
-        page: this.messageList.page || 1,
-        pageSize: this.messageList.pageSize || 10,
-      }).then(result => {
-        this.messageList = result.data ? result.data.userUnreadList : {}
-        this.$store.dispatch('user/GET_UNREAD_MESSAGE_COUNT')
-        this.isLoading = false
-      }).catch(() => {
-        this.isLoading = false
-      })
+      this.$store
+              .dispatch('user/GET_ATTENTION_MESSAGE_LIST', {
+                uid: this.personalInfo.user.uid,
+                type: this.type || '',
+                  page: this.messageList.page || 1,
+                  pageSize: this.messageList.pageSize || 10
+              })
+              .then(result => {
+                          // this.messageList = result.data ? result.data.userUnreadList : {}
+                          this.messageList.list = result.data.list
+                          // this.$store.dispatch('user/GET_UNREAD_MESSAGE_COUNT')
+                          this.isLoading = false
+                        }).catch(() => {
+                          this.isLoading = false
+                        })
+
+      // this.$store.dispatch('user/GET_ATTENTION_MESSAGE_LIST', {
+      //   page: this.messageList.page || 1,
+      //   pageSize: this.messageList.pageSize || 10,
+      // }).then(result => {
+      //   this.messageList = result.data ? result.data.userUnreadList : {}
+      //   this.$store.dispatch('user/GET_UNREAD_MESSAGE_COUNT')
+      //   this.isLoading = false
+      // }).catch(() => {
+      //   this.isLoading = false
+      // })
     },
     deleteChange () {
       this.getUserMessageList()

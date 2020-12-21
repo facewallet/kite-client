@@ -114,14 +114,14 @@
       <div class="action-box">
         <div class="like-action action"
              :class="{
-              active: true
-            // active: ~user.associateInfo.dynamicThumdId.indexOf(
+              active: isThumb(dynamicItem)
+            // active: ~this.user.associateInfo.dynamicThumdId.indexOf(
             //   dynamicItem.id || ''
             // )
           }"
              @click="userThumdDynamic">
           <i class="el-icon-thumb"></i>
-          <span class="action-title">{{ dynamicItem.thumb_count }}</span>
+          <span class="action-title">{{ dynamicItem.thumbCount }}</span>
         </div>
         <div class="comment-action action"
              @click="isCommnet = !isCommnet">
@@ -219,14 +219,14 @@ export default {
       }
       this.$store
         .dispatch('common/SET_ATTENTION', {
-          associate_id: this.dynamicItem.user.uid,
+          associateId: this.dynamicItem.user.uid,
           type: modelName.user
         })
         .then(result => {
-          if (result.state === 'success') {
-            this.$message.success(result.message)
+          if (result.meta.success === true) {
+            this.$message.success(result.meta.message)
             this.$store.dispatch('user/GET_ASSOCIATE_INFO')
-            this.selectAttentionUserClass(result.data.type)
+            this.selectAttentionUserClass(result.meta.data.type)
           } else {
             this.$message.error(result.message)
           }
@@ -248,9 +248,9 @@ export default {
     },
     isAttention (item) {
       // 是否收藏
-      if (true
-        // this.user.associateInfo.userAttentionId &&
-        // ~this.user.associateInfo.userAttentionId.indexOf(item.uid)
+      if (
+        this.user.associateInfo.userAttentionId &&
+        ~this.user.associateInfo.userAttentionId.indexOf(item.uid)
       ) {
         return true
       } else {
@@ -304,25 +304,47 @@ export default {
       })
       return content
     },
+    isThumb (item) {
+      // 是否收藏
+      console.log('孙武-----',this.user.associateInfo.dynamicThumdId)
+      console.log('韶关-----',item.id)
+      if (
+              this.user.associateInfo.dynamicThumdId &&
+              ~this.user.associateInfo.dynamicThumdId.indexOf(item.id+'')
+      ) {
+        console.log('撤兵-----',true)
+        return true
+      } else {
+        console.log('楚国-----',false)
+        return false
+      }
+    },
     userThumdDynamic () {
       if (!this.personalInfo.islogin) {
         this.$message.warning('请先登录')
         return false
       }
+      console.log('吴越春秋',this.dynamicItem.id)
+
+      // const b = user.associateInfo.dynamicThumdId.indexOf(
+      //         this.dynamicItem.id+'' || ''
+      // )
+      // console.log('专注次网聊1', user.associateInfo.dynamicThumdId)
+      // console.log('专注次网聊2', b)
       /*用户like 动态*/
       this.$store
         .dispatch('common/SET_THUMB', {
-          associate_id: this.dynamicItem.id,
+          associateId: this.dynamicItem.id,
           type: modelName.dynamic
         })
         .then(res => {
-          if (res.state === 'success') {
-            if (res.data.type === 'enter') {
-              this.dynamicItem.thumb_count =
-                Number(this.dynamicItem.thumb_count) + 1
-            } else if (res.data.type === 'cancel') {
-              this.dynamicItem.thumb_count -= 1
-            }
+          if (res.meta.success === true) {
+            // if (res.data.type === 'enter') {
+            //   this.dynamicItem.thumb_count =
+            //     Number(this.dynamicItem.thumbCount) + 1
+            // } else if (res.data.type === 'cancel') {
+            //   this.dynamicItem.thumbCount -= 1
+            // }
             this.$store.dispatch('user/GET_ASSOCIATE_INFO')
           } else {
             this.$message.warning(res.message)

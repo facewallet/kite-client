@@ -29,7 +29,7 @@
                                    :to="{ name: 'article', params: { aid: item.info.aid } }">{{ item.info.title }}</router-link>
                       <router-link v-if="item.type == modelName.books"
                                    :to="{name: 'book',
-                                  params: { books_id: item.info.books_id }
+                                  params: { books_id: item.info.booksId }
                                 }">{{ item.info.title }}</router-link>
                       <span class="cancal-collect"
                             @click="onUserCollect(item)">取消收藏</span>
@@ -113,12 +113,12 @@ export default {
       /*用户collect 文章*/
       this.$store
         .dispatch('common/SET_COLLECT', {
-          associate_id: item.associate_id,
+          associateId: item.associateId,
           type: item.type
         })
         .then(result => {
           this.$message.warning(result.message)
-          if (result.state === 'success') {
+          if (result.meta.success === true) {
             this.$store.dispatch('user/GET_ASSOCIATE_INFO')
             this.getList()
           }

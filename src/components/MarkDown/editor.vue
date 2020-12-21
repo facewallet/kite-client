@@ -95,7 +95,7 @@
     </div>
 
   </div>
-</template> 
+</template>
 
 <script>
 import mdToolbarleft from './components/md-toolbar-left'

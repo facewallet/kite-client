@@ -31,56 +31,56 @@
       </li>
     </ul>
 
-    <ul class="aside-operat client-card-shadow"
-        v-if="personalInfo.islogin&&personalInfo.user.uid==$route.params.uid">
-      <li @click="checkIn">
-        <a href="javascript:;">
-          <i class="icon el-icon-bell"></i>
-          <span class="box-title check-in"> 签到</span>
-        </a>
-      </li>
-      <li>
-        <router-link class="collection"
-                     :to="{ name: 'collect' }">
-          <i class="icon el-icon-folder-opened"></i>
-          <span class="box-title">收藏集</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link class="collection"
-                     :to="{ name: 'shellDetail' }">
-          <i class="icon el-icon-notebook-2"></i>
-          <span class="box-title">贝壳明细</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link class="collection"
-                     :to="{ name: 'myOrder' }">
-          <i class="icon el-icon-notebook-1"></i>
-          <span class="box-title">我的订单</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link :to="{ name: 'subscribe_tag', params: { type: 'my' } }">
-          <i class="icon el-icon-price-tag"></i>
-          <span class="box-title">关注标签</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link class="collection"
-                     :to="{ name: 'experienceDetail' }">
-          <i class="icon el-icon-document-checked"></i>
-          <span class="box-title">经验明细</span>
-        </router-link>
-      </li>
-      <li>
-        <router-link class="collection"
-                     :to="{ name: 'privateChatList' }">
-          <i class="icon el-icon-chat-line-round"></i>
-          <span class="box-title">私聊</span>
-        </router-link>
-      </li>
-    </ul>
+<!--    <ul class="aside-operat client-card-shadow"-->
+<!--        v-if="personalInfo.islogin&&personalInfo.user.uid==$route.params.uid">-->
+<!--      <li @click="checkIn">-->
+<!--        <a href="javascript:;">-->
+<!--          <i class="icon el-icon-bell"></i>-->
+<!--          <span class="box-title check-in"> 签到</span>-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <router-link class="collection"-->
+<!--                     :to="{ name: 'collect' }">-->
+<!--          <i class="icon el-icon-folder-opened"></i>-->
+<!--          <span class="box-title">收藏集</span>-->
+<!--        </router-link>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <router-link class="collection"-->
+<!--                     :to="{ name: 'shellDetail' }">-->
+<!--          <i class="icon el-icon-notebook-2"></i>-->
+<!--          <span class="box-title">贝壳明细</span>-->
+<!--        </router-link>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <router-link class="collection"-->
+<!--                     :to="{ name: 'myOrder' }">-->
+<!--          <i class="icon el-icon-notebook-1"></i>-->
+<!--          <span class="box-title">我的订单</span>-->
+<!--        </router-link>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <router-link :to="{ name: 'subscribe_tag', params: { type: 'my' } }">-->
+<!--          <i class="icon el-icon-price-tag"></i>-->
+<!--          <span class="box-title">关注标签</span>-->
+<!--        </router-link>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <router-link class="collection"-->
+<!--                     :to="{ name: 'experienceDetail' }">-->
+<!--          <i class="icon el-icon-document-checked"></i>-->
+<!--          <span class="box-title">经验明细</span>-->
+<!--        </router-link>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <router-link class="collection"-->
+<!--                     :to="{ name: 'privateChatList' }">-->
+<!--          <i class="icon el-icon-chat-line-round"></i>-->
+<!--          <span class="box-title">私聊</span>-->
+<!--        </router-link>-->
+<!--      </li>-->
+<!--    </ul>-->
 
     <div class="client-card"
          v-if="$route.name === 'user'">

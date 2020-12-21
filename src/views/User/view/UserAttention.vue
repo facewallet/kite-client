@@ -90,8 +90,11 @@ export default {
           pageSize: this.userAttentionList.pageSize || 10
         })
         .then(result => {
-          this.userAttentionList = result.data
-          this.isLoading = false
+          if (result.meta.success === true) {
+            this.userAttentionList = result.data
+            this.isLoading = false
+          }
+
         })
         .catch(() => {
           this.isLoading = false
@@ -102,13 +105,39 @@ export default {
       this.getUserAttentionList()
     },
     isAttention (item) {
+      console.log('郭照----1',this.personalInfo.islogin)
+      console.log('郭照----2',this.user.associateInfo)
+      console.log('郭照----3',this.user.associateInfo.userAttentionId)
+      console.log('郭照----4',this.userInfo)
+      // if (this.personalInfo.islogin &&
+      //         ~this.user.associateInfo.userAttentionId.indexOf(
+      //                 String(this.userInfo.uid)
+      //         )
+      // ) {
+      //   return true
+      // } else {
+      //   return false
+      // }
+
+      // if (~userAttentionIds.indexOf(Number(this.personalInfo.user.uid))) {
+      //   return true
+      // } else {
+      //   return false
+      // }
+      console.log('良机--',item)
       // 是否收藏
       let userAttentionIds = []
-      if (item.userAttentionIds && item.userAttentionIds.length > 0) {
-        item.userAttentionIds.map(item => {
-          userAttentionIds.push(Number(item.uid))
+      // if (item.userAttentionIds && item.userAttentionIds.length > 0) {
+      //   item.userAttentionIds.map(item => {
+      //     userAttentionIds.push(Number(item.uid))
+      //   })
+      if (this.userAttentionList.list && this.userAttentionList.list.length > 0) {
+        this.userAttentionList.list.map(ite => {
+          userAttentionIds.push(Number(ite.user.uid))
         })
-        if (~userAttentionIds.indexOf(Number(this.personalInfo.user.uid))) {
+        console.log('杨坚----1',userAttentionIds)
+        console.log('杨坚----2',this.personalInfo.user)
+        if (this.personalInfo && this.personalInfo.user && this.personalInfo.user.uid && ~userAttentionIds.indexOf(Number(this.personalInfo.user.uid))) {
           return true
         } else {
           return false
@@ -118,11 +147,15 @@ export default {
       }
     },
     onUserAttention (item) {
+      if (!this.personalInfo.islogin) {
+        this.$message.error('请先登录')
+        return false
+      }
       this.$store
         .dispatch('common/SET_ATTENTION', {
-          associate_id: item.user.uid,
-          type: modelName.user,
-          moreConfig: { direct: true }
+          associateId: item.user.uid,
+          type: modelName.user
+          // moreConfig: { direct: true }
         })
         .then(result => {
           this.getUserAttentionList()
@@ -134,7 +167,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['personalInfo'])
+    ...mapState(['personalInfo', 'user'])
   },
   components: {
     Page

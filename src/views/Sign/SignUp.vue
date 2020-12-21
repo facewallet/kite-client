@@ -76,6 +76,7 @@ import ClientOnly from 'vue-client-only'
 import { mapState } from 'vuex'
 import signModule from '../../store/module/sign'
 import { cookie } from '../../utils/cookie'
+import { encrypt } from '../../utils/AESUtil'
 export default {
   name: 'SignUp',
   metaInfo () {
@@ -127,31 +128,37 @@ export default {
         })
     },
     register () {
-      this.$store.dispatch('sign/REGISTER', this.formData)
-        .then(res => {
-          console.log('注册返回：', res)
-          // if (res.meta.success === true) {
-          if (res.meta.success === true) {
-            this.$message.success(res.meta.message)
-            this.$refs.register.reset()
-            cookie.set('accessToken', res.data.user.token, 7)
-            this.$router.push({
-              name: 'home' ,
-              params:{
-                accessToken2:res.data.user.token
-              }
-            })
-          } else {
-            this.$message.warning(res.meta.message)
-          }
-          // if (res.state === 'success') {
-          //   this.$message.success(res.message)
-          //   this.$refs.register.reset();
-          //   this.$router.push({ name: 'signIn' })
-          // } else {
-          //   this.$message.warning(res.message)
-          // }
-        })
+      this.$store.dispatch('sign/TOKEN', this.formData).then(res => {
+        // if (res.state === 'success') {
+        if (res.meta.success === true) {
+          this.formData.userKey = res.data.userKey
+          this.formData.name = encrypt(this.formData.name, res.data.tokenKey)
+          this.formData.password = encrypt(this.formData.password, res.data.tokenKey)
+          //下面去注册
+          this.$store.dispatch('sign/REGISTER', this.formData)
+                  .then(res => {
+                    console.log('注册返回：', res)
+                    // if (res.meta.success === true) {
+                    if (res.meta.success === true) {
+                      this.$message.success(res.meta.message)
+                      this.$refs.register.reset()
+                      cookie.set('accessToken', res.data.user.token, 7)
+                      this.$router.push({
+                        name: 'home' ,
+                        params:{
+                          accessToken2:res.data.user.token
+                        }
+                      })
+                    } else {
+                      this.$message.warning(res.meta.message)
+                    }
+                  })
+        }else {
+          //获取token失败
+          this.$message.warning(res.meta.message)
+        }
+      })
+
     },
     tapSign () {
       this.$router.push({ name: 'signIn' })

@@ -6,10 +6,12 @@ const mutations = {}
 
 const actions = {
   SET_ATTENTION ({ commit, dispatch, state }, parameter) {
-    // 设置关注
+    // 设置关注 // parameter: { params: parameter }
+    console.log('楚庄王----', parameter)
     return fetch({
       url: '/common/attention',
       method: 'post',
+      // parameter: { ...parameter }
       parameter: parameter
     })
   },
@@ -71,7 +73,15 @@ const actions = {
   },
   UPLOAD_FILE: ({ commit, dispatch, state }, data) => {
     return fetch({
-      url: '/upload-file',
+      url: '/file/upload',
+      method: 'post',
+      parameter: data
+    })
+  },
+
+  UPLOAD_AVATAR: ({ commit, dispatch, state }, data) => {
+    return fetch({
+      url: '/avatar/upload',
       method: 'post',
       parameter: data
     })

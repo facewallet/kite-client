@@ -310,20 +310,32 @@ export default {
       this.$router.push({ name: 'BookView', params: { books_id: this.$route.params.books_id, book_id: book_id } })
     },
     $imgAdd (pos, $file) {
-      // 第一步.将图片上传到服务器.
-      var formData = new FormData();
-      formData.append('file', $file);
+      var formData = new FormData()
+      // formData.append('fileType', 'admin')
+      formData.append('file', $file)
       this.$store
-        .dispatch("common/UPLOAD_FILE", formData)
-        .then(res => {
-          if (res.state === "success") {
-            this.$message.success("上传图片成功");
-            this.$refs.mavonEditor.$img2Url(pos, res.data.fileUrl);
-          } else {
-            this.$message.warning(res.message);
-            return false
-          }
-        });
+              .dispatch("common/UPLOAD_FILE", formData)
+              .then(res => {
+                if (res.meta.success === true) {
+                  this.$message.success("上传教程图片成功");
+                  this.$refs.mavonEditor.$img2Url(pos, res.data.url);
+                } else {
+                  this.$message.warning("上传教程图片失败");
+                  return false
+                }
+              });
+
+      // this.$store
+      //         .dispatch('common/UPLOAD_FILE', formData)
+      //         .then(res => {
+      //           if (res.meta.success === true) {
+      //             this.$message.success('上传文章图片成功')
+      //             this.$refs.mavonEditor.$img2Url(pos, res.data.fileUrl)
+      //           } else {
+      //             this.$message.warning('上传文章图片失败')
+      //             return false
+      //           }
+      //         })
     },
     writeChapter (book_id) { // 编辑或新增教程章节
       this.$router.push({ name: 'WriteBookView', params: { books_id: this.$route.params.books_id, book_id: book_id } })

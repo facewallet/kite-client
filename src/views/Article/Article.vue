@@ -26,10 +26,12 @@
                   </div>
                   <!-- 文章数据信息 -->
                   <div class="meta">
-                    <span class="publish-time">{{ article.create_dt }}</span>
-                    <span class="views-count">阅读 {{ article.read_count }}</span>
-                    <span class="comments-count">评论 {{ article.comment_count }}</span>
-                    <span class="likes-count">点赞 {{ article.thumb_count }}</span>
+<!--                    <span class="publish-time">{{ article.updateDate }}</span>-->
+                    <span class="publish-time">{{ article.updateDate ? moment(article.updateDate).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD') }}
+</span>
+                    <span class="views-count">阅读 {{ article.readCount  ? article.readCount : 0}}</span>
+                    <span class="comments-count">评论 {{ article.commentCount  ? article.commentCount : 0}}</span>
+                    <span class="likes-count">点赞 {{ article.thumbCount  ? article.thumbCount : 0}}</span>
                     <em class="source">{{ sourceTypeList[article.source] }}</em>
                     <em class="type"
                         :class="`type${article.type}`">{{
@@ -198,6 +200,7 @@ import { Dropdown, Dialog } from '@components'
 // 在这里导入模块，而不是在 `store/index.js` 中
 import shopModule from '../../store/module/shop'
 import hljs from '@utils/highlight.pack'
+import moment from 'moment'
 
 import {
   statusList,
@@ -273,12 +276,16 @@ export default {
   },
   asyncData ({ store, route, accessToken = '' }) {
     // 触发 action 后，会返回 Promise
-    return Promise.all([
-      store.dispatch('article/GET_ARTICLE', {
-        aid: route.params.aid,
-        accessToken
-      })
-    ])
+    console.log('用户路由参数',route.params.aid)
+    if('undefined' != route.params.aid){
+      return Promise.all([
+        store.dispatch('article/GET_ARTICLE', {
+          aid: route.params.aid,
+          accessToken
+        })
+      ])
+    }
+
   },
   data () {
     return {
@@ -303,6 +310,7 @@ export default {
     this.getThumbUserList()
   },
   methods: {
+    moment,
     initHljs () {
       let blocks = document.querySelectorAll('pre code')
       blocks.forEach(block => {
@@ -368,12 +376,13 @@ export default {
       /*用户thumb 文章*/
       this.$store
         .dispatch('common/SET_THUMB', {
-          associate_id: this.article.aid,
+          associateId: this.article.aid,
           type: modelName.article
         })
         .then(result => {
-          this.$message.warning(result.message)
-          if (result.state === 'success') {
+          // console.log('点赞结果',result)
+          this.$message.warning(result.meta.message)
+          if (result.meta.success === true) {
             this.$store.dispatch('user/GET_ASSOCIATE_INFO')
             this.$store.dispatch('article/GET_ARTICLE', {
               aid: this.$route.params.aid
@@ -387,12 +396,12 @@ export default {
       /*用户collect 文章*/
       this.$store
         .dispatch('common/SET_COLLECT', {
-          associate_id: this.article.aid,
+          associateId: this.article.aid,
           type: modelName.article
         })
         .then(result => {
           this.$message.warning(result.message)
-          if (result.state === 'success') {
+          if (result.meta.success === true) {
             this.$store.dispatch('user/GET_ASSOCIATE_INFO')
           }
         })

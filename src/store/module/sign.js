@@ -13,6 +13,14 @@ const actions = {
       parameter: { email }
     })
   },
+  TOKEN: ({ commit, dispatch, state }, parameter) => {
+    // 登录 post
+    return fetch({
+      url: '/upc/token',
+      method: 'get',
+      parameter
+    })
+  },
   LOGIN: ({ commit, dispatch, state }, parameter) => {
     // 登录 post
     return fetch({

@@ -21,11 +21,11 @@
 
         <div class="btn-group"
              v-if="userInfo.uid != personalInfo.user.uid">
-          <button class="btn btn-private-chat"
-                  @click="privateChat">
-            <i class="iconfont"></i>
-            <span>私聊</span>
-          </button>
+<!--          <button class="btn btn-private-chat"-->
+<!--                  @click="privateChat">-->
+<!--            <i class="iconfont"></i>-->
+<!--            <span>私聊</span>-->
+<!--          </button>-->
           <button class="btn"
                   @click="onUserAttention(isAttention.is_attention)"
                   :class="isAttention.is_attention ? 'has' : 'no'">
@@ -172,15 +172,15 @@ export default {
       }).then(() => {
         this.$store
           .dispatch('common/SET_ATTENTION', {
-            associate_id: this.userInfo.uid,
+            associateId: this.userInfo.uid,
             type: modelName.user
           })
           .then(result => {
-            if (result.state === 'success') {
+            if (result.meta.success === true) {
               this.$store.dispatch('user/GET_ASSOCIATE_INFO')
-              this.$message.success(result.message)
+              this.$message.success(result.meta.message)
             } else {
-              this.$message.warning(result.message)
+              this.$message.warning(result.meta.message)
             }
           })
       })

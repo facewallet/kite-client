@@ -9,6 +9,7 @@ import Popover from './Popover'
 import Dropdown from './Dropdown'
 import Message from './Message'
 import Confirm from './Confirm'
+import Tinymce from './Tinymce'
 export {
   sendCode, // 发送验证码
   ScrollLoading, // 滚动加载
@@ -20,5 +21,6 @@ export {
   Popover,
   Dropdown,
   Message,
-  Confirm
+  Confirm,
+  Tinymce
 }

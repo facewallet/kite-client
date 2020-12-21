@@ -12,7 +12,7 @@
                    :style="`background-image: url(${write.coverImg})`"></div>
               <div class="cover-img-view cover-img-null"
                    v-else>
-                <p>封面图片为空，如果未上传，将采用默认图片</p>
+                <p>封面图片为空，如果未上传，将采用默认图片~</p>
               </div>
               <upload-image class="upload-cover-image"
                             @changeUpload="changeUploadCoverImg">上传封面</upload-image>
@@ -46,6 +46,7 @@
                             ref="mavonEditor"
                             :imageFilter="imageFilter"
                             @imgAdd="$imgAdd" />
+
             </div>
 
             <div class="row mrg-bm20">
@@ -153,6 +154,7 @@ import ClientOnly from 'vue-client-only'
 import marked from "marked";
 import { mapState } from 'vuex'
 import googleMixin from '@mixins/google'
+import Tinymce from "@components/Tinymce"
 import {
   payTypeText,
   isFree,
@@ -186,6 +188,7 @@ export default {
   },
   data () {
     return {
+      content2: '默认值',
       write: {
         coverImg: '', // 教程封面图片
         title: '', // 教程的标题
@@ -230,10 +233,15 @@ export default {
     }
   },
   created () {
+
     this.initArticleTagAll()
     if (this.$route.params.type !== "create") {
       this.isEdit()
     }
+    // 设置中文
+    // Tinymce.init({
+    //   language:'zh_CN'
+    // })
   },
   watch: {
     searchArticleTag (val) {
@@ -299,11 +307,13 @@ export default {
     changeUploadCoverImg ({ formData, config }) { // 上传封面图片
       this.$store.dispatch('common/UPLOAD_FILE', formData)
         .then(result => {
-          if (result.state === 'success') {
-            this.write.coverImg = result.data.fileUrl
+          console.log("返回的上传：",result)
+          if (result.meta.success === true) {
+          // if (result.state === 'success') {
+            this.write.coverImg = result.data.url
             this.$message.success('上传封面成功')
           } else {
-            this.$message.warning(result.message)
+            this.$message.warning(result.meta.message)
           }
         })
     },
@@ -368,11 +378,11 @@ export default {
       this.$store
         .dispatch("common/UPLOAD_FILE", formData)
         .then(res => {
-          if (res.state === "success") {
+          if (res.meta.success === true) {
             this.$message.success("上传教程图片成功");
-            this.$refs.mavonEditor.$img2Url(pos, res.data.fileUrl);
+            this.$refs.mavonEditor.$img2Url(pos, res.data.url);
           } else {
-            this.$message.warning(res.message);
+            this.$message.warning("上传教程图片失败");
             return false
           }
         });
@@ -436,7 +446,8 @@ export default {
   components: {
     'mavon-editor': mavonEditor,
     UploadImage,
-    ClientOnly
+    ClientOnly,
+    Tinymce
   },
   computed: {
     articleTagAll () {
@@ -449,6 +460,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .Tinymce_box {
+    display: flex;
+  }
+  .editor-content {
+    margin-left: 30px;
+    flex-grow: 1;
+    border: 2px dashed #f1f1f1;
+    padding:0 20px;
+  }
+  h3 {
+    color: #808080;
+  }
+
 .books-write-lay {
   .client-card-shadow {
     padding: 20px;

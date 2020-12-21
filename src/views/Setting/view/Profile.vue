@@ -8,29 +8,32 @@
           <span class="title">头像</span>
           <div class="avatar-uploader avatar-uploader">
             <div class="avatar">
-              <img v-lazy="
-                  formData.avatar_review_status === 1 ||
-                  formData.avatar_review_status === 3
-                    ? formData.avatar_review
-                    : formData.avatar
-                "
+<!--              <img v-lazy="-->
+<!--                  formData.avatar_review_status === 1 ||-->
+<!--                  formData.avatar_review_status === 3-->
+<!--                    ? formData.avatar_review-->
+<!--                    : formData.avatar-->
+<!--                "-->
+<!--                   class="box-image"-->
+<!--                   alt="" />-->
+              <img v-lazy="formData.avatar"
                    class="box-image"
                    alt="" />
             </div>
             <div class="action-box">
               <div class="hint">
                 支持 jpg、png 格式大小 1M 以内的图片
-                <span class="hint-review"
-                      v-if="
-                    formData.avatar_review_status === 1 ||
-                      formData.avatar_review_status === 3
-                  ">
-                  ({{
-                    formData.avatar_review_status === 1
-                      ? '新头像正在审核中，审核通过则显示，否则将换回原头像'
-                      : '头像审核失败，请重新上传'
-                  }})
-                </span>
+<!--                <span class="hint-review"-->
+<!--                      v-if="-->
+<!--                    formData.avatar_review_status === 1 ||-->
+<!--                      formData.avatar_review_status === 3-->
+<!--                  ">-->
+<!--                  ({{-->
+<!--                    formData.avatar_review_status === 1-->
+<!--                      ? '新头像正在审核中，审核通过则显示，否则将换回原头像'-->
+<!--                      : '头像审核失败，请重新上传'-->
+<!--                  }})-->
+<!--                </span>-->
               </div>
               <upload-image class="upload-image"
                             @changeUpload="changeAvatar">上传图片</upload-image>
@@ -50,17 +53,17 @@
           <span class="title">性别</span>
           <div class="input-box profile-radio">
             <input type="radio"
-                   name="sex"
+                   name="gender"
                    value="1"
-                   v-model="formData.sex" /><span>男</span>
+                   v-model="formData.gender" /><span>男</span>
             <input type="radio"
-                   name="sex"
+                   name="gender"
                    value="2"
-                   v-model="formData.sex" /><span>女</span>
+                   v-model="formData.gender" /><span>女</span>
             <input type="radio"
-                   name="sex"
+                   name="gender"
                    value="0"
-                   v-model="formData.sex" /><span>保密</span>
+                   v-model="formData.gender" /><span>保密</span>
           </div>
         </li>
 
@@ -150,7 +153,7 @@ export default {
       user_info: '',
       formData: {
         nickname: '',
-        sex: '',
+        gender: '',
         is_msg_push: 0,
         profession: '',
         company: '',
@@ -182,11 +185,11 @@ export default {
         .dispatch('setting/PERSONAL_UPLOAD_INFO', this.formData)
         .then(result => {
           this.$nextTick(() => {
-            if (result.state === 'success') {
+            if (result.meta.success === true) {
               this.$message.success('保存成功')
               this.$store.dispatch('PERSONAL_INFO')
             } else {
-              this.$message.warning(result.message)
+              this.$message.warning(result.meta.message)
             }
           })
         })
@@ -194,26 +197,37 @@ export default {
     changeAvatar ({ formData, config }) {
 
       this.$store
-        .dispatch('common/UPLOAD_FILE', formData)
+        .dispatch('common/UPLOAD_AVATAR', formData)
         .then(res => {
-          if (res.state === 'success') {
-            this.$store
-              .dispatch('setting/PERSONAL_UPLOAD_AVATAR', { avatar: res.data.fileUrl })
-              .then(result => {
-                this.$nextTick(function () {
-                  if (result.state === 'success') {
-                    this.$message.success('上传用户头像成功，头像正在审核中')
-                    this.$store.dispatch('PERSONAL_INFO')
-                    window.location.reload()
-                  } else {
-                    this.$message.warning(result.message)
-                  }
-                })
-              })
-          } else {
-            this.$message.warning(res.message)
-            return false
-          }
+          //todo
+          this.$nextTick(function () {
+            if (res.meta.success === true) {
+              this.$message.success('上传用户头像成功')
+              this.$store.dispatch('PERSONAL_INFO')
+              window.location.reload()
+            } else {
+              this.$message.warning(res.meta.message)
+            }
+          })
+
+          // if (res.meta.success === true) {
+          //   this.$store
+          //     .dispatch('setting/PERSONAL_UPLOAD_AVATAR', { avatar: res.data.fileUrl })
+          //     .then(result => {
+          //       this.$nextTick(function () {
+          //         if (result.state === 'success') {
+          //           this.$message.success('上传用户头像成功，头像正在审核中')
+          //           this.$store.dispatch('PERSONAL_INFO')
+          //           window.location.reload()
+          //         } else {
+          //           this.$message.warning(result.message)
+          //         }
+          //       })
+          //     })
+          // } else {
+          //   this.$message.warning(res.message)
+          //   return false
+          // }
         })
     }
   },

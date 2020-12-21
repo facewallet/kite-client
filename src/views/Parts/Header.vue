@@ -74,7 +74,7 @@
                       name: 'dynamics',
                       params: { dynamicTopicId: 'newest' }
                     }"
-                               class="nav-link">百多帮</router-link>
+                               class="nav-link">百多帮&reg;</router-link>
                 </li>
                 <li class="nav-item"
                     :class="{'active':$route.name==='books'}">
@@ -157,18 +157,18 @@
                       }">
                       <i class="item-icon el-icon-user"></i>
                       我的主页</router-link>
-                    <router-link class="dropdown-menu-item"
-                                 :to="{ name: 'myOrder' }">
-                      <i class="item-icon el-icon-notebook-1"></i>
-                      我的订单</router-link>
-                    <router-link class="dropdown-menu-item"
-                                 :to="{ name: 'experienceDetail' }">
-                      <i class="item-icon el-icon-document-checked"></i>
-                      经验明细</router-link>
-                    <router-link class="dropdown-menu-item"
-                                 :to="{ name: 'shellDetail' }">
-                      <i class="item-icon el-icon-notebook-2"></i>
-                      贝壳明细</router-link>
+<!--                    <router-link class="dropdown-menu-item"-->
+<!--                                 :to="{ name: 'myOrder' }">-->
+<!--                      <i class="item-icon el-icon-notebook-1"></i>-->
+<!--                      我的订单</router-link>-->
+<!--                    <router-link class="dropdown-menu-item"-->
+<!--                                 :to="{ name: 'experienceDetail' }">-->
+<!--                      <i class="item-icon el-icon-document-checked"></i>-->
+<!--                      经验明细</router-link>-->
+<!--                    <router-link class="dropdown-menu-item"-->
+<!--                                 :to="{ name: 'shellDetail' }">-->
+<!--                      <i class="item-icon el-icon-notebook-2"></i>-->
+<!--                      贝壳明细</router-link>-->
                     <router-link class="dropdown-menu-item"
                                  :to="{ name: 'collect' }">
                       <i class="item-icon el-icon-folder-opened"></i>

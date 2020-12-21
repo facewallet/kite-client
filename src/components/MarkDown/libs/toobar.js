@@ -15,6 +15,18 @@ function $toolbar_left_undo_click ($vm) {
     })
   }
   $vm.getTextareaDom().focus()
+  // console.log('撤销-3----------')
+  // if ($vm.d_history_index > 0) {
+  //   $vm.d_history_index--
+  // }
+  // // $vm.$refs.vNoteDivEdit.innerHTML = $vm.s_markdown.render($vm.d_value)
+  // $vm.$nextTick(() => {
+  //   // 光标操作
+  //   let start = $vm.textarea_selectionEnds[$vm.d_history_index]
+  //   $vm.getTextareaDom().selectionStart = start
+  //   $vm.getTextareaDom().selectionEnd = start
+  // })
+  // $vm.getTextareaDom().focus()
 }
 // redo
 function $toolbar_left_redo_click ($vm) {
@@ -100,8 +112,8 @@ export const toolbar_left_click = (_type, $vm) => {
       str: lang.tl_header_six
     },
     underline: {
-      prefix: '++',
-      subfix: '++',
+      prefix: '<u>',
+      subfix: '</u>',
       str: lang.tl_underline
     },
     strikethrough: {

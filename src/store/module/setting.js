@@ -15,8 +15,9 @@ const actions = {
   },
   PERSONAL_UPLOAD_INFO ({ commit, dispatch, state }, parameter) {
     // 更新用户信息
+    console.log('二虎睛石------', parameter)
     return fetch({
-      url: '/personal/update-info',
+      url: '/personal/update',
       method: 'put',
       parameter: parameter
     })
@@ -24,7 +25,7 @@ const actions = {
   PERSONAL_UPLOAD_PASSWORD ({ commit, dispatch, state }, parameter) {
     // 更新用户密码
     return fetch({
-      url: '/personal/update-password',
+      url: '/upc/update/password',
       method: 'put',
       parameter: parameter
     })

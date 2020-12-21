@@ -17,7 +17,7 @@ const state = () => ({
 const mutations = {
   SET_BOOKS_LIST (state, data) {
     // 设置小书列表
-    state.booksList = data
+    if(data) state.booksList = data
   },
   SET_BOOKS_INFO (state, data) {
     // 设置小书列表
@@ -37,7 +37,7 @@ const actions = {
       method: 'get',
       parameter: { params: parameter }
     }).then(result => {
-      commit('SET_BOOKS_LIST', result.data)
+      commit('SET_BOOKS_LIST', result.data.list)
       return result
     })
   },
