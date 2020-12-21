@@ -151,6 +151,11 @@ export default [
         path: 'private-chat-list',
         name: 'privateChatList',
         component: require('@views/User/Chat/PrivateChatList').default // 私聊列表
+      },
+      {
+        path: '*',
+        name: '404',
+        component: require('@views/404/404').default // 私聊列表
       }
     ]
   },
