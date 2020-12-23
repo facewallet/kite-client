@@ -51,8 +51,9 @@ const actions = {
       method: 'get',
       parameter: { params: parameter }
     }).then(result => {
+      console.log('到哪了？',result)
       if (parameter.isCommit) {
-        commit('SET_DYNAMIC_LIST', result.data)
+        commit('SET_DYNAMIC_LIST', result.data.list)
       }
       return result
     })
@@ -65,7 +66,7 @@ const actions = {
       parameter: { ...parameter }
       // parameter: { params: parameter }
     }).then(result => {
-      commit('SET_DYNAMIC_LIST', result.data)
+      commit('SET_DYNAMIC_LIST', result.data.list)
       return result
     })
   },

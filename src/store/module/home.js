@@ -20,12 +20,14 @@ const mutations = {
       page: 0
     }
   },
-  SET_INDEX_ARTICLE_LIST (state, { list, column_en_name, count, page }) {
-    // let _list = state.article.article_list
+  // SET_INDEX_ARTICLE_LIST (state, { list, column_en_name, count, page }) {
+  SET_INDEX_ARTICLE_LIST (state, data) {
+    let _list = state.article.article_list
     // 首页 专栏页 文章列表
-    state.article = { column_en_name, count, page }
-    // state.article.article_list = [..._list, ...list]
-    state.article.article_list = [...list]
+    const list = data.list.list
+    // state.article = { column_en_name, count, page }
+    state.article.article_list = [..._list, ...list]
+    // state.article.article_list = [...list]
   },
   SET_POPULAR_ARTICLE_TAG (state, data) {
     // 设置热门文章标签

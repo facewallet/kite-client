@@ -1,6 +1,6 @@
 // 此文件是 kite 的总配置文件
 const path = require('path')
-
+const PORT = process.env.npm_config_port || 8081
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const IS_NODE_ENV = process.env.NODE_ENV === 'development'
 const THEME_NAME = 'default'
@@ -17,7 +17,8 @@ module.exports = {
   THEME_NAME,
   publicStatic: ProcessCwd('static'),
   client: {
-    port: 8081, // 前台调试端口号
+    port: PORT, // 前台调试端口号
+    // port: 8081, // 前台调试端口号
     assetsSubDirectory: 'static',
     proxy: {
       target: `http://localhost:8086`, // client ssr

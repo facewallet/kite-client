@@ -162,8 +162,10 @@ export default {
           page: this.page
         })
         .then(result => {
+          console.log('当前页',this.page)
+          console.log('总页数',result.data.list.pages)
           this.isLoading = false;
-          if (result.data.article_list.length === this.pageSize) {
+          if (result.meta.success === true && this.page < result.data.list.pages) {
             this.page += 1;
           } else {
             this.isMore = false;

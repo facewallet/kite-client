@@ -208,7 +208,7 @@
 
 <script>
 // import logoImg from '../../assets/images/xiaosuibi.png'
-import logoImg from '../../assets/images/es5.png'
+import logoImg from '../../assets/images/es2.png'
 import { cookie } from '../../utils/cookie.js'
 import { mapState } from 'vuex'
 import { Dropdown } from '@components'

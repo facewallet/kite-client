@@ -40,7 +40,8 @@
                       params: { dynamicId: item.id }
                     }">
                     <div class="content-box">
-                      <div class="content">{{ item.content }}</div>
+                      <div v-html="contentRender(item.content)"></div>
+<!--                      <div class="content">{{ item.content }}</div>-->
                       <div class="stat item">
                         <span>{{ item.thumb_count }} 赞 · </span><span>{{ item.comment_count }} 评论</span>
                       </div>
@@ -62,7 +63,7 @@ import dynamicWrite from './component/dynamicWrite'
 import dynamicAside from './component/dynamicAside'
 
 import commentItem from '../Comment/DynamicComment/CommentItem'
-import { Page, ScrollLoading } from '@components'
+import { faceQQ,Page, ScrollLoading } from '@components'
 import commentForm from '../Comment/DynamicComment/CommentForm'
 import { share, baidu, google } from '@utils'
 import { fetch } from '@request'
@@ -159,6 +160,16 @@ export default {
     }
   },
   methods: {
+    contentRender (val) {
+      let content = val
+      faceQQ.map(faceItem => {
+        content = content.replace(
+                new RegExp('\\' + faceItem.face_text, 'g'),
+                faceItem.face_view
+        )
+      })
+      return content
+    },
     infiniteHandler () {
       this.isLoading = true
       fetch({

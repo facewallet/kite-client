@@ -159,8 +159,10 @@ export default {
           isCommit: true
         })
         .then(result => {
+          console.log('当前页',this.page)
+          console.log('总页数',result)
           this.isLoading = false
-          if (result.data.list.length === 10) {
+          if (result.meta.success === true && (this.page < result.data.list.pages ) ) {
             this.page += 1
           } else {
             this.isMore = false

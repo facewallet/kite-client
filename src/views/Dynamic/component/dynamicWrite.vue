@@ -111,16 +111,16 @@
                         class="search-input"
                         placeholder="请输入连接地址">
                   <ul class="topic-list">
-                    <li @click="onTopic">
-                      <div class="topic-item no-topic">
-                        <div class="icon">
-                          <i class="el-icon-remove-outline"></i>
-                        </div>
-                        <div class="content">
-                          <span>不添加任何话题</span>
-                        </div>
-                      </div>
-                    </li>
+<!--                    <li @click="onTopic">-->
+<!--                      <div class="topic-item no-topic">-->
+<!--                        <div class="icon">-->
+<!--                          <i class="el-icon-remove-outline"></i>-->
+<!--                        </div>-->
+<!--                        <div class="content">-->
+<!--                          <span>不添加任何话题</span>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </li>-->
                     <li v-for="(item,key) in searchTopicResultList"
                         @click="onTopic(item)"
                         :key="key">
@@ -256,10 +256,14 @@ export default {
       }
       this.$store.dispatch('common/UPLOAD_FILE', formData)
         .then(result => {
-          this.coverImage += result.data.fileUrl + ','
+          if (result.meta.success === true) {
+            this.coverImage += result.data.url + ','
+          }
+
         })
     },
     deleteCoverImage (url, index) { // 删除已上传的图片
+      //todo 这个地方要删除
       let coverImageArr = this.coverImage.split(',') || []
       coverImageArr.splice(index, 1)
       let newCoverImageArr = coverImageArr.join(',')

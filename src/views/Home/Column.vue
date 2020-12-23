@@ -50,7 +50,7 @@ export default {
       titleTemplate: `%s - ${this.website.meta.website_name}`,
       meta: [
         {
-          // set meta 
+          // set meta
           name: "description",
           content: `${this.currentColumn().name} - ${this.currentColumn().description}`
         }
@@ -100,7 +100,7 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     // 在当前路由改变，但是该组件被复用时调用
-    // this.initHomeDate()
+    this.initHomeDate()
     this.$refs.navSort.dafauleNav();
     this.isMore = true;
     next();
@@ -139,8 +139,10 @@ export default {
           page: this.page
         })
         .then(result => {
+          console.log('当前页1',this.page)
+          console.log('总页数1',result.data.list.pages)
           this.isLoading = false;
-          if (result.data.article_list.length === this.pageSize) {
+          if (result.meta.success === true && this.page < result.data.list.pages) {
             this.page += 1;
           } else {
             this.isMore = false;
