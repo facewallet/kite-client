@@ -63,7 +63,7 @@ const actions = {
     return fetch({
       url: '/dynamic/list-my',
       method: 'get',
-      parameter: { ...parameter }
+      parameter: { ...parameter, params: parameter }
       // parameter: { params: parameter }
     }).then(result => {
       commit('SET_DYNAMIC_LIST', result.data.list)

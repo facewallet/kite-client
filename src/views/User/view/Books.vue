@@ -74,9 +74,9 @@
       </div>
     </div>
 
-    <Page :total="Number(books.count)"
+    <Page :total="Number(books.total)"
           :pageSize="Number(books.pageSize)"
-          :page="Number(books.page)||1"
+          :page="Number(books.pageNum)||1"
           @pageChange="pageChange"></Page>
 
   </div>
@@ -123,8 +123,8 @@ export default {
         pageSize: this.books.pageSize || 10,
       }).then(result => {
         console.log('返回的', result)
-        this.books.list = result.data.list
-        // this.books = result.data
+        // this.books.list = result.data.list
+        this.books = result.data.list
         this.isLoading = false
       }).catch(() => {
         this.isLoading = false

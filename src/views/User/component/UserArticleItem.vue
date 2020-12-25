@@ -28,18 +28,18 @@
         <ul class="meta-list">
           <li class="item item-icon read-count">
             <i class="el-icon-view"></i>
-            <strong v-text="articleItem.readCount"></strong>
+            <strong v-text="articleItem.readCount?articleItem.readCount:0"></strong>
           </li>
           <li class="item item-icon like-article">
             <i class="el-icon-star-off"></i>
-            <strong v-text="articleItem.thumbCount"></strong>
+            <strong v-text="articleItem.thumbCount?articleItem.thumbCount:0"></strong>
           </li>
           <li class="item item-icon comment-count">
             <i class="el-icon-chat-dot-round"></i>
-            <strong v-text="articleItem.commentCount"></strong>
+            <strong v-text="articleItem.commentCount?articleItem.commentCount:0"></strong>
           </li>
           <li class="item"
-              v-text="articleItem.create_dt"></li>
+          v-text=" articleItem.updateDate ? moment(articleItem.updateDate).format('YYYY-MM-DD HH:mm') : moment().format('YYYY-MM-DD HH:mm') " ></li>
           <li class="item"
               v-if="articleItem.tag_ids">
             <router-link v-for="(itemTag,key) in articleItem.tag"
@@ -91,6 +91,7 @@
 <script>
 import { mapState } from 'vuex'
 import { Dropdown } from '@components'
+import moment from 'moment'
 import {
   statusList,
   articleType,
@@ -112,6 +113,7 @@ export default {
     };
   },
   methods: {
+    moment,
     deleteArticle () {
       this.$confirm("此操作将永久删除该文章, 是否继续?", "提示", {
         confirmButtonText: "确定",

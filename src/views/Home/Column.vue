@@ -98,15 +98,21 @@ export default {
       isMore: true
     };
   },
-  beforeRouteUpdate (to, from, next) {
-    // 在当前路由改变，但是该组件被复用时调用
-    this.initHomeDate()
-    this.$refs.navSort.dafauleNav();
-    this.isMore = true;
-    next();
-  },
+  // beforeRouteUpdate (to, from, next) {
+  //   // 在当前路由改变，但是该组件被复用时调用
+  //   this.initHomeDate()
+  //   this.$refs.navSort.dafauleNav();
+  //   this.isMore = true;
+  //   next();
+  // },
   created () {
     this.$store.dispatch("home/GET_POPULAR_ARTICLE_TAG"); // 获取热门文章标签
+  },
+  watch: {
+    $route(to, from){
+      this.initHomeDate()
+      console.log('在这个地方调用------')
+    }
   },
   methods: {
     navTap (val) {

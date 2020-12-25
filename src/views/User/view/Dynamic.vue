@@ -32,10 +32,10 @@
                  target="_blank"
                  rel=""
                  class="meta-box-item time-box">
-                <time :title="dynamicItem.create_dt"
+                <time :title="dynamicItem.updateDate "
                       class="time">{{
-                  dynamicItem.create_dt
-                }}</time>
+                  dynamicItem.updateDate ? moment(dynamicItem.updateDate).format('YYYY-MM-DD HH:mm') : moment().format('YYYY-MM-DD HH:mm')
+                  }}</time>
               </a>
               <div class="dot">·</div>
               <div class="meta-box-item like-action action"
@@ -46,14 +46,14 @@
                 }"
                    @click="userThumdDynamic(dynamicItem)">
                 <i class="el-icon-thumb"></i>
-                <span class="action-title">{{ dynamicItem.thumbCount }}</span>
+                <span class="action-title">{{ dynamicItem.thumbCount ? dynamicItem.thumbCount:0}}</span>
               </div>
               <div class="dot">·</div>
               <div class="meta-box-item comment-action action"
                    @click="isCommnet = !isCommnet">
                 <i class="el-icon-chat-line-round"></i>
                 <span class="action-title">{{
-                  dynamicItem.comment_count
+                  dynamicItem.comment_count?dynamicItem.comment_count:0
                 }}</span>
               </div>
             </div>
@@ -118,9 +118,9 @@
       </div>
     </div>
 
-    <Page :total="Number(dynamicList.count)"
+    <Page :total="Number(dynamicList.total)"
           :pageSize="Number(dynamicList.pageSize)"
-          :page="Number(dynamicList.page) || 1"
+          :page="Number(dynamicList.pageNum) || 1"
           @pageChange="pageChange"></Page>
   </div>
 </template>
@@ -129,6 +129,7 @@
 import { Page, faceQQ, Dropdown } from '@components'
 import { mapState } from 'vuex'
 import { modelName } from '@utils/constant'
+import moment from 'moment'
 
 export default {
   name: 'Dynamic',
@@ -153,6 +154,7 @@ export default {
     }
   },
   methods: {
+    moment,
     selectAttentionUserClass (type) {
       let userAttentionAll = document.querySelectorAll(
         `.user-attention-${this.dynamicItem.user.uid}`
@@ -193,11 +195,11 @@ export default {
               id
             })
             .then(result => {
-              if (result.state === 'success') {
-                this.$message.success(result.message)
+              if (result.meta.success === true) {
+                this.$message.success(result.meta.message)
                 this.getPersonalDynamicList()
               } else {
-                this.$message.error(result.message)
+                this.$message.error(result.meta.message)
               }
             })
         })
@@ -248,7 +250,7 @@ export default {
           pageSize: this.dynamicList.pageSize || 10
         })
         .then(result => {
-          this.dynamicList = result.data
+          this.dynamicList = result.data.list
           this.isLoading = false
         })
         .catch(() => {

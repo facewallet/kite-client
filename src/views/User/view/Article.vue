@@ -73,9 +73,9 @@
                            :articleItem="item" />
         </div>
       </div>
-      <Page :total="Number(myArticle.count)"
+      <Page :total="Number(myArticle.total)"
             :pageSize="Number(myArticle.pageSize)"
-            :page="Number(myArticle.page) || 1"
+            :page="Number(myArticle.pageNum) || 1"
             @pageChange="pageChange"></Page>
     </div>
   </div>
@@ -131,7 +131,7 @@ export default {
           pageSize: this.myArticle.pageSize || 10
         })
         .then(result => {
-          this.myArticle = result.data
+          this.myArticle = result.data.list
           this.isLoading = false
         })
         .catch(() => {

@@ -119,9 +119,9 @@
       </div>
     </div>
 
-    <Page :total="Number(articleBlog.count)"
+    <Page :total="Number(articleBlog.total)"
           :pageSize="Number(articleBlog.pageSize)"
-          :page="Number(articleBlog.page) || 1"
+          :page="Number(articleBlog.pageNum) || 1"
           @pageChange="pageChange"></Page>
 
     <!-- use the modal component, pass in the prop -->
@@ -249,7 +249,8 @@ export default {
         })
         .then(result => {
           console.log('关羽', result.data)
-          this.articleBlog.list = result.data.list
+          // this.articleBlog.list = result.data.list
+          this.articleBlog = result.data.list
           this.isLoading = false
         })
         .catch(() => {

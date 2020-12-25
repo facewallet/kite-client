@@ -130,6 +130,12 @@ export default {
     this.$store.dispatch('dynamic/GET_DYNAMIC_TOPIC_INDEX') // 获取首页动态专题列表
   },
   methods: {
+    initDynamicDate () {
+      this.$store.commit("dynamic/INIT_DYNAMIC_LIST"); // 重置BDB列表数据
+      this.isMore = true;
+      this.page = 1;
+      this.infiniteHandler();
+    },
     dynamicSubmit () {
       // 评论提交的回调
       if (this.$route.params.dynamicTopicId !== 'following') {
@@ -160,7 +166,7 @@ export default {
         })
         .then(result => {
           console.log('当前页',this.page)
-          console.log('总页数',result)
+          console.log('总页数',result.data.list.pages)
           this.isLoading = false
           if (result.meta.success === true && (this.page < result.data.list.pages ) ) {
             this.page += 1
@@ -178,6 +184,7 @@ export default {
   },
   watch: {
     $route(to, from){
+      this.initDynamicDate()
       console.log('在这个地方调用------')
     }
   },

@@ -44,9 +44,9 @@
     </ul>
 
     <div class="pagination">
-      <Page :total="Number(userAttentionList.count)"
+      <Page :total="Number(userAttentionList.total)"
             :pageSize="Number(userAttentionList.pageSize)"
-            :page="Number(userAttentionList.page || 1)"
+            :page="Number(userAttentionList.pageNum || 1)"
             @pageChange="pageChange"></Page>
     </div>
   </div>
@@ -91,7 +91,7 @@ export default {
         })
         .then(result => {
           if (result.meta.success === true) {
-            this.userAttentionList = result.data
+            this.userAttentionList = result.data.list
             this.isLoading = false
           }
 
