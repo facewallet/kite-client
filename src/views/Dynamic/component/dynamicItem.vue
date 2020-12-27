@@ -48,10 +48,11 @@
                target="_blank"
                rel=""
                class="time-box">
-              <time :title="dynamicItem.create_dt"
+              <time :title="dynamicItem.createDate"
                     class="time">{{
-                dynamicItem.create_dt
-              }}</time>
+                dynamicItem.createDate ? moment(dynamicItem.createDate).format('YYYY-MM-DD HH:mm') : moment().format('YYYY-MM-DD HH:mm')
+
+                }}</time>
             </a>
           </div>
         </div>
@@ -179,6 +180,7 @@ import { faceQQ, Dropdown, Dialog } from '@components'
 import { mapState } from 'vuex'
 import { share } from '@utils'
 import { dynamicType, modelName, dynamicTypeText } from '@utils/constant'
+import moment from 'moment'
 
 export default {
   name: 'dynamicItem',
@@ -205,6 +207,7 @@ export default {
     }
   },
   methods: {
+    moment,
     previewImg (url) {
       // 图片预览
       console.log('url', url)
@@ -306,16 +309,16 @@ export default {
     },
     isThumb (item) {
       // 是否收藏
-      console.log('孙武-----',this.user.associateInfo.dynamicThumdId)
-      console.log('韶关-----',item.id)
+      // console.log('孙武-----',this.user.associateInfo.dynamicThumdId)
+      // console.log('韶关-----',item.id)
       if (
               this.user.associateInfo.dynamicThumdId &&
               ~this.user.associateInfo.dynamicThumdId.indexOf(item.id+'')
       ) {
-        console.log('撤兵-----',true)
+        // console.log('撤兵-----',true)
         return true
       } else {
-        console.log('楚国-----',false)
+        // console.log('楚国-----',false)
         return false
       }
     },

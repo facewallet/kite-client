@@ -379,9 +379,9 @@ export default {
         }
         .add-book {
           float: right;
-          color: rgba(0, 0, 0, 0.88);
-          background: #b7d6ec;
-          border: 1px solid #b7d6ec;
+          color: rgba(255, 255, 255, 0.88);
+          background: #ea6f5a;
+          border: 1px solid #ea6f5a;
           cursor: pointer;
           padding: 5px 12px;
           border-radius: 3px;

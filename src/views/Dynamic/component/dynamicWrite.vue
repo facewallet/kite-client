@@ -106,10 +106,10 @@
 
             <Popover :visible.sync="isTopicPopover">
                 <div class="topic-view">
-                  <input type="text"
-                        v-model="searchTopicVal"
-                        class="search-input"
-                        placeholder="请输入连接地址">
+<!--                  <input type="text"-->
+<!--                        v-model="searchTopicVal"-->
+<!--                        class="search-input"-->
+<!--                        placeholder="请输入连接地址">-->
                   <ul class="topic-list">
 <!--                    <li @click="onTopic">-->
 <!--                      <div class="topic-item no-topic">-->

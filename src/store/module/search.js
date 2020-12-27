@@ -2,6 +2,9 @@ import { fetch } from '@request'
 
 const state = () => ({
   searchArticle: {
+    list: [],
+    total: 0,
+    pageNum: 1,
     article_list: [],
     count: 0,
     page: 1,
@@ -14,7 +17,8 @@ const state = () => ({
 const mutations = {
   SET_ARTICLE_SEARCH (state, data) {
     // 设置搜索的文章
-    state.searchArticle = data
+    state.searchArticle = data.list
+    state.searchArticle.search = data.search
   }
 }
 
@@ -26,8 +30,14 @@ const actions = {
       method: 'get',
       parameter: { params: parameter }
     }).then(result => {
-      commit('SET_ARTICLE_SEARCH', result.data)
-      return result
+      if (result.meta.success === true) {
+        this.$message.success(result.meta.message)
+        commit('SET_ARTICLE_SEARCH', result.data)
+        return result
+      } else {
+        this.$message.warning(result.meta.message);
+      }
+
     })
   }
 }

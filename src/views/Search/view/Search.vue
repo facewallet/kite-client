@@ -13,7 +13,7 @@
               </div>
               <div class="info">
                 一共有
-                {{searchArticle.count}} 条结果
+                {{searchArticle.total}} 条结果
               </div>
             </div>
 
@@ -25,16 +25,18 @@
               </ul>
               <div class="article-view">
                 <div class="article-item"
-                     v-for="(item,key) in searchArticle.article_list"
+                     v-for="(item,key) in searchArticle.list"
                      :key="key">
                   <ArticleItem :articleItem="item" />
                 </div>
               </div>
 
-              <Page :total="Number(searchArticle.count)"
+<!--              :page="Number($route.query.page)||1"-->
+
+              <Page :total="Number(searchArticle.total)"
                     :pageSize="Number(searchArticle.pageSize)"
-                    :page="Number($route.query.page)||1"
-                    @pageChange="pageChange"></Page>
+                    :page="Number(searchArticle.pageNum)||1"
+                    @pageChange="pageChange(searchArticle)"></Page>
             </div>
           </div>
         </div>
@@ -78,10 +80,18 @@ export default {
   },
   methods: {
     pageChange (val) {
+      console.log('val------search1',val.search)
+      console.log('val------search2',Number(val.pageNum) +1)
       this.$router.push({
-        search: this.$route.query.query || '',
-        page: this.$route.query.page || 1
+        name: 'search',
+        query: { query: val.search , page: Number(val.pageNum) +1 || 1}
       })
+
+      // this.$router.push({
+      //   // search: this.$route.query.query || '',
+      //   search: val.search,
+      //   page: Number(val.pageNum) +1 || 1
+      // })
     }
   },
   computed: {
