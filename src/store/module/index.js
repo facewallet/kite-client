@@ -12,6 +12,7 @@ import book from './book'
 import virtual from './virtual'
 import common from './common'
 import graphql from './graphql'
+import im from './im2'
 
 export default {
   home,
@@ -27,5 +28,6 @@ export default {
   book,
   virtual,
   common,
-  graphql
+  graphql,
+  im
 }

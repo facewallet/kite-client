@@ -1,4 +1,8 @@
 import Vue from 'vue'
+
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
 import App from './App.vue'
 import { createRouter } from './router'
 import { createStore } from './store'
@@ -10,6 +14,8 @@ import './assets/css/box_layout.scss'
 import './assets/css/reset.scss'
 import './assets/css/other.scss'
 import './assets/fonts/icon.scss'
+
+Vue.use(ElementUI)
 
 Vue.prototype.$confirm = Confirm.install
 Vue.use(Message)

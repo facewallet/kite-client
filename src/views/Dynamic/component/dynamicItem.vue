@@ -125,9 +125,9 @@
           <span class="action-title">{{ dynamicItem.thumbCount }}</span>
         </div>
         <div class="comment-action action"
-             @click="isCommnet = !isCommnet">
+             @click="privateChat(dynamicItem)">
           <i class="el-icon-chat-line-round"></i>
-          <span class="action-title">{{ dynamicItem.comment_count }}</span>
+<!--          <span class="action-title">{{ dynamicItem.comment_count }}</span>-->
         </div>
         <div class="share-action action">
           <Dropdown>
@@ -208,6 +208,20 @@ export default {
   },
   methods: {
     moment,
+    privateChat (dynamicItem) {
+      if (!this.personalInfo.islogin) {
+        this.$router.push({ name: 'signIn' })
+        return false
+      }
+      if (dynamicItem.user.uid === this.personalInfo.user.uid) {
+        this.$message.error('自己不能和自己私聊')
+        return false
+      }
+      this.$router.push({
+        name: 'im',
+        query: { nickname: dynamicItem.user.nickname }
+      })
+    },
     previewImg (url) {
       // 图片预览
       console.log('url', url)

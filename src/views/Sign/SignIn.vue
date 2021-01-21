@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     login () {
-
+      const _this = this
       this.$store.dispatch('sign/TOKEN', this.formData).then(res => {
         // if (res.state === 'success') {
         if (res.meta.success === true) {
@@ -116,6 +116,8 @@ export default {
             // if (res.state === 'success') {
             if (res.meta.success === true) {
               this.$message.success(res.meta.message)
+              _this.$store.dispatch('im/initJIM2', res.data)
+              // this.$store.dispatch('im/initJIM2', res.data.init, res.data.user)
               this.$refs.login.reset()
               cookie.set('accessToken', res.data.user.token, 7)
               this.$router.push({

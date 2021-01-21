@@ -68,7 +68,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
         options: {
-          plugins: ['@babel/plugin-syntax-dynamic-import', 'transform-vue-jsx']
+          plugins: ['@babel/plugin-syntax-dynamic-import', 'transform-vue-jsx', '@babel/plugin-proposal-class-properties']
         }
       },
       {

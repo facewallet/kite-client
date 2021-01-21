@@ -29,6 +29,11 @@ export default [
         component: () => import('@views/Search/view/Search') // 搜索页
       },
       {
+        path: 'im',
+        name: 'im',
+        component: () => import('@views/IM/IM') // 搜索页
+      },
+      {
         path: 'user/:uid/:routeType',
         name: 'user',
         component: () => import('@views/User/User') // 用户内页
@@ -151,6 +156,7 @@ export default [
         path: 'private-chat-list',
         name: 'privateChatList',
         component: require('@views/User/Chat/PrivateChatList').default // 私聊列表
+        // component: require('@views/User/Chat/PrivateChatList').default // 私聊列表
       },
       {
         path: '*',

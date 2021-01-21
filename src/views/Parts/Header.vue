@@ -126,10 +126,11 @@
                         class="unread-message-count">{{ user.messageCount }}</span>
                 </router-link>
               </li>
+<!--              name: 'privateChatList'-->
               <li class="nav-item   icon-item mb-hide">
                 <router-link class="btn btn-sm no-read-msg"
                              :to="{
-                    name: 'privateChatList'
+                    name: 'im'
                   }">
                   <i class="iconfont el-icon-chat-line-round"></i>
                   <span v-if="user.privateChatCount > 0"
@@ -212,6 +213,7 @@ import logoImg from '../../assets/images/es2.png'
 import { cookie } from '../../utils/cookie.js'
 import { mapState } from 'vuex'
 import { Dropdown } from '@components'
+import { Constant } from '../../utils/im/constant'
 export default {
   name: 'Header',
   // asyncData({ store, route, accessToken = '' }) {
@@ -242,6 +244,7 @@ export default {
     escLogin () {
       this.$message.warning('已退出当前账户，请重新登录')
       cookie.delete('accessToken')
+      cookie.delete(Constant.accessTokenIM)
       window.location.reload()
     }
   },

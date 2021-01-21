@@ -38,11 +38,11 @@
 
                 <div class="btn-group"
                      v-if="user.user.uid !== personalInfo.user.uid">
-<!--                  <button class="btn btn-private-chat"-->
-<!--                          @click="privateChat">-->
-<!--                    <i class="iconfont"></i>-->
-<!--                    <span>私聊</span>-->
-<!--                  </button>-->
+                  <button class="btn btn-private-chat"
+                          @click="privateChat">
+                    <i class="iconfont"></i>
+                    <span>私聊</span>
+                  </button>
                   <button class="btn"
                           @click="onUserAttention(isAttention.is_attention)"
                           :class="isAttention.is_attention ? 'has' : 'no'">
@@ -208,8 +208,8 @@ export default {
         return false
       }
       this.$router.push({
-        name: 'privateChat',
-        query: { uid: this.user.user.uid, nickname: this.user.user.nickname }
+        name: 'im',
+        query: {nickname: this.user.user.nickname }
       })
     },
     getLevel () {

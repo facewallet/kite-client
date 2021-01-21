@@ -31,6 +31,9 @@ export default {
     //   console.log('suansuan002')
     //   this.$store.dispatch('PERSONAL_INFO', { accessToken:this.$route.params.accessToken2 })
     // }
+    //todo 这个地方也要放到已经登录
+    // this.$store.dispatch("im/GET_MESSAGE_INIT");
+    // this.$store.dispatch("im/initJIM");
 
 
 
