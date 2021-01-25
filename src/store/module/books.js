@@ -11,6 +11,7 @@ const state = () => ({
   booksInfo: {
     cover_img: ''
   }, // 小书的信息
+  articlesMy: {},
   booksBookAll: [] // 小书的所有章节
 })
 
@@ -26,6 +27,10 @@ const mutations = {
   SET_BOOKS_BOOK_ALL (state, data) {
     // 设置小书所有的章节
     state.booksBookAll = data
+  },
+  SET_ARTICLES_MY (state, data) {
+    // 设置小书所有的章节
+    state.articlesMy = data
   }
 }
 
@@ -92,6 +97,17 @@ const actions = {
       parameter: { params: parameter }
     }).then(result => {
       commit('SET_BOOKS_BOOK_ALL', result.data.list)
+      return result
+    })
+  },
+  GET_ARTICLES_MY: ({ commit, dispatch, state }, parameter) => {
+    // 获取小书的所有章节列表
+    return fetch({
+      url: '/articles/my',
+      method: 'get',
+      parameter: { params: parameter }
+    }).then(result => {
+      commit('SET_ARTICLES_MY', result.data.list)
       return result
     })
   },

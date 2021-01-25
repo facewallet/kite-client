@@ -98,14 +98,14 @@
                   <button class="btn btn-look"
                           v-if="$route.params.book_id!=='create'"
                           @click="lookChapter(editDataInfo.bookId)">查看演示</button>
-                  <div class="trial-read"
-                       v-if="books.booksInfo.is_free===isFree.pay">
-                    <label for="">开启试读：</label>
+                  <div class="trial-read">
+                    <label for="">从文章中选择：</label>
                     <select class="trial-read-select"
-                            v-model="write.trial_read">
-                      <option :value="key"
-                              v-for="(item,key) in  trialReadText"
-                              :key="key">{{item}}</option>
+                            v-model="currentArticle" @change="choseArticle">
+                      <option :value="0">无</option>
+                      <option :value="item"
+                              v-for="(item,key) in  books.articlesMy"
+                              :key="key" >{{item.title}}</option>
                     </select>
                   </div>
                   <button class="btn btn-delete"
@@ -188,6 +188,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch("books/GET_BOOKS_BOOK_ALL", { books_id: this.$route.params.books_id })
+    this.$store.dispatch("books/GET_ARTICLES_MY")
     this.initEdit()
   },
   data () {
@@ -196,11 +197,13 @@ export default {
       trialRead,
       trialReadText,
       isFree,
+      currentArticle:{
+
+      },
       write: {
         title: "",
         content: "",
         sort: 0,
-        trial_read: 1
       },
       isShowAside: true, // 是否显示侧栏
       toolbars: {
@@ -244,6 +247,25 @@ export default {
       this.$message.warning("已退出当前账户，请重新登录");
       cookie.delete("accessToken");
       window.location.reload();
+    },
+    restArticleId(){
+      this.write.articleId = 0;
+      this.write.title = ""
+      this.write.content = ""
+    },
+    initArticle(article){
+      this.write.title = article.title
+      this.write.content = article.content
+    },
+    choseArticle(){
+      let _this = this
+      if(this.currentArticle != "0"){
+        _this.write.title = _this.currentArticle.title
+        _this.write.content = _this.currentArticle.content
+      }else {
+        _this.write.title = ""
+        _this.write.content = ""
+      }
     },
     resetBook () { // 回复默认
       this.$confirm('此操作将恢复到初始编辑状态, 是否继续?', '提示', {
@@ -722,7 +744,7 @@ export default {
                   font-size: 14px;
                 }
                 .trial-read-select {
-                  width: 100px;
+                  width: 400px;
                   height: 35px;
                   vertical-align: middle;
                 }
