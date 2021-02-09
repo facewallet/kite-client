@@ -81,6 +81,21 @@
                   <router-link :to="{ name: 'books', params: { columnEnName: 'all' } }"
                                class="nav-link">教程</router-link>
                 </li>
+                <li class="nav-item"
+                    :class="{'active':$route.name==='graduateHome'}">
+                  <router-link :to="{ name: 'graduateHome', params: { column: 'all' } }"
+                               class="nav-link">考研</router-link>
+                </li>
+                <li class="nav-item"
+                    :class="{'active':$route.name==='servantHome'}">
+                  <router-link :to="{ name: 'servantHome', params: { column: 'all' } }"
+                               class="nav-link">公务员</router-link>
+                </li>
+                <li class="nav-item"
+                    :class="{'active':$route.name==='medicalHome'}">
+                  <router-link :to="{ name: 'medicalHome', params: { column: 'all' } }"
+                               class="nav-link">仲景在线&reg;</router-link>
+                </li>
               </ul>
             </li>
             <li class="nav-item search">
@@ -384,7 +399,7 @@ export default {
                   outline: none;
                   font-size: 12px;
                   color: #666;
-                  width: 200px;
+                  width: 120px;
                   background-color: transparent;
                 }
                 .search-btn {

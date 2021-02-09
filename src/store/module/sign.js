@@ -21,6 +21,22 @@ const actions = {
       parameter
     })
   },
+  OAUTHLOGIN: ({ commit, dispatch, state }, parameter) => {
+    // 登录 post
+    return fetch({
+      url: `/oauth/login/${parameter}`,
+      method: 'get',
+      parameter
+    })
+  },
+  OAUTHCALLBACK: ({ commit, dispatch, state }, parameter) => {
+    // 登录 post
+    return fetch({
+      url: `/oauth/${parameter.type}/callback${parameter.query}`,
+      method: 'get',
+      parameter: parameter
+    })
+  },
   LOGIN: ({ commit, dispatch, state }, parameter) => {
     // 登录 post
     return fetch({

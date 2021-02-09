@@ -8,11 +8,15 @@ import search from './search'
 import website from './website'
 import dynamic from './dynamic'
 import books from './books'
+import graduate from './graduate'
+import servant from './servant'
+import medical from './medical'
 import book from './book'
 import virtual from './virtual'
 import common from './common'
-import graphql from './graphql'
+// import graphql from './graphql'
 import im from './im2'
+import region from './region'
 
 export default {
   home,
@@ -28,6 +32,10 @@ export default {
   book,
   virtual,
   common,
-  graphql,
-  im
+  // graphql,
+  im,
+  graduate,
+  servant,
+  medical,
+  region
 }

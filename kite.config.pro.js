@@ -27,7 +27,7 @@ module.exports = {
       secure: false,
       pathRewrite: {
         '^/api-client': '/api-client',
-        '^/graphql': '/graphql',
+        // '^/graphql': '/graphql',
         // '^/default': '/default',
         '^/upload': '/upload'
       },

@@ -143,6 +143,52 @@ export default [
         component: () => import('@views/Books/Books') // 小书首页
       },
       {
+        path: 'graduate/:column',
+        name: 'graduateHome',
+        component: () => import('@views/Graduate/Home') // 考研首页
+      },
+      {
+        path: 'grad/:type',
+        name: 'graduateWrite',
+        component: () => import('@views/Graduate/Write') // 考研创建，修改
+      },
+      {
+        path: 'g/:id',
+        name: 'graduatePage',
+        component: require('@views/Graduate/Page').default // 考研详情页
+      },
+      {
+        path: 'servant/:column',
+        name: 'servantHome',
+        component: () => import('@views/Servant/Home') // 考研首页
+      },
+      {
+        path: 'vant/:type',
+        name: 'servantWrite',
+        component: () => import('@views/Servant/Write') // 考研创建，修改
+      },
+      {
+        path: 's/:id',
+        name: 'servantPage',
+        component: require('@views/Servant/Page').default // 考研详情页
+      },
+      {
+        path: 'medical/:column',
+        name: 'medicalHome',
+        component: () => import('@views/Medical/Home') // 考研首页
+      },
+      {
+        path: 'medi/:type',
+        name: 'medicalWrite',
+        component: () => import('@views/Medical/Write') // 考研创建，修改
+      },
+      {
+        path: 'm/:id',
+        name: 'medicalPage',
+        component: require('@views/Medical/Page').default // 考研详情页
+      },
+
+      {
         path: 'book/:books_id',
         name: 'book',
         component: require('@views/Book/Book').default // 小书内容
@@ -157,6 +203,11 @@ export default [
         name: 'privateChatList',
         component: require('@views/User/Chat/PrivateChatList').default // 私聊列表
         // component: require('@views/User/Chat/PrivateChatList').default // 私聊列表
+      },
+      {
+        path: 'oauth2/:type/callback',
+        name: 'thirdLogin',
+        component: () => import('@views/Sign/ThirdLogin') // 登录
       },
       {
         path: '*',

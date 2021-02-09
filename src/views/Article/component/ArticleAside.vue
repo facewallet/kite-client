@@ -187,12 +187,12 @@ export default {
     },
     getUserInfo () {
       //todo graphql是做什么的？
-      this.$store
-        .dispatch('graphql/GET_USER_INFO', { uid: this.article.uid })
-        .then(result => {
-          this.userInfo = result.data.userInfo || {}
-          this.recommendArticle = result.data.recommendArticle || []
-        })
+      // this.$store
+      //   .dispatch('graphql/GET_USER_INFO', { uid: this.article.uid })
+      //   .then(result => {
+      //     this.userInfo = result.data.userInfo || {}
+      //     this.recommendArticle = result.data.recommendArticle || []
+      //   })
     },
     getArticleUserInfo () {
       //todo graphql是做什么的？

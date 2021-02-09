@@ -41,7 +41,7 @@ app.use((req, res, next) => {
   // 接口进行拦截，并进行代理
   if (
     req.url.startsWith('/api-client/v1') ||
-    req.url.startsWith('/graphql') ||
+    // req.url.startsWith('/graphql') ||
     // req.url.startsWith('/default') ||
     req.url.startsWith('/upload')
   ) {

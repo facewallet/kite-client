@@ -48,10 +48,13 @@
               登录
             </button>
 
-            <div class="other-login"
-                 v-if="~website.oauths.indexOf('github')">
-              <a href="/api-client/v1/oauth/github-oauth"
-                 class="github">通过github登录</a>
+            <div class="other-login">
+              <span>其他登陆方式</span>
+              <div class="icons-list">
+                <a-icon class="item-icon" @click="showOauthModal('qq')" type="qq"></a-icon>
+                <a-icon class="item-icon" @click="showOauthModal('wechat_open')"  type="wechat"></a-icon>
+                <a-icon class="item-icon" @click="showOauthModal('weibo')"  type="weibo-circle"></a-icon>
+              </div>
             </div>
 
             <router-link class="return-home"
@@ -103,6 +106,32 @@ export default {
     }
   },
   methods: {
+    showOauthModal(type){
+      console.log('登录方式：',type)
+      this.$store.dispatch('sign/OAUTHLOGIN',type).then(res => {
+        if (res.meta.success === true) {
+          console.log('返回的重定向地址：',res.data.url)
+          window.location.href = res.data.url
+
+        }
+        let url = 'http://www.163.com'
+// //跳转2
+//         window.history.pushState(url);
+//         window.history.replaceState(url);
+//
+// //跳转3
+//         window.open(url,"_blank");
+//
+// //跳转4
+//         let a = document.createElement("a");
+//         a.setAttribute("href", "http://www.baidu.com");
+//         a.setAttribute("target", "_blank");
+//         a.click();
+        // this.$router.push({
+        //   path:'http://www.baidu.com'
+        // })
+      })
+    },
     login () {
       const _this = this
       this.$store.dispatch('sign/TOKEN', this.formData).then(res => {
@@ -158,6 +187,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .icons-list >>> .anticon {
+    margin-top: 20px;
+    margin-right: 20px;
+    font-size: 24px;
+    color: #00bb29;
+  }
 /*sign-in start*/
 .reg-btn {
   color: #3194d0;

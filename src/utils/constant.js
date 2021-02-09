@@ -437,18 +437,18 @@ export const productTypeInfo = {
 export const isFree = {
   free: 1
 }
-// export const isFree = {
-//   free: 1, // 免费
-//   pay: 2 // 付费
-// }
+export const isFree2 = {
+  free: 1, // 免费
+  pay: 2 // 付费
+}
 
 export const isFreeText = {
   [isFree.free]: '免费'
 }
-// export const isFreeText = {
-//   [isFree.free]: '免费', // 免费
-//   [isFree.pay]: '付费' // 付费
-// }
+export const isFree2Text = {
+  [isFree2.free]: '免费', // 免费
+  [isFree2.pay]: '付费' // 付费
+}
 
 export const trialRead = {
   // 是否可以试读

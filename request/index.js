@@ -91,3 +91,42 @@ export function fetch ({ url, method, parameter, moreConfig = {} }) {
       .catch(reject)
   })
 }
+export function file ({ url, method, parameter, moreConfig = {} }) {
+  logRequests && console.log(`调用的API是： ${url}...`)
+  // let co = Cookies.get('accessToken')
+  // console.log('-------------获取到的cookie:--------------', co)
+  return new Promise((resolve, reject) => {
+    // if (api.accessToken || parameter.accessToken) {
+    //   service.defaults.headers.common['Token'] = api.accessToken || parameter.accessToken
+    //   service.defaults.headers.common['Role'] = 'user'
+    // }
+    const co = Cookies.get('accessToken')
+    const token = co || parameter.accessToken
+    console.log('-------------获取到的cookie:-------二虎争食-------', co)
+    console.log('-------------获取到的parameter.accessToken:-------二虎争食-------', parameter)
+    console.log('-------------获取到的token:-------二虎争食-------', token)
+    if (token) {
+      console.log('驱虎吞狼之计----------')
+      service.defaults.headers.common['Token'] = token
+      service.defaults.headers.common['Role'] = 'user'
+    } else {
+      service.defaults.headers.common['Role'] = 'guest'
+    }
+    if (parameter.accessRole === 'user' || service.defaults.headers.common['Role'] === 'user') {
+      service.defaults.headers.common['Role'] = 'user'
+    } else {
+      service.defaults.headers.common['Role'] = 'guest'
+    }
+    service.defaults.headers.common['Content-Type'] = 'multipart/form-data'
+    service.defaults.headers.common['processData'] = false
+    console.log('头信心', service.defaults.headers)
+    console.log('头信心2', service.defaults.headers.common)
+    service[method](url, parameter, moreConfig)
+      .then(res => {
+        const val = res.data
+        logRequests && console.log(`调用完成- ${url}.`)
+        resolve(val)
+      }, reject)
+      .catch(reject)
+  })
+}
