@@ -140,8 +140,27 @@ export default {
   },
   created () {
     this.$store.dispatch("home/GET_POPULAR_ARTICLE_TAG"); // 获取热门文章标签
+
   },
+  mounted() {
+    // 在 DOM 加载完以后调用初始化
+    window.JAnalyticsInterface.init({
+      appkey: "d527f49432f2dfa0d52a3218", // 极光官网中创建应用后分配的 appkey，必填
+      debugMode: false,// 设置是否开启 debug 模式。true 则会打印更多的日志信息。设置 false 则只会输出 w、e 级别的日志
+      channel: "web",// 渠道名称，默认值为:default-channel
+      loc: true, //设置是否尝试获取位置信息上报，默认为 true
+      singlePage:true //设置是否为单页面，默认为 false
+    });
+    this.onEventBrowse();
+
+    },
   methods: {
+    onEventBrowse() {
+      var  BrowseEvent  = window.JAnalyticsInterface.Event.BrowseEvent;
+      var bEvent = new BrowseEvent("home", "首页", "it", 30);
+      bEvent.addKeyValue("key1", "value1");
+      window.JAnalyticsInterface.onEvent(bEvent);
+    },
     navTap (val) {
       this.sort = val;
       this.initHomeDate();

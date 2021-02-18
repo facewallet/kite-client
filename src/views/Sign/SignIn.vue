@@ -106,6 +106,13 @@ export default {
     }
   },
   methods: {
+    onEventLogin() {
+      console.log('登录埋码------')
+      var  LoginEvent  = window.JAnalyticsInterface.Event.LoginEvent;
+      var lEvent = new LoginEvent("easystudy", true);
+      lEvent.addKeyValue("key1", "value1").addKeyValue("key2", "value2");
+      window.JAnalyticsInterface.onEvent(lEvent);
+    },
     showOauthModal(type){
       console.log('登录方式：',type)
       this.$store.dispatch('sign/OAUTHLOGIN',type).then(res => {
@@ -146,6 +153,7 @@ export default {
             if (res.meta.success === true) {
               this.$message.success(res.meta.message)
               _this.$store.dispatch('im/initJIM2', res.data)
+              _this.onEventLogin()
               // this.$store.dispatch('im/initJIM2', res.data.init, res.data.user)
               this.$refs.login.reset()
               cookie.set('accessToken', res.data.user.token, 7)

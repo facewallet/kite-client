@@ -192,12 +192,22 @@ export default {
   created () {
     this.initColumn()
   },
+  mounted() {
+    this.onEventBrowse()
+  },
   watch: {
     $route (to, from) {
       this.initColumn()
     }
   },
   methods: {
+    onEventBrowse() {
+      console.log('教程页埋码-----')
+      var  BrowseEvent  = window.JAnalyticsInterface.Event.BrowseEvent;
+      var bEvent = new BrowseEvent("books", "教程", "it", 30);
+      bEvent.addKeyValue("key1", "value1");
+      window.JAnalyticsInterface.onEvent(bEvent);
+    },
     initColumn () {
       if (this.$route.params.columnEnName && this.$route.params.columnEnName !== 'all') {
         this.switchColumn(this.$route.params.columnEnName)
