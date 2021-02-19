@@ -10,7 +10,7 @@
     "build:server": "cross-env NODE_ENV=production  webpack --config tools/webpack.server.config.js --color -p --progress --hide-modules --display-optimization-bailout",
     "start": "cross-env NODE_ENV=development node ./tools/dev.js",
     "product": "cross-env NODE_ENV=development node ./tools/devproduct.js",
-    "product2": "cross-env NODE_ENV=development  pm2 start node ./tools/devproduct.js -i 3 "
+    "product2": "cross-env NODE_ENV=development  pm2 start node ./tools/devproduct.js  "
   },
   "author": "xiaoquan",
   "license": "ISC",
