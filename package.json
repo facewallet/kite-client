@@ -11,8 +11,7 @@
     "start": "cross-env NODE_ENV=development node ./tools/dev.js",
     "start2": "cross-env NODE_ENV=production node server.js",
     "product": "cross-env NODE_ENV=development node ./tools/devproduct.js",
-    "product2": "cross-env NODE_ENV=development  pm2 start node ./tools/devproduct.js -i 2",
-    "product3": "cross-env NODE_ENV=development  pm2 start node ./tools/devproduct.js"
+    "product2": "cross-env NODE_ENV=production  pm2 start node server.js -i 2"
   },
   "author": "xiaoquan",
   "license": "ISC",

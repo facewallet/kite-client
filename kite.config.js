@@ -22,6 +22,7 @@ module.exports = {
     // port: 8081, // 前台调试端口号
     assetsSubDirectory: 'static',
     proxy: {
+      // target: IS_NODE_ENV ? 'http://localhost:8086' : `http://localhost:8086`, // client ssr
       target: IS_NODE_ENV ? 'https://easystudy.vip' : `http://localhost:8086`, // client ssr
       changeOrigin: true,
       secure: false,

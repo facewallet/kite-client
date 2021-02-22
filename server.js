@@ -7,6 +7,7 @@ const express = require('express')
 const microcache = require('route-cache')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
+const config = require('./kite.config')
 
 const isProd = process.env.NODE_ENV === 'production'
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
@@ -30,6 +31,27 @@ function createRenderer (bundle, options) {
     runInNewContext: false
   }))
 }
+
+const proxy = require('http-proxy-middleware')
+
+// 配置静态资源加载中间件
+// 我在这个地方改成../static
+app.use(express.static(path.join(__dirname, './static')))
+// app.use(express.static(path.join(__dirname, '../../static')))
+
+app.use((req, res, next) => {
+  // 接口进行拦截，并进行代理
+  if (
+    req.url.startsWith('/api-client/v1') ||
+    // req.url.startsWith('/graphql') ||
+    // req.url.startsWith('/default') ||
+    req.url.startsWith('/upload')
+  ) {
+    req.respond = false
+    return proxy(config.client.proxy)(req, res, next)
+  }
+  return next()
+})
 
 let renderer
 let readyPromise
@@ -83,13 +105,13 @@ app.use(microcache.cacheSeconds(1, req => useMicroCache && req.originalUrl))
 function render (req, res) {
   const s = Date.now()
 
-  res.setHeader("Content-Type", "text/html")
-  res.setHeader("Server", serverInfo)
+  res.setHeader('Content-Type', 'text/html')
+  res.setHeader('Server', serverInfo)
 
   const handleError = err => {
     if (err.url) {
       res.redirect(err.url)
-    } else if(err.code === 404) {
+    } else if (err.code === 404) {
       res.status(404).send('404 | Page Not Found')
     } else {
       // Render Error Page or Redirect
@@ -118,7 +140,7 @@ app.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res))
 })
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8081
 app.listen(port, () => {
   console.log(`server started at localhost:${port}`)
 })
