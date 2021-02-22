@@ -3,7 +3,8 @@ const path = require('path')
 const PORT = process.env.npm_config_port || 8081
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const IS_NODE_ENV = process.env.NODE_ENV === 'development'
-const THEME_NAME = 'default'
+const THEME_NAME = 'dist'
+// const THEME_NAME = 'default'
 function ProcessCwd(val) {
   return path.resolve(process.cwd(), val)
 }
@@ -21,7 +22,7 @@ module.exports = {
     // port: 8081, // 前台调试端口号
     assetsSubDirectory: 'static',
     proxy: {
-      target: `http://localhost:8086`, // client ssr
+      target: IS_NODE_ENV ? 'https://easystudy.vip' : `http://localhost:8086`, // client ssr
       changeOrigin: true,
       secure: false,
       pathRewrite: {
@@ -32,10 +33,12 @@ module.exports = {
       },
       logLevel: 'silent'
     },
-    assetsRoot: IS_NODE_ENV
-      ? ProcessCwd(`${THEME_NAME}`)
-      : path.resolve(`../kite/static/theme/${THEME_NAME}`),
-    publicPath: IS_NODE_ENV ? '/' : `/theme/${THEME_NAME}/`,
+    // assetsRoot: IS_NODE_ENV
+    //   ? ProcessCwd(`${THEME_NAME}`)
+    //   : path.resolve(`../kite/static/theme/${THEME_NAME}`),
+    // publicPath: IS_NODE_ENV ? '/' : `/theme/${THEME_NAME}/`,
+    assetsRoot: ProcessCwd(`${THEME_NAME}`),
+    publicPath: `/${THEME_NAME}/`,
     devtool: IS_NODE_ENV ? 'cheap-module-eval-source-map' : '#source-map',
     dev: {
       notifyOnErrors: true,
