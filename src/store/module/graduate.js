@@ -12,13 +12,17 @@ const state = () => ({
     // cover_img: ''
   }, // 小书的信息
   articlesMy: {},
-  booksBookAll: [] // 小书的所有章节
+  allCategory: [] // 考研所有分类
 })
 
 const mutations = {
   SET_GRADUATE_LIST (state, data) {
     // 设置小书列表
     if (data) state.graduateList = data
+  },
+  SET_GRADUATE_CATEGORY_LIST (state, data) {
+    // 设置小书列表
+    if (data) state.allCategory = data
   },
   SET_GRADUATE_INFO (state, data) {
     // 设置小书列表
@@ -35,6 +39,17 @@ const actions = {
       parameter: { params: parameter }
     }).then(result => {
       commit('SET_GRADUATE_LIST', result.data.list)
+      return result
+    })
+  },
+  GET_GRADUATE_CATEGORY_ALL ({ commit, dispatch, state }, parameter) {
+    // 获取小书
+    return fetch({
+      url: '/grad/all/category',
+      method: 'get',
+      parameter: { params: parameter }
+    }).then(result => {
+      commit('SET_GRADUATE_CATEGORY_LIST', result.data.list)
       return result
     })
   },

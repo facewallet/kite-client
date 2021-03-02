@@ -10,7 +10,7 @@
             <nav class="column-menu">
               <ul class="nav-item-view">
                 <li class="nav-item"
-                    v-for="column_item in region.regionAll"
+                    v-for="column_item in graduate.allCategory"
                     :key="column_item.code">
                   <router-link :to="{name:'graduateHome',params:{column:column_item.code}}">
                     {{column_item.name}}
@@ -137,7 +137,7 @@ export default {
 
     // 触发 action 后，会返回 Promise
     return Promise.all([
-      store.dispatch("region/GET_ALL_REGION"),
+      store.dispatch("graduate/GET_GRADUATE_CATEGORY_ALL"),
       store.dispatch('graduate/GET_GRADUATE_LIST', {
         page: route.query.page || 1,
         column: route.params.column || '',
@@ -181,7 +181,7 @@ export default {
       }
     },
     switchColumn (val) {
-      this.region.regionAll.map(item => {
+      this.graduate.allCategory.map(item => {
         if (item.code === val) {
           this.childNavItem = item || {}
         }
@@ -211,7 +211,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['website','graduate', 'region', 'personalInfo'])
+    ...mapState(['website','graduate', 'personalInfo'])
   },
   components: {
     websiteNotice,

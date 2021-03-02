@@ -63,11 +63,11 @@
 
               <div class="col-xs-12 col-sm-6 col-md-6 box-form-group">
                 <label class="box-label"
-                       for="">省市</label>
+                       for="">分类</label>
                 <select class="box-select"
-                        v-model="write.region">
+                        v-model="write.category">
                   <option :value="item.code"
-                          v-for="(item,key) in region.regionAll"
+                          v-for="(item,key) in graduate.allCategory"
                           :key="key">{{item.name}}</option>
                 </select>
               </div>
@@ -177,7 +177,7 @@ export default {
   async asyncData ({ store, route, accessToken = "" }) {
     // 触发 action 后，会返回 Promise
     return Promise.all([
-      store.dispatch("region/GET_ALL_REGION"),
+      store.dispatch("graduate/GET_GRADUATE_CATEGORY_ALL"),
       store.dispatch("PERSONAL_INFO", { accessToken }),
       // store.dispatch("articleTag/GET_ARTICLE_TAG_ALL")
       // store.dispatch("articleColumn/GET_ARTICLE_COLUMN_ALL")
@@ -190,6 +190,7 @@ export default {
       content2: '默认值',
       write: {
         region: 'all',
+        category: 'all',
         coverImg: '', // 教程封面图片
         title: '', // 教程的标题
         description: '', // 教程的简介
@@ -432,6 +433,7 @@ export default {
       formData.append('payType',this.write.payType);
       formData.append('price',this.write.price);
       formData.append('region',this.write.region);
+      formData.append('category',this.write.category);
       formData.append('isRecommend',this.write.isRecommend);
       // this.$route.params.type !== "create" &&
       //   (params.booksId = this.$route.query.books_id);

@@ -1,7 +1,7 @@
 {
-  "name": "kite",
+  "name": "easystudy",
   "version": "1.0.1",
-  "description": "blog cms",
+  "description": "易学习",
   "main": "index.js",
   "scripts": {
     "init": "node  ./cli/init.js ",
@@ -14,7 +14,7 @@
     "product2": "cross-env NODE_ENV=production  pm2 start node server.js -i 2",
     "product3": "cross-env NODE_ENV=production  pm2 start node server.js -i 3"
   },
-  "author": "xiaoquan",
+  "author": "easystudy",
   "license": "ISC",
   "dependencies": {
     "lru-cache": "^4.1.1",
